@@ -3,7 +3,6 @@ import type { AxiosInstance } from "axios";
 
 // TODO: minimal CAP abstract type definition
 
-
 export interface AssociationDefinition extends Definition {
   target: string;
   _target: EntityDefinition;
