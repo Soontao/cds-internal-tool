@@ -4,6 +4,21 @@ import type { AxiosInstance } from "axios";
 import process from "process";
 import { CDS } from "./types";
 
+export function mustBeArray<T extends Array<any>>(obj: T): T;
+export function mustBeArray(obj: null): [];
+export function mustBeArray(obj: undefined): [];
+export function mustBeArray<T extends object>(obj: T): [T];
+export function mustBeArray(obj: any): Array<any> {
+  if (obj instanceof Array) {
+    return obj;
+  }
+  if (obj === undefined || obj === null) {
+    return [];
+  }
+  return [obj];
+}
+
+
 /**
  * return null if strings are `null`/`undefined`
  * 
@@ -61,11 +76,22 @@ export const memorized = <T extends (arg0: any) => any>(func: T): T => {
   };
 };
 
+/**
+ * very simple safe `get` function
+ * 
+ * @param object 
+ * @param path 
+ * @returns 
+ */
+
 export const get = (object: any, path: string) => {
-  for (const part of path.split(".")) {
-    object = object[part];
-    if (object === undefined) {
-      break;
+  if (path?.length > 0) {
+    for (const part of path.split(".")) {
+      if (object?.[part] !== undefined) {
+        object = object[part];
+      } else {
+        return undefined;
+      }
     }
   }
   return object;
