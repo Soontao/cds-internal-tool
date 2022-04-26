@@ -1,0 +1,98 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "jest"
+  ],
+  "env": {
+    "node": true,
+    "es6": true,
+    "jest": true,
+    "jest/globals": true
+  },
+  "parserOptions": {
+    "project": [
+      "./tsconfig.json",
+      "./test/tsconfig.json"
+    ],
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "objectLiteralDuplicateProperties": false
+    }
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jest/recommended"
+  ],
+  "rules": {
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "ignoreComments": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+    "semi": [
+      2
+    ], // must end with semi
+    "no-extra-semi": [
+      0
+    ],
+    "@typescript-eslint/type-annotation-spacing": "error",
+    "@typescript-eslint/no-explicit-any": [
+      0
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "space-before-blocks": "error",
+    "key-spacing": "error",
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "camelcase": [
+      "error",
+      {
+        "ignoreImports": true,
+        "ignoreGlobals": true
+      }
+    ],
+    "space-infix-ops": "off",
+    "@typescript-eslint/space-infix-ops": "error",
+    "comma-spacing": "error",
+    "arrow-spacing": "error",
+    "lines-between-class-members": "error",
+    "quotes": [
+      "error",
+      "double",
+      {
+        "allowTemplateLiterals": true,
+        "avoidEscape": true
+      }
+    ],
+    "indent": "off",
+    "@typescript-eslint/indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "@typescript-eslint/no-floating-promises": [
+      "warn"
+    ]
+  }
+}
