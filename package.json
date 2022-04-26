@@ -1,7 +1,11 @@
 {
-  "name": "template",
+  "name": "cds-internal-tool",
   "version": "0.0.1",
   "main": "lib/index.js",
+  "description": "internal tools for CAP nodejs extension",
+  "author": {
+    "name": "Theo Sun"
+  },
   "engines": {
     "node": ">=12",
     "npm": ">=6"
@@ -36,5 +40,6 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  }
+  },
+  "license": "Apache-2.0"
 }
