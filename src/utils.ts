@@ -25,19 +25,30 @@ export function mustBeArray(obj: any): Array<any> {
  * @param args 
  * @returns 
  */
-export const defaultStringOrNull = (...args: Array<any>) => {
+export function defaultStringOrNull(...args: Array<null | undefined>): null;
+export function defaultStringOrNull(...args: Array<any>): string;
+export function defaultStringOrNull(...args: Array<any>) {
   for (const arg of args) {
     if (arg !== undefined && arg !== null) {
       return String(arg);
     }
   }
   return null;
-};
+}
 
 
+/**
+ * setup test and return an axios instance
+ * 
+ * the instance will not throw error when status is not 2xx
+ * 
+ * @param path 
+ * @returns axios instance
+ */
 export const setupTest = (...path: Array<string>): AxiosInstance => {
   const cds = require("@sap/cds") as CDS;
   const { axios } = cds.test(".").in(...path);
+  axios.defaults.validateStatus = () => true;
   return axios;
 };
 

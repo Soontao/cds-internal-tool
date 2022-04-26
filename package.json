@@ -12,6 +12,9 @@
   },
   "scripts": {
     "test": "jest --detectOpenHandles --passWithNoTests",
+    "install:dev": "bash install_no_trace_deps.sh",
+    "pretest": "npm run install:dev",
+    "prelint": "npm run install:dev",
     "prebuild": "rimraf lib",
     "build": "tsc",
     "postbuild": "tsc --noEmit --p tsconfig.lib.json",

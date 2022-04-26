@@ -1,9 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
+import { cwdRequire } from "../src";
 import * as utils from "../src/utils";
 
-
 describe("Utils Test Suite", () => {
+
+  it("should support alias export", async () => {
+    expect(cwdRequire).toBe(utils.cwdRequire);
+  });
+
+  it('should support "cwdRequire" function', () => {
+    const process = cwdRequire("process");
+    expect(process).not.toBeUndefined();
+  });
 
   it('should support "get"', async () => {
     const o1 = { a: [{ b: 1 }] };
@@ -16,6 +25,14 @@ describe("Utils Test Suite", () => {
     expect(utils.get({ a: [null] }, "a.0")).toBeNull();
     expect(utils.get(o1, "a.0.b.a")).toBeUndefined();
     expect(utils.get(o1, "a.0.b.toFixed")).toBe(Number.prototype.toFixed);
+
+  });
+
+  it('should support function "defaultStringOrNull"', () => {
+
+    expect(utils.defaultStringOrNull(null, undefined)).toBeNull();
+    expect(utils.defaultStringOrNull(null, undefined, "a")).toBe("a");
+    expect(utils.defaultStringOrNull(null, undefined, 1)).toBe("1");
 
   });
 

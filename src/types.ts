@@ -65,6 +65,8 @@ export interface Service {
 
 }
 
+export type ApplicationService = Service
+
 type Methods = "get" | "post" | "patch" | "delete" | "put";
 
 export interface TestFacade extends Pick<AxiosInstance, Methods> {
@@ -86,6 +88,8 @@ export interface LinkedCSN {
 }
 
 export interface CDS {
+  Service: Service;
+  ApplicationService: ApplicationService;
   on: (event: string, cb: Function) => void;
   log: (module: string) => Logger;
   connect: {
