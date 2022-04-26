@@ -86,7 +86,7 @@ interface RequestMessageParam {
   args?: Array<any>;
 }
 
-export declare class Request extends Event {
+export declare class Request<DATA = any> extends Event<DATA> {
   _: {
     req: import("express").Request;
     res: import("express").Response;
