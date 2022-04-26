@@ -47,6 +47,9 @@ export interface Logger {
   error: LogFunction;
 }
 
+/**
+ * cds service
+ */
 export interface Service {
 
   prepend(cb: (srv: this) => void): void;
@@ -65,7 +68,15 @@ export interface Service {
 
 }
 
+/**
+ * cds application service
+ */
 export type ApplicationService = Service
+
+/**
+ * cds database service
+ */
+export type DatabaseService = Service
 
 type Methods = "get" | "post" | "patch" | "delete" | "put";
 
