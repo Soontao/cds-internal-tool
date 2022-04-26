@@ -6,6 +6,10 @@
   "author": {
     "name": "Theo Sun"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Soontao/cds-internal-tool"
+  },
   "engines": {
     "node": ">=12",
     "npm": ">=6"
@@ -44,5 +48,10 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "keywords": [
+    "CAP",
+    "cds",
+    "utils"
+  ]
 }
