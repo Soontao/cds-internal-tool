@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/Soontao/cds-internal-tool/compare/v0.0.4...v0.0.5) (2022-04-27)
+
+
+### Features
+
+* group by key and event assert ([329f288](https://github.com/Soontao/cds-internal-tool/commit/329f288f7c875dcd3cae210885991da486bf8f65))
+
 ### [0.0.4](https://github.com/Soontao/cds-internal-tool/compare/v0.0.3...v0.0.4) (2022-04-26)
 
 
