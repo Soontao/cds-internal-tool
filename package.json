@@ -26,6 +26,9 @@
     "release": "npx standard-version --no-verify",
     "coverage": "npm test -- --coverage --no-cache"
   },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
+  },
   "devDependencies": {
     "@commitlint/config-conventional": "^16.2.1",
     "@types/jest": "^27.4.1",
