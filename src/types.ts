@@ -397,6 +397,8 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
    */
   resolve(paths: Array<string>): Array<string>;
 
+  tx: DatabaseService["tx"];
+
   /**
    * Runs the given function as detached continuation in a specified event context (not inheriting from the current one). 
    * Options every or after allow to run the function repeatedly or deferred. 
