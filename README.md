@@ -7,6 +7,11 @@
 ![npm type definitions](https://img.shields.io/npm/types/cds-internal-tool)
 [![codecov](https://codecov.io/gh/Soontao/cds-internal-tool/branch/main/graph/badge.svg?token=upomv9gmft)](https://codecov.io/gh/Soontao/cds-internal-tool)
 
+## Feature
+
+- annotation utils
+- fresh `cds` runtime types
+
 ## [CHANGELOG](./CHANGELOG.md)
 
 ## [LICENSE](./LICENSE)

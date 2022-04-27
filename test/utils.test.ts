@@ -71,7 +71,9 @@ describe("Utils Test Suite", () => {
   });
 
   it("should support group object by key prefix", () => {
-
+    expect(utils.groupByKeyPrefix(null, "")).toStrictEqual({});
+    expect(utils.groupByKeyPrefix(undefined, "")).toStrictEqual({});
+    
     const object = {
       "@cds.rate.limit.duration": 10,
       "@cds.rate.limit.points": 20,

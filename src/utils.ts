@@ -25,12 +25,12 @@ export function mustBeArray(obj: any): Array<any> {
  * @returns 
  */
 export function isCDSRequest(obj: any): obj is Request {
-  const cds = cwdRequire("@sap/cds");
+  const cds = cwdRequireCDS();
   return obj instanceof cds.Request;
 }
 
 export function isCDSEvent(obj: any): obj is Event {
-  const cds = cwdRequire("@sap/cds");
+  const cds = cwdRequireCDS();
   return obj instanceof cds.Event;
 }
 
