@@ -144,15 +144,28 @@ export const groupByKeyPrefix = (obj: any, prefix: string) => {
     return {};
   }
   const keys = Object.keys(obj);
-  return keys
-    .filter(objectKey => objectKey.startsWith(prefix))
-    .reduce((pre: any, cur: string) => {
-      if (cur.length === prefix.length) {
-        pre = Object.assign({}, pre, obj[cur]);
-      } else {
-        pre[cur.substring(prefix.length + 1)] = obj[cur];
-      }
-      return pre;
-    }, {});
+  const base = prefix in obj ? (obj[prefix] ?? {}) : {};
+  const potentialMergedKeys = keys.filter(objectKey => objectKey.startsWith(prefix) && objectKey !== prefix);
+
+  if (typeof base !== "object") {
+    // if base is number or string
+    if (potentialMergedKeys.length > 0) {
+      cwdRequireCDS()
+        .log("cds-internal-tool")
+        .warn(
+          "group obj",
+          obj?.name ?? obj,
+          "has a property full match the prefix",
+          prefix,
+          "but type is not object, ignore other properties",
+          potentialMergedKeys
+        );
+    }
+    return base;
+  }
+  return potentialMergedKeys.reduce((pre: any, cur: string) => {
+    pre[cur.substring(prefix.length + 1)] = obj[cur];
+    return pre;
+  }, base);
 
 };

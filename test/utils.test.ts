@@ -73,7 +73,7 @@ describe("Utils Test Suite", () => {
   it("should support group object by key prefix", () => {
     expect(utils.groupByKeyPrefix(null, "")).toStrictEqual({});
     expect(utils.groupByKeyPrefix(undefined, "")).toStrictEqual({});
-    
+
     const object = {
       "@cds.rate.limit.duration": 10,
       "@cds.rate.limit.points": 20,
@@ -119,6 +119,16 @@ describe("Utils Test Suite", () => {
       keyParts: ["tenant"],
     });
 
+  });
+
+  it("should support groupByString key", () => {
+    const object3 = {
+      "@cds.rate.limit": "v1",
+      "@cds.rate.limit.keyParts": ["tenant"],
+    };
+    const result3 = utils.groupByKeyPrefix(object3, "@cds.rate.limit");
+    const v = "v1";
+    expect(result3).toStrictEqual(v);
   });
 
   it("should support isRequest", () => {

@@ -19,6 +19,9 @@ export type BeforeEventHandler = <T = any>(req: Request<T>) => Promise<T> | T | 
 export type AfterEventHandler = <T = any>(data: T, req: Request<T>) => Promise<T> | T | void
 
 
+type DefinitionContext<T extends Definition> = { [entityName: string]: T } & Iterable<T>;
+type DefinitionProperty<T extends Definition> = DefinitionContext<T> & ((namespace?: string) => DefinitionContext<T>)
+
 /**
  * cds service
  */
@@ -48,11 +51,11 @@ export declare class Service {
 
   // >>> metadata
 
-  entities(namespace?: string): { [entityName: string]: EntityDefinition };
+  entities: DefinitionProperty<EntityDefinition>;
 
-  events(namespace?: string): { [eventName: string]: Definition };
+  events: DefinitionProperty<Definition>;
 
-  operations(namespace?: string): { [operationName: string]: Definition };
+  operations: DefinitionProperty<Definition>;
 
   /**
    * Use srv.prepend in order to register handlers, which shall be executed before already registered handlers. In particular, this can be used to override handlers from reused services as in cap/samples/bookstore/srv/mashup.js:
