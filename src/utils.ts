@@ -140,6 +140,7 @@ export const get = (object: any, path: string) => {
  * @returns 
  */
 export const groupByKeyPrefix = (obj: any, prefix: string) => {
+  // TODO: split for the deep key: prefix.v.value => {v:{value}}
   if (obj === undefined || obj === null) {
     return {};
   }
