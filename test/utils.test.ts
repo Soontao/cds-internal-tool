@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import { cwdRequire } from "../src";
+import { CDS, cwdRequire } from "../src";
 import * as utils from "../src/utils";
 
 describe("Utils Test Suite", () => {
@@ -68,6 +68,68 @@ describe("Utils Test Suite", () => {
     expect(() => mf1(k2)).toThrow();
 
 
+  });
+
+  it("should support group object by key prefix", () => {
+
+    const object = {
+      "@cds.rate.limit.duration": 10,
+      "@cds.rate.limit.points": 20,
+      "@cds.rate.limit.keyParts": ["tenant", "remote_ip"],
+    };
+    const result = utils.groupByKeyPrefix(object, "@cds.rate.limit");
+
+    expect(result).toStrictEqual({
+      duration: 10,
+      points: 20,
+      keyParts: ["tenant", "remote_ip"],
+    });
+
+    const object2 = {
+      "@cds.rate.limit": {
+        duration: 10,
+        points: 20,
+        keyParts: ["tenant", "remote_ip"],
+      }
+    };
+    const result2 = utils.groupByKeyPrefix(object2, "@cds.rate.limit");
+
+    expect(result2).toStrictEqual({
+      duration: 10,
+      points: 20,
+      keyParts: ["tenant", "remote_ip"],
+    });
+
+
+
+    const object3 = {
+      "@cds.rate.limit": {
+        duration: 10,
+        points: 20,
+      },
+      "@cds.rate.limit.keyParts": ["tenant"],
+    };
+    const result3 = utils.groupByKeyPrefix(object3, "@cds.rate.limit");
+
+    expect(result3).toStrictEqual({
+      duration: 10,
+      points: 20,
+      keyParts: ["tenant"],
+    });
+
+  });
+
+  it("should support isRequest", () => {
+    const cds: CDS = cwdRequire("@sap/cds");
+    expect(utils.isCDSRequest(new cds.Request())).toBeTruthy();
+    expect(utils.isCDSRequest(new cds.Event())).toBeFalsy();
+  });
+
+
+  it("should support iSEvent", () => {
+    const cds: CDS = cwdRequire("@sap/cds");
+    expect(utils.isCDSEvent(new cds.Request())).toBeTruthy();
+    expect(utils.isCDSEvent(new cds.Event())).toBeTruthy();
   });
 
 });

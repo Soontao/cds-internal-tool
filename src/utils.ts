@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { AxiosInstance } from "axios";
 import process from "process";
-import { CDS } from "./types";
+import { CDS, Event, Request } from "./types";
 
 export function mustBeArray<T extends Array<any>>(obj: T): T;
 export function mustBeArray(obj: null): [];
@@ -16,6 +16,22 @@ export function mustBeArray(obj: any): Array<any> {
     return [];
   }
   return [obj];
+}
+
+/**
+ * assume the obj is a cds Request, so that could use it safely
+ * 
+ * @param obj 
+ * @returns 
+ */
+export function isCDSRequest(obj: any): obj is Request {
+  const cds = cwdRequire("@sap/cds");
+  return obj instanceof cds.Request;
+}
+
+export function isCDSEvent(obj: any): obj is Event {
+  const cds = cwdRequire("@sap/cds");
+  return obj instanceof cds.Event;
 }
 
 
@@ -106,4 +122,29 @@ export const get = (object: any, path: string) => {
     }
   }
   return object;
+};
+
+/**
+ * utils for deep annotation
+ * 
+ * @param obj 
+ * @param prefix 
+ * @returns 
+ */
+export const groupByKeyPrefix = (obj: any, prefix: string) => {
+  if (obj === undefined || obj === null) {
+    return {};
+  }
+  const keys = Object.keys(obj);
+  return keys
+    .filter(objectKey => objectKey.startsWith(prefix))
+    .reduce((pre: any, cur: string) => {
+      if (cur.length === prefix.length) {
+        pre = Object.assign({}, pre, obj[cur]);
+      } else {
+        pre[cur.substring(prefix.length + 1)] = obj[cur];
+      }
+      return pre;
+    }, {});
+
 };

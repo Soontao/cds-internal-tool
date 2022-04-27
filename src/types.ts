@@ -324,6 +324,7 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   Event: typeof Event;
   Service: typeof Service;
   ApplicationService: typeof ApplicationService;
+  Request: typeof Request
 
   db: DatabaseService;
 
