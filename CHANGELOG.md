@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://github.com/Soontao/cds-internal-tool/compare/v0.0.8...v0.0.9) (2022-04-27)
+
+
+### Features
+
+* enhanced type & fix group by key issue ([d1017b1](https://github.com/Soontao/cds-internal-tool/commit/d1017b13efe43f4df4d3b51fda7c0bf5c893d2fc))
+
 ### [0.0.8](https://github.com/Soontao/cds-internal-tool/compare/v0.0.7...v0.0.8) (2022-04-27)
 
 
