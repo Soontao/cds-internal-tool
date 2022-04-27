@@ -120,7 +120,7 @@ describe("Utils Test Suite", () => {
   });
 
   it("should support isRequest", () => {
-    const cds: CDS = cwdRequire("@sap/cds");
+    const cds = utils.cwdRequireCDS();
     expect(utils.isCDSRequest(new cds.Request())).toBeTruthy();
     expect(utils.isCDSRequest(new cds.Event())).toBeFalsy();
   });

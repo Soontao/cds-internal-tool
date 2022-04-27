@@ -79,6 +79,14 @@ export const cwdRequire = (id: string) => require(require.resolve(id, { paths: [
 
 
 /**
+ * require `@sap/cds` from current work space
+ * 
+ * @returns 
+ */
+export const cwdRequireCDS = (): CDS => cwdRequire("@sap/cds");
+
+
+/**
  * utils for memorized (sync) **ONE-parameter** function
  * 
  * @param func a function which only have one parameter
