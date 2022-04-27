@@ -62,7 +62,7 @@ export function defaultStringOrNull(...args: Array<any>) {
  * @returns axios instance
  */
 export const setupTest = (...path: Array<string>): AxiosInstance => {
-  const cds = require("@sap/cds") as CDS;
+  const cds = cwdRequireCDS();
   const { axios } = cds.test(".").in(...path);
   axios.defaults.validateStatus = () => true;
   return axios;
