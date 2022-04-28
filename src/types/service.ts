@@ -26,6 +26,9 @@ type DefinitionProperty<T extends Definition> = DefinitionContext<T> & ((namespa
  * cds service
  */
 export declare class Service {
+
+  kind: string;
+
   options: any;
 
   /**
@@ -150,6 +153,8 @@ export type Entities = string | Definition | Array<Entities>
  * cds application service
  */
 export declare class ApplicationService extends Service {
+  kind: "app-service";
+
   begin(): this;
 }
 /**

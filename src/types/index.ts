@@ -109,6 +109,14 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
     context: Partial<EventContext> & { every?: number, after?: number },
     cb: (tx: TransactionMix) => Promise<any>
   ): EventEmitter;
+
+  options: {
+    "in-memory?": boolean;
+    project: string;
+    port: string;
+    service: string;
+    from: string;
+  }
 }
 
 export * from "./auth";

@@ -9,6 +9,11 @@ export interface AssociationDefinition extends Definition {
  * entity definition type
  */
 export interface EntityDefinition extends Definition {
+  kind: "entity";
+  /**
+   * aspects
+   */
+  includes: Array<string>;
   associations?: { [elementName: string]: AssociationDefinition };
   compositions?: { [elementName: string]: AssociationDefinition };
   elements: { [elementName: string]: ElementDefinition };
@@ -19,9 +24,17 @@ export interface EntityDefinition extends Definition {
  * element definition type
  */
 export interface ElementDefinition extends Definition {
+
+  kind: "element";
   parent: EntityDefinition;
   key: boolean;
   isAssociation?: boolean;
+}
+
+export interface ServiceDefinition extends Definition {
+  kind: "service"
+  path: string;
+  ["@source"]: string
 }
 
 export interface Definition {
