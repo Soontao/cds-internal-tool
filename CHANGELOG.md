@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://github.com/Soontao/cds-internal-tool/compare/v0.0.10...v0.0.11) (2022-04-28)
+
+
+### Features
+
+* enhance setupTest ([19b3978](https://github.com/Soontao/cds-internal-tool/commit/19b3978728fac99c935fa82a975e274a2e5a907b))
+* groupByKey deep ([e1b501b](https://github.com/Soontao/cds-internal-tool/commit/e1b501b34d6d31f9fb755af1b632d05d85ad9a53))
+
 ### [0.0.10](https://github.com/Soontao/cds-internal-tool/compare/v0.0.9...v0.0.10) (2022-04-27)
 
 
