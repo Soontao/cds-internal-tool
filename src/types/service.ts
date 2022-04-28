@@ -14,7 +14,9 @@ export type DRAFT = "NEW" | "EDIT" | "PATCH" | "SAVE"
 export type HTTP = "GET" | "PUT" | "POST" | "PATCH" | "DELETE"
 export type TX = "COMMIT" | "ROLLBACK"
 
-export type OnEventHandler = <T = any>(req: Request<T>, next?: () => Promise<T>) => Promise<T> | T
+export type NextFunction<T = any> = () => Promise<T>;
+
+export type OnEventHandler = <T = any>(req: Request<T>, next?: NextFunction<T>) => Promise<T> | T
 export type BeforeEventHandler = <T = any>(req: Request<T>) => Promise<T> | T | Promise<CQN> | CQN | void
 export type AfterEventHandler = <T = any>(data: T, req: Request<T>) => Promise<T> | T | void
 
