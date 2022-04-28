@@ -121,6 +121,8 @@ describe("Utils Test Suite", () => {
 
   });
 
+
+
   it("should support groupByString key", () => {
     const object3 = {
       "@cds.rate.limit": "v1",
@@ -129,6 +131,42 @@ describe("Utils Test Suite", () => {
     const result3 = utils.groupByKeyPrefix(object3, "@cds.rate.limit");
     const v = "v1";
     expect(result3).toStrictEqual(v);
+  });
+
+  it("should support groupByKey deep key", () => {
+    expect(
+      utils.groupByKeyPrefix(
+        {
+          "@a.b.c.e.f": 1,
+          "@a.b.c.f.c": [2, 3],
+          "@a.b.c": { w: 3, c: 2 }
+        },
+        "@a.b.c"
+      )
+    )
+      .toStrictEqual({
+        w: 3,
+        c: 2,
+        e: { f: 1 },
+        f: { c: [2, 3] }
+      });
+
+    expect(
+      utils.groupByKeyPrefix(
+        {
+          "@a.b.c.e.f": 1,
+          "@a.b.c.f": [2, 3],
+          "@a.b.c": { w: 3, c: 2 }
+        },
+        "@a.b.c"
+      )
+    )
+      .toStrictEqual({
+        w: 3,
+        c: 2,
+        e: { f: 1 },
+        f: [2, 3]
+      });
   });
 
   it("should support isRequest", () => {

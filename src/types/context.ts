@@ -4,17 +4,27 @@ import { User } from "./auth";
 import { CQN, Definition } from "./reflect";
 
 export declare class EventContext {
+
+  /**
+   * A unique string used for request correlation.
+   */
   id: string;
 
   user: User;
 
+  /**
+   * A unique string identifying the current tenant, or undefined if not run in multitenancy mode. In case of multitenancy operation, this string is used for tenant isolation, for example as keys in the database connection pools.
+   */
   tenant: string;
 
   locale: string;
 
   timestamp: Date;
 
-  on(event: string, cb: Function): void
+  on(event: "succeeded" | "failed" | "done", cb: Function): void
+
+  before(event: "commit", cb: Function): void
+
 }
 
 /**

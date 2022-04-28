@@ -140,7 +140,6 @@ export const get = (object: any, path: string) => {
  * @returns 
  */
 export const groupByKeyPrefix = (obj: any, prefix: string) => {
-  // TODO: split for the deep key: prefix.v.value => {v:{value}}
   if (obj === undefined || obj === null) {
     return {};
   }
@@ -165,7 +164,17 @@ export const groupByKeyPrefix = (obj: any, prefix: string) => {
     return base;
   }
   return potentialMergedKeys.reduce((pre: any, cur: string) => {
-    pre[cur.substring(prefix.length + 1)] = obj[cur];
+    const pathParts = cur.substring(prefix.length + 1).split(".");
+    const lastPart: any = pathParts.pop();
+    let targetObjectRef = pre;
+    if (pathParts.length > 0) {
+      // deep create target object path ref
+      for (const pathPart of pathParts) {
+        if (pre[pathPart] === undefined) { pre[pathPart] = {}; }
+        targetObjectRef = pre[pathPart];
+      }
+    }
+    targetObjectRef[lastPart] = obj[cur];
     return pre;
   }, base);
 
