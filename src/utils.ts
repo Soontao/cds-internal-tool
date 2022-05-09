@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { AxiosInstance } from "axios";
+import path from "path";
 import process from "process";
 import { CDS, Event, Request } from "./types";
 
@@ -85,6 +86,14 @@ export const cwdRequire = (id: string) => require(require.resolve(id, { paths: [
  */
 export const cwdRequireCDS = (): CDS => cwdRequire("@sap/cds");
 
+/**
+ * require module based on CAP nodejs runtime project root.
+ * it will be useful the relative path module which defined in cds configurations maybe
+ * 
+ * @param mName module name
+ * @returns 
+ */
+export const cdsProjectRequire = (mName: string) => require(path.join(cwdRequireCDS().options.project, mName));
 
 /**
  * utils for memorized (sync) **ONE-parameter** function
