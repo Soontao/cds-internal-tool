@@ -188,3 +188,16 @@ export const groupByKeyPrefix = (obj: any, prefix: string) => {
   }, base);
 
 };
+
+
+/**
+ * return last item of a list
+ * 
+ * @param list 
+ * @returns 
+ */
+export function last<T = any>(list: Array<T>): T | undefined {
+  if (list instanceof Array && list.length >= 1) {
+    return list[list.length - 1];
+  }
+}

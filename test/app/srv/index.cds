@@ -1,4 +1,5 @@
 using {cuid} from '@sap/cds/common';
+using from './demo';
 
 
 service IndexService {

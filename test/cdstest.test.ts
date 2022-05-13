@@ -1,4 +1,5 @@
-import { cdsProjectRequire, setupTest } from "../src/utils";
+import { fuzzy } from "../src";
+import { cdsProjectRequire, cwdRequireCDS, setupTest } from "../src/utils";
 
 
 
@@ -21,6 +22,21 @@ describe("CDS setupTest Suite", () => {
   it("should support require module by cds project", () => {
     const v = cdsProjectRequire("./srv/whatever");
     expect(v).toBe(1);
+  });
+
+  it("should support fuzzy find entity", () => {
+    const { model } = cwdRequireCDS();
+    const { Foo: FooDef } = model.entities("test.app.srv.MyService");
+
+    expect(FooDef).not.toBeUndefined();
+    expect(fuzzy.findEntity(model, "Foo")).toBe(FooDef);
+    expect(fuzzy.findEntity(model, "testAppSrvMyServiceFoo")).toBe(FooDef);
+
+    expect(fuzzy.findElement(FooDef, "Age")).toBe(FooDef.elements["age"]);
+    expect(fuzzy.findElement(FooDef, "a_ge")).toBe(FooDef.elements["age"]);
+    expect(fuzzy.findElement(FooDef, "ageNew")).toBe(FooDef.elements["age_new"]);
+    expect(fuzzy.findElement(FooDef, "height2")).toBe(FooDef.elements["height_2"]);
+
   });
 
 });

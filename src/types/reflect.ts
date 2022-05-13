@@ -66,4 +66,9 @@ export interface LinkedCSN {
     flavor?: string;
   };
 
+  services(ns?: string): Array<ServiceDefinition>;
+  entities(ns?: string): { [key: string]: EntityDefinition };
+  events(ns?: string): { [key: string]: Definition };
+  operations(ns?: string): { [key: string]: Definition };
+
 }
