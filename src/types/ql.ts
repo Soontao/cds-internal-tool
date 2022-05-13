@@ -3,9 +3,9 @@
 import * as CQN from "./cqn";
 import { Definition } from "./reflect";
 
-export type Query = CQN.Query
+export type QueryObject = SELECT | INSERT | UPDATE | DELETE | CREATE | DROP;
 
-export declare class ConstructedQuery {
+export declare class PromiseLike {
   then(_resolved: (x: any) => any, _rejected: (e: Error) => any): any
 }
 
@@ -28,7 +28,7 @@ export declare class QL {
   DROP: typeof DROP;
 }
 
-export declare class SELECT<T> extends ConstructedQuery {
+export declare class SELECT<T = any> extends PromiseLike {
   static one: SELECT_one & { from: SELECT_one };
 
   static distinct: typeof SELECT;
@@ -80,7 +80,7 @@ type SELECT_from =
   & (<T> (entity: { new(): T }, primaryKey: number | string | object, projection?: (e: T) => void) => SELECT<T> & Promise<T>)
 
 
-export declare class INSERT<T> extends ConstructedQuery {
+export declare class INSERT<T = any> extends PromiseLike {
   static into(entity: Definition | string, entries?: object | object[]): INSERT<any>
 
   static into<T>(entity: Constructable<T>, entries?: object | object[]): INSERT<T>
@@ -102,7 +102,7 @@ export declare class INSERT<T> extends ConstructedQuery {
   INSERT: CQN.INSERT;
 }
 
-export declare class DELETE<T> extends ConstructedQuery {
+export declare class DELETE<T = any> extends PromiseLike {
   static from(entity: Definition | string, primaryKey?: number | string | object): DELETE<any>
 
   byKey(primaryKey?: number | string | object): this
@@ -118,7 +118,7 @@ export declare class DELETE<T> extends ConstructedQuery {
   DELETE: CQN.DELETE;
 }
 
-export declare class UPDATE<T> extends ConstructedQuery {
+export declare class UPDATE<T = any> extends PromiseLike {
   static entity(entity: Definition | string, primaryKey?: number | string | object): UPDATE<any>
 
   static entity<T>(entity: Constructable<T>, primaryKey?: number | string | object): UPDATE<T>
@@ -144,13 +144,13 @@ export declare class UPDATE<T> extends ConstructedQuery {
   UPDATE: CQN.UPDATE;
 }
 
-export declare class CREATE<T> extends ConstructedQuery {
+export declare class CREATE<T = any> extends PromiseLike {
   static entity(entity: Definition | string): CREATE<any>
 
   CREATE: CQN.CREATE;
 }
 
-export declare class DROP<T> extends ConstructedQuery {
+export declare class DROP<T = any> extends PromiseLike {
   static entity(entity: Definition | string): DROP<any>
 
   DROP: CQN.DROP;

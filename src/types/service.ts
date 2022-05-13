@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Readable } from "stream";
 import { EventContext, Request } from "./context";
+import { QueryObject } from "./ql";
 import { CQN, Definition, EntityDefinition, LinkedCSN } from "./reflect";
 import { TransactionMix } from "./transaction";
 
@@ -99,6 +100,10 @@ export declare class Service {
   // >>> query API
 
   run(query: CQN): Promise<any>;
+
+  run(query: QueryObject): Promise<any>;
+
+  run(query: any): Promise<any>;
 
   read(entity: Definition | string, key?: any, projection?: any): CQN;
 
