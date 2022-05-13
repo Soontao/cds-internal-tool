@@ -16,6 +16,7 @@ export interface EntityDefinition extends Definition {
    * aspects
    */
   includes: Array<string>;
+  actions: { [key: string]: Definition };
   associations?: { [elementName: string]: AssociationDefinition };
   compositions?: { [elementName: string]: AssociationDefinition };
   elements: { [elementName: string]: ElementDefinition };
@@ -66,9 +67,6 @@ export interface LinkedCSN {
     flavor?: string;
   };
 
-  services(ns?: string): Array<ServiceDefinition>;
   entities(ns?: string): { [key: string]: EntityDefinition };
-  events(ns?: string): { [key: string]: Definition };
-  operations(ns?: string): { [key: string]: Definition };
 
 }

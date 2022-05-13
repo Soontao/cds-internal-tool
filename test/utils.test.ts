@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 
 import { CDS, cwdRequire } from "../src";
 import * as utils from "../src/utils";
@@ -180,6 +181,12 @@ describe("Utils Test Suite", () => {
     const cds: CDS = cwdRequire("@sap/cds");
     expect(utils.isCDSEvent(new cds.Request())).toBeTruthy();
     expect(utils.isCDSEvent(new cds.Event())).toBeTruthy();
+  });
+
+  it("should support last", () => {
+    expect(utils.last([1])).toBe(1);
+    expect(utils.last([])).toBeUndefined();
+    expect(utils.last({})).toBeUndefined();
   });
 
 });

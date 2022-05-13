@@ -27,16 +27,32 @@ describe("CDS setupTest Suite", () => {
   it("should support fuzzy find entity", () => {
     const { model } = cwdRequireCDS();
     const { Foo: FooDef } = model.entities("test.app.srv.MyService");
+    const MyService = model.definitions["test.app.srv.MyService"];
+    expect(MyService).not.toBeUndefined();
+
+    const SubEvtDef = model.definitions["test.app.srv.MyService.sub"];
 
     expect(FooDef).not.toBeUndefined();
-    expect(fuzzy.findEntity(model, "Foo")).toBe(FooDef);
-    expect(fuzzy.findEntity(model, "testAppSrvMyServiceFoo")).toBe(FooDef);
+    expect(fuzzy.findEntity("Foo")).toBe(FooDef);
+    expect(fuzzy.findEntity("testAppSrvMyServiceFoo")).toBe(FooDef);
+    expect(fuzzy.findEvent("Sub")).toBe(SubEvtDef);
 
     expect(fuzzy.findElement(FooDef, "Age")).toBe(FooDef.elements["age"]);
     expect(fuzzy.findElement(FooDef, "a_ge")).toBe(FooDef.elements["age"]);
     expect(fuzzy.findElement(FooDef, "ageNew")).toBe(FooDef.elements["age_new"]);
     expect(fuzzy.findElement(FooDef, "height2")).toBe(FooDef.elements["height_2"]);
 
+    expect(fuzzy.findService("my_service")).toBe(MyService);
+
+
+  });
+
+  it("should support fuzzy find action", () => {
+    const { model } = cwdRequireCDS();
+    const { Foo: FooDef } = model.entities("test.app.srv.MyService");
+    expect(fuzzy.findAction("Add")).toBe(FooDef.actions.add);
+    expect(fuzzy.findAction("testAppSrvMyServiceFooAdd")).toBe(FooDef.actions.add);
+    expect(fuzzy.findFunction("Add")).toBeUndefined();
   });
 
 });

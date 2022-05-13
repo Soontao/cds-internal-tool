@@ -18,4 +18,7 @@ service MyService {
 
   action addFoo(id : UUID, v1 : Integer) returns Foo;
 
+  event sub {
+    v : String(255)
+  }
 }
