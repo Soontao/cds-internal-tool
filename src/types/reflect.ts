@@ -1,3 +1,5 @@
+import { expr } from "./cxn";
+
 export interface AssociationDefinition extends Definition {
   target: string;
   _target: EntityDefinition;
@@ -45,19 +47,11 @@ export interface Definition {
   [annotationKey: string]: any;
 }
 
-export type CXN = any;
+export type CXN = expr;
 
 export type CSN = any;
 
-/**
- * CQN query type
- */
-export type CQN = {
-  SELECT: any,
-  INSERT: any,
-  UPDATE: any,
-  DELETE: any,
-}
+export { CQN } from "./cqn";
 
 export interface LinkedCSN {
 
@@ -71,4 +65,5 @@ export interface LinkedCSN {
     creator?: string;
     flavor?: string;
   };
+
 }

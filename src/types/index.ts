@@ -5,7 +5,9 @@
 
 import type EventEmitter from "events";
 import { Event, EventContext, Request } from "./context";
+import { ref } from "./cxn";
 import { Logger } from "./log";
+import { QL } from "./ql";
 import { CQN, CSN, CXN, LinkedCSN } from "./reflect";
 import { ApplicationService, DatabaseService, Service } from "./service";
 import { TestFacade } from "./test";
@@ -52,12 +54,7 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
 
   test(project: string): { in: (...path: Array<string>) => TestFacade };
 
-  ql: {
-    SELECT: any;
-    INSERT: any;
-    UPDATE: any;
-    DELETE: any;
-  };
+  ql: QL;
   /**
    * Reference to the current root event or request, which acts as invocation context, providing access to the current tenant and user information, and also constitutes the transaction boundary for automatically managed transactions.
    */
@@ -87,7 +84,7 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
     cdl(cdl: string): CSN;
     cql(cql: string): CQN;
     xpr(cxl: string): CXN;
-    ref(cxl: string): any;
+    ref(cxl: string): ref;
   };
   load(files: string): CSN;
   load(files: Array<string>): CSN;
