@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.18](https://github.com/Soontao/cds-internal-tool/compare/v0.0.17...v0.0.18) (2022-05-16)
+
+
+### Features
+
+* assert utils ([4338549](https://github.com/Soontao/cds-internal-tool/commit/433854975882805e7a9704c0a66bce060dfd97b4))
+
 ### [0.0.17](https://github.com/Soontao/cds-internal-tool/compare/v0.0.16...v0.0.17) (2022-05-16)
 
 
