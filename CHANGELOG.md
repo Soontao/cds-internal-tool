@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.17](https://github.com/Soontao/cds-internal-tool/compare/v0.0.16...v0.0.17) (2022-05-16)
+
+
+### Features
+
+* assert is function ([097aea4](https://github.com/Soontao/cds-internal-tool/commit/097aea46e256fd51d73792560e20cb7c1fd711d2))
+* utils for definition abs path location ([3046e6b](https://github.com/Soontao/cds-internal-tool/commit/3046e6b6af2a8131d51a5c56a9a73efcd940d73b))
+
 ### [0.0.16](https://github.com/Soontao/cds-internal-tool/compare/v0.0.15...v0.0.16) (2022-05-13)
 
 
