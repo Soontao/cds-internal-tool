@@ -1,6 +1,7 @@
+/* eslint-disable max-len */
 import path from "path";
 import { fuzzy } from "../src";
-import { cdsProjectRequire, cwdRequireCDS, getDefinitionPath, setupTest } from "../src/utils";
+import { cdsProjectRequire, cwdRequire, cwdRequireCDS, getDefinitionBaseDir, getDefinitionPath, setupTest } from "../src/utils";
 
 
 
@@ -69,9 +70,27 @@ describe("CDS setupTest Suite", () => {
       .toBe(path.join(cds.options.project, "srv/demo.cds"));
   });
 
+
+
   it("should support get definition location (operations)", () => {
     expect(getDefinitionPath(cds.services["test.app.srv.MyService"].operations["addFoo"]))
       .toBe(path.join(cds.options.project, "srv/demo.cds"));
   });
-  
+
+  it("should support get definition dir (operations)", () => {
+    expect(getDefinitionBaseDir(cds.services["test.app.srv.MyService"].operations["addFoo"]))
+      .toBe(path.join(cds.options.project, "srv"));
+  });
+
+  it("should support cwdRequire for target definition", () => {
+    const v = cwdRequire(getDefinitionBaseDir(cds.services["test.app.srv.MyService"]), "whatever.js");
+    expect(v).toBe(1);
+  });
+
+  it("should support cwdRequire with target definition shortcut", () => {
+    const v = cwdRequire(cds.services["test.app.srv.MyService"], "whatever.js");
+    expect(v).toBe(1);
+  });
+
+
 });

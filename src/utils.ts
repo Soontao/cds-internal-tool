@@ -3,21 +3,12 @@
 import type { AxiosInstance } from "axios";
 import path from "path";
 import process from "process";
+import * as assert from "./assert";
 import { CDS, Definition, Event, Request, Service } from "./types";
+export { mustBeArray } from "./assert";
 
-export function mustBeArray<T extends Array<any>>(obj: T): T;
-export function mustBeArray(obj: null): [];
-export function mustBeArray(obj: undefined): [];
-export function mustBeArray<T extends object>(obj: T): [T];
-export function mustBeArray(obj: any): Array<any> {
-  if (obj instanceof Array) {
-    return obj;
-  }
-  if (obj === undefined || obj === null) {
-    return [];
-  }
-  return [obj];
-}
+
+// >>>> check 
 
 /**
  * assume the obj is a cds Request, so that could use it safely
@@ -34,6 +25,30 @@ export function isCDSEvent(obj: any): obj is Event {
   const cds = cwdRequireCDS();
   return obj instanceof cds.Event;
 }
+
+/**
+ * check object is a cds definition or not (from LinkedCSN)
+ * @param obj 
+ * @returns 
+ */
+export const isCDSDefinition = (obj: any) => {
+  const cds = cwdRequireCDS();
+  if (obj instanceof cds.builtin.classes.any) {
+    return true;
+  }
+  return false;
+};
+
+/**
+ * check object is a cds service or not
+ * @param obj 
+ * @returns 
+ */
+export const isCDSService = (obj: any): obj is Service => {
+  return obj instanceof cwdRequireCDS().Service;
+};
+
+// <<< check
 
 
 /**
@@ -73,10 +88,27 @@ export const setupTest = (...path: Array<string>): AxiosInstance => {
 /**
  * require for current work directory
  * 
- * @param id 
+ * @param parts module parts 
  * @returns 
  */
-export const cwdRequire = (id: string) => require(require.resolve(id, { paths: [process.cwd()] }));
+export function cwdRequire(...parts: Array<string>): any;
+/**
+ * require for current work directory
+ * @param id module id
+ */
+export function cwdRequire(id: string): any;
+export function cwdRequire(def: Definition | Service, relId: string): any;
+export function cwdRequire(...args: any[]) {
+  let [id] = args;
+  if (isCDSDefinition(id) || isCDSService(id)) {
+    id = path.join(getDefinitionBaseDir(id), ...args.slice(1));
+  } else {
+    if (args.length > 1) {
+      id = path.join(...args);
+    }
+  }
+  return require(require.resolve(id, { paths: [process.cwd()] }));
+}
 
 
 /**
@@ -84,7 +116,7 @@ export const cwdRequire = (id: string) => require(require.resolve(id, { paths: [
  * 
  * @returns 
  */
-export const cwdRequireCDS = (): CDS => cwdRequire("@sap/cds");
+export const cwdRequireCDS = (): CDS => require(require.resolve("@sap/cds", { paths: [process.cwd()] }));
 
 /**
  * require module based on CAP nodejs runtime project root.
@@ -202,11 +234,24 @@ export function last<T = any>(list: Array<T>): T | undefined {
   }
 }
 
-export function getDefinitionPath(def: Definition): string | undefined
-export function getDefinitionPath(def: Service): string | undefined
-export function getDefinitionPath(def: any): string | undefined {
+/**
+ * get the absolutely path of specific CDS definition
+ * @param def 
+ */
+export function getDefinitionPath(def: Definition): string
+export function getDefinitionPath(def: Service): string
+export function getDefinitionPath(def: any): string {
   const cds = cwdRequireCDS();
-  if (def instanceof cds.Service) { def = def.definition; }
+  if (isCDSService(def)) { def = def.definition; }
+
+  assert.mustNotNullOrUndefined(def);
+
   const base = cds.options.project;
   return path.join(base, def["$location"].file);
+}
+
+export function getDefinitionBaseDir(def: Definition): string
+export function getDefinitionBaseDir(def: Service): string
+export function getDefinitionBaseDir(def: any): string {
+  return path.dirname(getDefinitionPath(def));
 }

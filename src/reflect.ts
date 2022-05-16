@@ -81,7 +81,5 @@ export const fuzzy = {
   }
 };
 
-export default fuzzy;
-
 
 

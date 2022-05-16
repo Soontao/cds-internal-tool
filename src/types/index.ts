@@ -15,6 +15,8 @@ import { TransactionMix } from "./transaction";
 
 
 export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" | "delete" | "insert"> {
+  
+  builtin: any;
   version: string;
   home: string;
   env: any;
