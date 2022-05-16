@@ -11,6 +11,9 @@
 
 - annotation utils
 - fresh `cds` runtime types
+- module resolution
+- reflect utils
+- type checker and assertion
 
 ## [CHANGELOG](./CHANGELOG.md)
 
