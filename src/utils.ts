@@ -3,7 +3,7 @@
 import type { AxiosInstance } from "axios";
 import path from "path";
 import process from "process";
-import { CDS, Event, Request } from "./types";
+import { CDS, Definition, Event, Request, Service } from "./types";
 
 export function mustBeArray<T extends Array<any>>(obj: T): T;
 export function mustBeArray(obj: null): [];
@@ -200,4 +200,13 @@ export function last<T = any>(list: Array<T>): T | undefined {
   if (list instanceof Array && list.length >= 1) {
     return list[list.length - 1];
   }
+}
+
+export function getDefinitionPath(def: Definition): string | undefined
+export function getDefinitionPath(def: Service): string | undefined
+export function getDefinitionPath(def: any): string | undefined {
+  const cds = cwdRequireCDS();
+  if (def instanceof cds.Service) { def = def.definition; }
+  const base = cds.options.project;
+  return path.join(base, def["$location"].file);
 }

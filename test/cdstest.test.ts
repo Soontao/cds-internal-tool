@@ -1,11 +1,13 @@
+import path from "path";
 import { fuzzy } from "../src";
-import { cdsProjectRequire, cwdRequireCDS, setupTest } from "../src/utils";
+import { cdsProjectRequire, cwdRequireCDS, getDefinitionPath, setupTest } from "../src/utils";
 
 
 
 describe("CDS setupTest Suite", () => {
 
   const axios = setupTest(__dirname, "./app");
+  const cds = cwdRequireCDS();
 
   it("should support get odata metadata", async () => {
     const response = await axios.get("/index/$metadata");
@@ -55,4 +57,21 @@ describe("CDS setupTest Suite", () => {
     expect(fuzzy.findFunction("Add")).toBeUndefined();
   });
 
+  it("should support get definition location (service)", () => {
+    expect(getDefinitionPath(cds.services["test.app.srv.MyService"].definition))
+      .toBe(path.join(cds.options.project, "srv/demo.cds"));
+    expect(getDefinitionPath(cds.services["test.app.srv.MyService"]))
+      .toBe(path.join(cds.options.project, "srv/demo.cds"));
+  });
+
+  it("should support get definition location (entity)", () => {
+    expect(getDefinitionPath(cds.services["test.app.srv.MyService"].entities["Foo"]))
+      .toBe(path.join(cds.options.project, "srv/demo.cds"));
+  });
+
+  it("should support get definition location (operations)", () => {
+    expect(getDefinitionPath(cds.services["test.app.srv.MyService"].operations["addFoo"]))
+      .toBe(path.join(cds.options.project, "srv/demo.cds"));
+  });
+  
 });

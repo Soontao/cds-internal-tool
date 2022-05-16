@@ -2,7 +2,7 @@
 import { Readable } from "stream";
 import { EventContext, Request } from "./context";
 import { QueryObject } from "./ql";
-import { CQN, Definition, EntityDefinition, LinkedCSN } from "./reflect";
+import { CQN, Definition, EntityDefinition, LinkedCSN, ServiceDefinition } from "./reflect";
 import { TransactionMix } from "./transaction";
 
 export type EventHook = "before" | "on" | "after"
@@ -45,7 +45,7 @@ export declare class Service {
    */
   model: LinkedCSN;
 
-  definition: Definition;
+  definition: ServiceDefinition;
 
   namespace: string;
 
