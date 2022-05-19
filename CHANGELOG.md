@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.19](https://github.com/Soontao/cds-internal-tool/compare/v0.0.18...v0.0.19) (2022-05-19)
+
+
+### Features
+
+* fuzzy support for given model ([9049ca1](https://github.com/Soontao/cds-internal-tool/commit/9049ca13264bb6f10c4d74514fad8420559b2718))
+
 ### [0.0.18](https://github.com/Soontao/cds-internal-tool/compare/v0.0.17...v0.0.18) (2022-05-16)
 
 
