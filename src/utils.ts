@@ -183,11 +183,7 @@ export const memorized = <T extends (...args: Array<any>) => any>(
 
   memorizedFunc.clear = () => {
     if (caches !== undefined) {
-      if (caches instanceof Map) {
-        caches = new Map();
-      } else {
-        caches = new WeakMap();
-      }
+      caches = new LRUMap();
     }
   };
 
@@ -197,7 +193,7 @@ export const memorized = <T extends (...args: Array<any>) => any>(
 
   Object.defineProperty(memorizedFunc, "name", { value: func.name });
 
-  return memorizedFunc as (T & { clear: () => void, caches: Map<any, any> });
+  return memorizedFunc as (T & { clear: () => void, caches: LRUMap<any, any> });
 };
 
 
