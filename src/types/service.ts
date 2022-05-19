@@ -18,9 +18,9 @@ export type AnyEvent = "*"
 
 export type NextFunction<T = any> = () => Promise<T>;
 
-export type OnEventHandler = <T = any>(req: Request<T>, next: NextFunction<T>) => Promise<T> | T
-export type BeforeEventHandler = <T = any>(req: Request<T>) => Promise<T> | T | Promise<CQN> | CQN | void
-export type AfterEventHandler = <T = any>(data: T, req: Request<T>) => Promise<T> | T | void
+export type OnEventHandler = <T = any>(req: Request<T>, next: NextFunction<T>) => Promise<any> | any
+export type BeforeEventHandler = <T = any>(req: Request<T>) => Promise<any> | any
+export type AfterEventHandler = <T = any>(data: T, req: Request<T>) => Promise<any> | any
 
 
 type DefinitionContext<T extends Definition> = { [entityName: string]: T } & Iterable<T>;
