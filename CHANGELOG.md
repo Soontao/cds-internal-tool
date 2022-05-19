@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.20](https://github.com/Soontao/cds-internal-tool/compare/v0.0.19...v0.0.20) (2022-05-19)
+
+
+### Features
+
+* memorized for multi parameters ([bbb1634](https://github.com/Soontao/cds-internal-tool/commit/bbb1634e40c8fa1a75103d40a33c2fc1040e5f34))
+* support exact equal ([bb9416a](https://github.com/Soontao/cds-internal-tool/commit/bb9416a02065bfd6e34c323d6d4c6281ea7524e4))
+
 ### [0.0.19](https://github.com/Soontao/cds-internal-tool/compare/v0.0.18...v0.0.19) (2022-05-19)
 
 
