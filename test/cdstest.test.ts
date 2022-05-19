@@ -47,7 +47,6 @@ describe("CDS setupTest Suite", () => {
 
     expect(fuzzy.findService("my_service")).toBe(MyService);
 
-
   });
 
   it("should support fuzzy find action", () => {

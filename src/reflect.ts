@@ -1,4 +1,5 @@
-import { EntityDefinition } from "./types";
+/* eslint-disable max-len */
+import { EntityDefinition, LinkedModel } from "./types";
 import { cwdRequireCDS } from "./utils";
 
 const REP_REG = /[-_\.]/g;
@@ -11,8 +12,8 @@ const REP_REG = /[-_\.]/g;
  */
 function normalizeIdentifier(n: string) { return n.replace(REP_REG, "").toLowerCase(); }
 
-function find(type: "entity" | "action" | "function" | "event" | "service", name: string) {
-  const { model } = cwdRequireCDS();
+function find(type: "entity" | "action" | "function" | "event" | "service", name: string, model?: LinkedModel) {
+  model = model ?? cwdRequireCDS().model;
   const iName = normalizeIdentifier(name);
   const defs = Object.values(model.definitions).filter(def => def.kind === type);
 
@@ -66,11 +67,11 @@ function find(type: "entity" | "action" | "function" | "event" | "service", name
  * fuzzy utils for cds reflection
  */
 export const fuzzy = {
-  findEntity(name: string): EntityDefinition { return find("entity", name) as EntityDefinition; },
-  findEvent(name: string) { return find("event", name); },
-  findAction(name: string) { return find("action", name); },
-  findFunction(name: string) { return find("function", name); },
-  findService(name: string) { return find("service", name); },
+  findEntity(name: string, model?: LinkedModel): EntityDefinition { return find("entity", name, model) as EntityDefinition; },
+  findEvent(name: string, model?: LinkedModel) { return find("event", name, model); },
+  findAction(name: string, model?: LinkedModel) { return find("action", name, model); },
+  findFunction(name: string, model?: LinkedModel) { return find("function", name, model); },
+  findService(name: string, model?: LinkedModel) { return find("service", name, model); },
   findElement(def: EntityDefinition, name: string) {
     const iName = normalizeIdentifier(name);
     for (const elementName of Object.keys(def.elements)) {

@@ -54,19 +54,25 @@ export type CSN = any;
 
 export { CQN } from "./cqn";
 
-export interface LinkedCSN {
+export declare class LinkedCSN {
 
   $version: string;
+
   definitions: {
     [key: string]: Definition;
   };
-  exports: (ns: string) => any;
+
   kind: "type";
+
   meta?: {
     creator?: string;
     flavor?: string;
   };
+  
+  exports(ns: string): any;
 
   entities(ns?: string): { [key: string]: EntityDefinition };
 
 }
+
+export type LinkedModel = LinkedCSN
