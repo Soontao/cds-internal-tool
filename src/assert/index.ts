@@ -38,10 +38,12 @@ export function mustBeCDSDefinition(v: any): v is Definition {
 }
 
 /**
- * must have equal values
- * @param v 
- * @param e 
+ * must have equal values (with deep equal)
+ * 
+ * @param v actual value
+ * @param e expected value
+ * @param m message when error
  */
-export function mustEqual<T = any>(v: T, e: T) {
-  assert.strictEqual(v, e);
+export function mustEqual<T = any>(v: T, e: T, m?: string) {
+  assert.deepStrictEqual(v, e, m);
 }

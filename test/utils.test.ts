@@ -60,6 +60,12 @@ describe("Utils Test Suite", () => {
     expect(mf1(k1)).toBe(1);
     expect(f1).toBeCalledTimes(1);
 
+    // support clear cache
+    mf1.clear();
+    expect(mf1(k1)).toBe(1);
+    expect(f1).toBeCalledTimes(2);
+    expect(mf1.caches.get(k1)).toBe(1);
+
     expect(mf2(k2)).toBe(2);
     expect(mf2(k2)).toBe(2);
     expect(mf2(k2)).toBe(2);
@@ -86,15 +92,25 @@ describe("Utils Test Suite", () => {
     expect(mf1(k1, k2)).toBe(1);
     expect(f1).toBeCalledTimes(1);
 
+    // support clear cache
+    mf1.clear();
+    expect(mf1(k1, k2)).toBe(1);
+    expect(f1).toBeCalledTimes(2);
+    expect(mf1.caches.get(k1).get(k2)).toBe(1);
+
     expect(mf2(k2, k1)).toBe(2);
     expect(mf2(k2, k1)).toBe(2);
     expect(mf2(k2, k1)).toBe(2);
     expect(mf2(k2, k1)).toBe(2);
     expect(f2).toBeCalledTimes(1);
 
-    expect(() => mf1(k2)).toThrow();
-    expect(() => mf1(null)).toThrow();
-    expect(() => mf1()).toThrow();
+    expect(mf2(k2, {})).toBe(2);
+    expect(mf2(k2, {})).toBe(2);
+    expect(f2).toBeCalledTimes(3);
+
+    expect(() => mf1(k2)).toThrow("change the number of parameters");
+    expect(() => mf1(null)).toThrow("change the number of parameters");
+    expect(() => mf1(k2, k2)).toThrow("primitive types");
   });
 
   it("should support group object by key prefix", () => {

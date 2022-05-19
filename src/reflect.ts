@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { EntityDefinition, LinkedModel } from "./types";
-import { cwdRequireCDS } from "./utils";
+import { cwdRequireCDS, memorized } from "./utils";
 
 const REP_REG = /[-_\.]/g;
 
@@ -12,25 +12,28 @@ const REP_REG = /[-_\.]/g;
  */
 function normalizeIdentifier(n: string) { return n.replace(REP_REG, "").toLowerCase(); }
 
-// TODO: cache
-function find(type: "entity" | "action" | "function" | "event" | "service", name: string, model?: LinkedModel) {
+const find = memorized.hyper((
+  kind: "entity" | "action" | "function" | "event" | "service",
+  name: string,
+  model?: LinkedModel
+) => {
   model = model ?? cwdRequireCDS().model;
-  
+
   // if exact equal
-  if (model.definitions[name] !== undefined && model.definitions[name].kind === type) {
+  if (model.definitions[name] !== undefined && model.definitions[name].kind === kind) {
     return model.definitions[name];
   }
 
   const iName = normalizeIdentifier(name);
-  const defs = Object.values(model.definitions).filter(def => def.kind === type);
+  const defs = Object.values(model.definitions).filter(def => def.kind === kind);
 
   // find bounded action/function
-  if (type === "action" || type === "function") {
+  if (kind === "action" || kind === "function") {
     const entities = Object.values(model.definitions).filter(def => def.kind === "entity") as Array<EntityDefinition>;
     for (const entity of Object.values(entities)) {
       const entityName = entity.name;
       const actions = Object.values(entity?.actions ?? []);
-      for (const action of actions.filter(a => a.kind === type)) {
+      for (const action of actions.filter(a => a.kind === kind)) {
         const actionName = `${entityName}.${action.name}`;
         if (iName === normalizeIdentifier(actionName)) {
           return action;
@@ -54,12 +57,12 @@ function find(type: "entity" | "action" | "function" | "event" | "service", name
   }
 
   // find bounded action/function without namespace
-  if (type === "action" || type === "function") {
+  if (kind === "action" || kind === "function") {
     const entities = Object.values(model.definitions).filter(def => def.kind === "entity") as Array<EntityDefinition>;
     for (const entity of Object.values(entities)) {
       const entityName = entity.name;
       const actions = Object.values(entity?.actions ?? []);
-      for (const action of actions.filter(a => a.kind === type)) {
+      for (const action of actions.filter(a => a.kind === kind)) {
         const actionName = `${entityName}.${action.name}`;
         if (normalizeIdentifier(actionName).endsWith(iName)) {
           return action;
@@ -67,8 +70,7 @@ function find(type: "entity" | "action" | "function" | "event" | "service", name
       }
     }
   }
-
-}
+}, 3);
 
 /**
  * fuzzy utils for cds reflection

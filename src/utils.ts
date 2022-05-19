@@ -70,6 +70,16 @@ export function defaultStringOrNull(...args: Array<any>) {
 
 
 /**
+ * check whether value is primitive or reference
+ * 
+ * @param value 
+ * @returns 
+ */
+export function isPrimitive(value: any): boolean {
+  return Object(value) !== value;
+}
+
+/**
  * setup test and return an axios instance
  * 
  * the instance will not throw error when status is not 2xx
@@ -134,38 +144,54 @@ export const cdsProjectRequire = (mName: string) => require(path.join(cwdRequire
  * @param func a function which only have one parameter
  * @returns memorized function
  */
-export const memorized = <T extends (arg0: any) => any>(func: T): T => {
-  return memorized.hyper(func);
+export const memorized = <T extends (arg0: any) => any>(func: T) => {
+  return memorized.hyper<T>(func);
 };
 
 /**
  * `hyper` memorized function, make it support multi parameters function
  * 
+ * PLEASE only use it for **RESTRICTED** metadata instead of transaction data
+ * 
  * @param func a function, but parameters could not be null/undefined
+ * @param parametersNumber the number of parameters, to restrict the callee arguments
  * @returns memorized function
  */
-memorized.hyper = <T extends (...args: Array<any>) => any>(func: T): T => {
+memorized.hyper = <T extends (...args: Array<any>) => any>(func: T, parametersNumber?: number) => {
 
   let caches: Map<any, any> | WeakMap<any, any>;
-  let paramLength: number;
 
-  return function (...args: Array<any>) {
+  let primitives: Array<boolean>;
 
-    if (paramLength === undefined) {
-      paramLength = args.length;
+  const memorizedFunc = (...args: Array<any>) => {
+
+    if (parametersNumber === undefined) {
+      parametersNumber = args.length;
+    } else {
+      assert.mustEqual(
+        parametersNumber,
+        args.length,
+        "memoried function could not change the number of parameters after first invocation"
+      );
     }
-    
-    assert.mustEqual(paramLength, args.length);
-    
-    // each parameter should not be `undefined` or `null`
-    for (const arg of args) { assert.mustNotNullOrUndefined(arg); }
+
+    if (primitives === undefined) {
+      primitives = args.map(arg => isPrimitive(arg));
+    } else {
+      assert.mustEqual(
+        args.map(arg => isPrimitive(arg)),
+        primitives,
+        "the primitive types of parameters must keep same"
+      );
+    }
+
     const lastArg = last(args);
 
     if (caches === undefined) {
-      if (typeof args[0] === "object") {
-        caches = new WeakMap();
-      } else {
+      if (isPrimitive(args[0])) {
         caches = new Map();
+      } else {
+        caches = new WeakMap();
       }
     }
 
@@ -175,14 +201,32 @@ memorized.hyper = <T extends (...args: Array<any>) => any>(func: T): T => {
       const arg = args[idx];
       const nextArg = args[idx + 1];
       if (!cache.has(arg)) {
-        cache.set(arg, typeof nextArg === "object" ? new WeakMap() : new Map());
+        cache.set(arg, isPrimitive(nextArg) ? new Map() : new WeakMap());
       }
       cache = cache.get(arg);
     }
 
     if (!cache.has(lastArg)) { cache.set(lastArg, func(...args)); }
     return cache.get(lastArg);
-  } as T;
+  };
+
+  memorizedFunc.clear = () => {
+    if (caches !== undefined) {
+      if (caches instanceof Map) {
+        caches = new Map();
+      } else {
+        caches = new WeakMap();
+      }
+    }
+  };
+
+  Object.defineProperty(memorizedFunc, "caches", {
+    get() { return caches; }
+  });
+
+  Object.defineProperty(memorizedFunc, "name", { value: func.name });
+
+  return memorizedFunc as (T & { clear: () => void, caches: Map<any, any> });
 };
 
 /**
