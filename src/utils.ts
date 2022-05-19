@@ -154,10 +154,13 @@ export const memorized = <T extends (...args: Array<any>) => any>(
     if (parametersNumber === undefined) {
       parametersNumber = args.length;
     } else {
+      if (args.length < parametersNumber) {
+        args = args.concat(new Array(parametersNumber - args.length).fill(undefined));
+      }
       assert.mustEqual(
         parametersNumber,
         args.length,
-        "memoried function could not change the number of parameters after first invocation"
+        `memoried function '${func.name}' could not change the number of parameters after first invocation`
       );
     }
 
@@ -171,9 +174,7 @@ export const memorized = <T extends (...args: Array<any>) => any>(
 
     for (let idx = 0; idx < args.length - 1; idx++) {
       const arg = args[idx];
-      if (!cache.has(arg)) {
-        cache.set(arg, new LRUMap());
-      }
+      if (!cache.has(arg)) { cache.set(arg, new LRUMap()); }
       cache = cache.get(arg);
     }
 
