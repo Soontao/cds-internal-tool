@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.22](https://github.com/Soontao/cds-internal-tool/compare/v0.0.21...v0.0.22) (2022-05-19)
+
+
+### Features
+
+* improve memorized ([c2b0d17](https://github.com/Soontao/cds-internal-tool/commit/c2b0d174643320573c6f400591ce904c9c4e416c))
+* improve memorized ([118e04d](https://github.com/Soontao/cds-internal-tool/commit/118e04d85333352873c0bd9f256aca0dda7224ef))
+* update memorized ([66d6e27](https://github.com/Soontao/cds-internal-tool/commit/66d6e2760206f426b1f55586a20b35a31a061387))
+
 ### [0.0.21](https://github.com/Soontao/cds-internal-tool/compare/v0.0.20...v0.0.21) (2022-05-19)
 
 
