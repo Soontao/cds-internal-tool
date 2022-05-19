@@ -17,7 +17,7 @@ export type TX = "COMMIT" | "ROLLBACK"
 
 export type NextFunction<T = any> = () => Promise<T>;
 
-export type OnEventHandler = <T = any>(req: Request<T>, next?: NextFunction<T>) => Promise<T> | T
+export type OnEventHandler = <T = any>(req: Request<T>, next: NextFunction<T>) => Promise<T> | T
 export type BeforeEventHandler = <T = any>(req: Request<T>) => Promise<T> | T | Promise<CQN> | CQN | void
 export type AfterEventHandler = <T = any>(data: T, req: Request<T>) => Promise<T> | T | void
 
