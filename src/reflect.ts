@@ -12,7 +12,7 @@ const REP_REG = /[-_\.]/g;
  */
 function normalizeIdentifier(n: string) { return n.replace(REP_REG, "").toLowerCase(); }
 
-const find = memorized.hyper((
+const find = memorized((
   kind: "entity" | "action" | "function" | "event" | "service",
   name: string,
   model?: LinkedModel

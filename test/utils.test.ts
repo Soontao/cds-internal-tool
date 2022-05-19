@@ -72,7 +72,7 @@ describe("Utils Test Suite", () => {
     expect(mf2(k2)).toBe(2);
     expect(f2).toBeCalledTimes(1);
 
-    expect(() => mf1(k2)).toThrow();
+    expect(() => mf1(k1, k2)).toThrow("change the number of parameters");
 
 
   });
@@ -110,7 +110,6 @@ describe("Utils Test Suite", () => {
 
     expect(() => mf1(k2)).toThrow("change the number of parameters");
     expect(() => mf1(null)).toThrow("change the number of parameters");
-    expect(() => mf1(k2, k2)).toThrow("primitive types");
   });
 
   it("should support group object by key prefix", () => {

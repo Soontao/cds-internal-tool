@@ -4,8 +4,10 @@ import type { AxiosInstance } from "axios";
 import path from "path";
 import process from "process";
 import * as assert from "./assert";
+import { LRUMap } from "./foundation";
 import { CDS, Definition, Event, Request, Service } from "./types";
 export { mustBeArray } from "./assert";
+
 
 
 // >>>> check 
@@ -70,16 +72,6 @@ export function defaultStringOrNull(...args: Array<any>) {
 
 
 /**
- * check whether value is primitive or reference
- * 
- * @param value 
- * @returns 
- */
-export function isPrimitive(value: any): boolean {
-  return Object(value) !== value;
-}
-
-/**
  * setup test and return an axios instance
  * 
  * the instance will not throw error when status is not 2xx
@@ -138,15 +130,6 @@ export const cwdRequireCDS = (): CDS => require(require.resolve("@sap/cds", { pa
 export const cdsProjectRequire = (mName: string) => require(path.join(cwdRequireCDS().options.project, mName));
 
 
-/**
- * utils for memorized (sync) **ONE-parameter** function
- * 
- * @param func a function which only have one parameter
- * @returns memorized function
- */
-export const memorized = <T extends (arg0: any) => any>(func: T) => {
-  return memorized.hyper<T>(func);
-};
 
 /**
  * `hyper` memorized function, make it support multi parameters function
@@ -155,13 +138,16 @@ export const memorized = <T extends (arg0: any) => any>(func: T) => {
  * 
  * @param func a function, but parameters could not be null/undefined
  * @param parametersNumber the number of parameters, to restrict the callee arguments
+ * @param lruMapSize cache size for each key default is 1024
  * @returns memorized function
  */
-memorized.hyper = <T extends (...args: Array<any>) => any>(func: T, parametersNumber?: number) => {
+export const memorized = <T extends (...args: Array<any>) => any>(
+  func: T,
+  parametersNumber?: number,
+  lruMapSize = 1024
+) => {
 
   let caches: Map<any, any> | WeakMap<any, any>;
-
-  let primitives: Array<boolean>;
 
   const memorizedFunc = (...args: Array<any>) => {
 
@@ -175,33 +161,18 @@ memorized.hyper = <T extends (...args: Array<any>) => any>(func: T, parametersNu
       );
     }
 
-    if (primitives === undefined) {
-      primitives = args.map(arg => isPrimitive(arg));
-    } else {
-      assert.mustEqual(
-        args.map(arg => isPrimitive(arg)),
-        primitives,
-        "the primitive types of parameters must keep same"
-      );
-    }
-
     const lastArg = last(args);
 
     if (caches === undefined) {
-      if (isPrimitive(args[0])) {
-        caches = new Map();
-      } else {
-        caches = new WeakMap();
-      }
+      caches = new LRUMap(lruMapSize);
     }
 
     let cache = caches;
 
     for (let idx = 0; idx < args.length - 1; idx++) {
       const arg = args[idx];
-      const nextArg = args[idx + 1];
       if (!cache.has(arg)) {
-        cache.set(arg, isPrimitive(nextArg) ? new Map() : new WeakMap());
+        cache.set(arg, new LRUMap());
       }
       cache = cache.get(arg);
     }
@@ -228,6 +199,7 @@ memorized.hyper = <T extends (...args: Array<any>) => any>(func: T, parametersNu
 
   return memorizedFunc as (T & { clear: () => void, caches: Map<any, any> });
 };
+
 
 /**
  * very simple safe `get` function
