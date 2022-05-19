@@ -12,8 +12,15 @@ const REP_REG = /[-_\.]/g;
  */
 function normalizeIdentifier(n: string) { return n.replace(REP_REG, "").toLowerCase(); }
 
+// TODO: cache
 function find(type: "entity" | "action" | "function" | "event" | "service", name: string, model?: LinkedModel) {
   model = model ?? cwdRequireCDS().model;
+  
+  // if exact equal
+  if (model.definitions[name] !== undefined && model.definitions[name].kind === type) {
+    return model.definitions[name];
+  }
+
   const iName = normalizeIdentifier(name);
   const defs = Object.values(model.definitions).filter(def => def.kind === type);
 
