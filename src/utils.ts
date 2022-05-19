@@ -147,7 +147,7 @@ export const memorized = <T extends (...args: Array<any>) => any>(
   lruMapSize = 1024
 ) => {
 
-  let caches: Map<any, any> | WeakMap<any, any>;
+  let caches: LRUMap<any, any>;
 
   const memorizedFunc = (...args: Array<any>) => {
 
