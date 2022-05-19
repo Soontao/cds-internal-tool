@@ -126,19 +126,13 @@ export declare class Service {
 
   // >>> register handlers
 
-  before(handler: BeforeEventHandler): void;
-
   before(event: EventNames, handler: BeforeEventHandler): void;
 
   before(event: EventNames, entity: Entities, handler: BeforeEventHandler): void;
 
-  on(handler: OnEventHandler): void;
-
   on(event: EventNames, handler: OnEventHandler): void;
 
   on(event: EventNames, entity: Entities, handler: OnEventHandler): void;
-
-  after(handler: AfterEventHandler): void;
 
   after(event: EventNames, handler: AfterEventHandler): void;
 
