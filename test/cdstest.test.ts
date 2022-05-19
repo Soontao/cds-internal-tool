@@ -46,6 +46,8 @@ describe("CDS setupTest Suite", () => {
     expect(fuzzy.findElement(FooDef, "height2")).toBe(FooDef.elements["height_2"]);
 
     expect(fuzzy.findService("my_service")).toBe(MyService);
+    expect(fuzzy.findService("MyService")).toBe(MyService);
+    expect(fuzzy.findService("test.app.srv.MyService")).toBe(MyService);
 
   });
 

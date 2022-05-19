@@ -71,6 +71,32 @@ describe("Utils Test Suite", () => {
 
   });
 
+  it('should support multi parameters "hyperMemorized"', () => {
+    const k1 = {};
+    const k2 = "k2";
+    const f1 = jest.fn().mockReturnValue(1);
+    const f2 = jest.fn().mockReturnValue(2);
+
+    const mf1 = utils.memorized(f1);
+    const mf2 = utils.memorized(f2);
+
+    expect(mf1(k1, k2)).toBe(1);
+    expect(mf1(k1, k2)).toBe(1);
+    expect(mf1(k1, k2)).toBe(1);
+    expect(mf1(k1, k2)).toBe(1);
+    expect(f1).toBeCalledTimes(1);
+
+    expect(mf2(k2, k1)).toBe(2);
+    expect(mf2(k2, k1)).toBe(2);
+    expect(mf2(k2, k1)).toBe(2);
+    expect(mf2(k2, k1)).toBe(2);
+    expect(f2).toBeCalledTimes(1);
+
+    expect(() => mf1(k2)).toThrow();
+    expect(() => mf1(null)).toThrow();
+    expect(() => mf1()).toThrow();
+  });
+
   it("should support group object by key prefix", () => {
     expect(utils.groupByKeyPrefix(null, "")).toStrictEqual({});
     expect(utils.groupByKeyPrefix(undefined, "")).toStrictEqual({});

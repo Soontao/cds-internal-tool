@@ -1,4 +1,4 @@
-import { AssertionError } from "assert";
+import assert, { AssertionError } from "assert";
 import { Definition } from "../types";
 import { isCDSDefinition } from "../utils";
 
@@ -35,4 +35,13 @@ export function mustBeCDSDefinition(v: any): v is Definition {
     return true;
   }
   throw new AssertionError({ message: "CDS definition object required", actual: v, expected: "<CSN Definition>" });
+}
+
+/**
+ * must have equal values
+ * @param v 
+ * @param e 
+ */
+export function mustEqual<T = any>(v: T, e: T) {
+  assert.strictEqual(v, e);
 }

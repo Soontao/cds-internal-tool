@@ -127,29 +127,62 @@ export const cwdRequireCDS = (): CDS => require(require.resolve("@sap/cds", { pa
  */
 export const cdsProjectRequire = (mName: string) => require(path.join(cwdRequireCDS().options.project, mName));
 
+
 /**
  * utils for memorized (sync) **ONE-parameter** function
  * 
  * @param func a function which only have one parameter
- * @returns 
+ * @returns memorized function
  */
 export const memorized = <T extends (arg0: any) => any>(func: T): T => {
-  let cache: WeakMap<any, any>;
+  return memorized.hyper(func);
+};
 
-  // @ts-ignore
-  return function (arg0: any) {
-    if (cache === undefined) {
-      if (typeof arg0 === "object") {
-        cache = new WeakMap();
+/**
+ * `hyper` memorized function, make it support multi parameters function
+ * 
+ * @param func a function, but parameters could not be null/undefined
+ * @returns memorized function
+ */
+memorized.hyper = <T extends (...args: Array<any>) => any>(func: T): T => {
+
+  let caches: Map<any, any> | WeakMap<any, any>;
+  let paramLength: number;
+
+  return function (...args: Array<any>) {
+
+    if (paramLength === undefined) {
+      paramLength = args.length;
+    }
+    
+    assert.mustEqual(paramLength, args.length);
+    
+    // each parameter should not be `undefined` or `null`
+    for (const arg of args) { assert.mustNotNullOrUndefined(arg); }
+    const lastArg = last(args);
+
+    if (caches === undefined) {
+      if (typeof args[0] === "object") {
+        caches = new WeakMap();
       } else {
-        cache = new Map();
+        caches = new Map();
       }
     }
-    if (!cache.has(arg0)) {
-      cache.set(arg0, func(arg0));
+
+    let cache = caches;
+
+    for (let idx = 0; idx < args.length - 1; idx++) {
+      const arg = args[idx];
+      const nextArg = args[idx + 1];
+      if (!cache.has(arg)) {
+        cache.set(arg, typeof nextArg === "object" ? new WeakMap() : new Map());
+      }
+      cache = cache.get(arg);
     }
-    return cache.get(arg0);
-  };
+
+    if (!cache.has(lastArg)) { cache.set(lastArg, func(...args)); }
+    return cache.get(lastArg);
+  } as T;
 };
 
 /**
