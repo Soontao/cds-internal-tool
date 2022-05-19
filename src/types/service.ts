@@ -9,11 +9,12 @@ export type EventHook = "before" | "on" | "after"
 
 
 export type EventNames = EventName | EventName[]
-export type EventName = (CRUD | TX | HTTP | DRAFT)
+export type EventName = (CRUD | TX | HTTP | DRAFT | AnyEvent)
 export type CRUD = "CREATE" | "READ" | "UPDATE" | "DELETE"
 export type DRAFT = "NEW" | "EDIT" | "PATCH" | "SAVE"
 export type HTTP = "GET" | "PUT" | "POST" | "PATCH" | "DELETE"
 export type TX = "COMMIT" | "ROLLBACK"
+export type AnyEvent = "*"
 
 export type NextFunction<T = any> = () => Promise<T>;
 
