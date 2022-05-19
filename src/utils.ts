@@ -136,7 +136,9 @@ export const cdsProjectRequire = (mName: string) => require(path.join(cwdRequire
  * 
  * PLEASE only use it for **RESTRICTED** metadata instead of transaction data
  * 
- * @param func a function, but parameters could not be null/undefined
+ * default the cache values will be stored into LRU maps and evicts old values
+ * 
+ * @param func a function
  * @param parametersNumber the number of parameters, to restrict the callee arguments
  * @param lruMapSize cache size for each key default is 1024
  * @returns memorized function
