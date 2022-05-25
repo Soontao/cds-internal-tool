@@ -73,9 +73,9 @@ export declare class Service {
    */
   prepend(cb: (srv: this) => void): void;
 
-  emit(payload: { event: string, data?: any, headers?: any }): void;
+  emit(payload: { event: string, data?: any, headers?: any }): Promise<this>;
 
-  emit(event: string, data?: any, headers?: any): void;
+  emit(event: string, data?: any, headers?: any): Promise<this>;
 
   // >>> rest operations
 
