@@ -19,13 +19,21 @@ import { TransactionMix } from "./transaction";
 
 export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" | "delete" | "insert"> {
 
+  /**
+   * project root directory
+   */
+  root?: string;
+
+  /**
+   * @sap/cds home directory
+   */
+  home: string;
   builtin: any;
   version: string;
-  home: string;
   env: any;
   requires: any;
   app: import("express").Application;
-  services: { [serviceName: string]: Service };
+  services: { [serviceName: string]: Service } & Iterator<Service>;
 
   Event: typeof Event;
   Service: typeof Service;
