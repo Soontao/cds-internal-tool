@@ -5,6 +5,7 @@
 // TODO: minimal CAP abstract type definition
 
 import type EventEmitter from "events";
+import { User } from "./auth";
 import { connect } from "./connect";
 import { Event, EventContext, Request } from "./context";
 import { ref } from "./cxn";
@@ -32,6 +33,7 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   MessagingService: typeof MessagingService;
   AuditLogService: typeof AuditLogService;
   RemoteService: typeof RemoteService;
+  User: typeof User;
 
   Request: typeof Request
 
