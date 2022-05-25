@@ -1,5 +1,8 @@
 /* eslint-disable camelcase */
 export declare class User {
+
+  constructor(_: any);
+
   id: string;
 
   get _roles(): any;
