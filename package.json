@@ -1,6 +1,6 @@
 {
   "name": "cds-internal-tool",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "main": "lib/index.js",
   "description": "internal tools for CAP nodejs extension",
   "author": {

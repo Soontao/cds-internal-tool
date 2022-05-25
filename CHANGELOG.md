@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.27](https://github.com/Soontao/cds-internal-tool/compare/v0.0.26...v0.0.27) (2022-05-25)
+
+
+### Features
+
+* type enhance for event ([38a499f](https://github.com/Soontao/cds-internal-tool/commit/38a499fd0c7efd5e43d266956b20e278e5723e30))
+
 ### [0.0.26](https://github.com/Soontao/cds-internal-tool/compare/v0.0.25...v0.0.26) (2022-05-25)
 
 
