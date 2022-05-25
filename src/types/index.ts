@@ -65,7 +65,11 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   /**
    * Reference to the current root event or request, which acts as invocation context, providing access to the current tenant and user information, and also constitutes the transaction boundary for automatically managed transactions.
    */
-  context: EventContext;
+  get context(): EventContext;
+  /**
+   * set cds context
+   */
+  set context(ctx: { tenant?: string, user: User | string });
   server: (options: any) => any;
   utils: {
     /**
