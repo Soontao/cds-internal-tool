@@ -5,6 +5,7 @@
 // TODO: minimal CAP abstract type definition
 
 import type EventEmitter from "events";
+import { connect } from "./connect";
 import { Event, EventContext, Request } from "./context";
 import { ref } from "./cxn";
 import { Logger } from "./log";
@@ -48,9 +49,7 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
 
   log(module: string): Logger;
 
-  connect: {
-    to: (...args: Array<any>) => Promise<Service>;
-  };
+  connect: connect;
 
   serve(service: string, options: any): any;
 
