@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 /* eslint-disable @typescript-eslint/ban-types */
 
@@ -9,13 +10,13 @@ import { ref } from "./cxn";
 import { Logger } from "./log";
 import { QL } from "./ql";
 import { CQN, CSN, CXN, LinkedCSN } from "./reflect";
-import { ApplicationService, DatabaseService, Service } from "./service";
+import { ApplicationService, AuditLogService, DatabaseService, MessagingService, RemoteService, Service } from "./service";
 import { TestFacade } from "./test";
 import { TransactionMix } from "./transaction";
 
 
 export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" | "delete" | "insert"> {
-  
+
   builtin: any;
   version: string;
   home: string;
@@ -24,10 +25,13 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   app: import("express").Application;
   services: { [serviceName: string]: Service };
 
-
   Event: typeof Event;
   Service: typeof Service;
   ApplicationService: typeof ApplicationService;
+  MessagingService: typeof MessagingService;
+  AuditLogService: typeof AuditLogService;
+  RemoteService: typeof RemoteService;
+
   Request: typeof Request
 
   db: DatabaseService;

@@ -163,3 +163,12 @@ export declare class ApplicationService extends Service {
  * cds database service
  */
 export declare class DatabaseService extends Service { }
+
+
+export declare class RemoteService extends Service { }
+
+export declare class OutboxService extends Service { }
+
+export declare class AuditLogService extends OutboxService { }
+
+export declare class MessagingService extends OutboxService { }
