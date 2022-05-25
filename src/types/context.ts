@@ -5,6 +5,10 @@ import { CQN, Definition } from "./reflect";
 
 export declare class EventContext {
 
+  static for(_: any): EventContext;
+
+  constructor(_?: any);
+
   /**
    * A unique string used for request correlation.
    */
