@@ -9,11 +9,12 @@
 
 ## Feature
 
-- annotation utils
-- fresh `cds` runtime types
-- module resolution
-- reflect utils
-- type checker and assertion
+- [x] annotation utils
+- [x] fresh `cds` runtime types
+- [x] module resolution
+- [x] reflect utils
+- [x] type checker and assertion
+- [ ] option name adapter
 
 ## [CHANGELOG](./CHANGELOG.md)
 
