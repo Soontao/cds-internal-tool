@@ -7,7 +7,6 @@ import { TransactionMix } from "./transaction";
 
 export type EventHook = "before" | "on" | "after"
 
-
 export type EventNames = EventName | EventName[]
 export type EventName = (CRUD | TX | HTTP | DRAFT | AnyEvent)
 export type CRUD = "CREATE" | "READ" | "UPDATE" | "DELETE"
@@ -80,6 +79,17 @@ export declare class Service {
   // >>> rest operations
 
   send(method: string, path: string, data?: any, headers?: any): Promise<any>;
+
+  send(
+    param: {
+      method?: string,
+      path?: string,
+      query?: QueryObject,
+      event?: string,
+      data?: any,
+      headers?: any
+    }
+  ): Promise<any>;
 
   get(entityOrPath: Definition | string, data: any): Promise<any>;
 
