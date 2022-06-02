@@ -116,16 +116,16 @@ export declare class Service {
 
   run(query: any): Promise<any>;
 
-  read(entity: Definition | string, key?: any, projection?: any): CQN;
+  read(entity: Definition | string, key?: any, projection?: any): QueryObject;
 
-  insert(data: any): { into: (entity: Definition | string) => CQN }
+  insert(data: any): { into: (entity: Definition | string) => QueryObject }
 
-  create(entity: Definition | string, key?: any): CQN;
+  create(entity: Definition | string, key?: any): QueryObject;
 
-  update(entity: Definition | string, key?: any): CQN;
+  update(entity: Definition | string, key?: any): QueryObject;
 
   // eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
-  delete(entity: Definition | string, key?: any): CQN;
+  delete(entity: Definition | string, key?: any): QueryObject;
 
   // >>> stream
 
