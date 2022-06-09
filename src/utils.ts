@@ -128,7 +128,7 @@ export const cwdRequireCDS = (): CDS => require(require.resolve("@sap/cds", { pa
  * @returns 
  */
 export const cdsProjectRequire = (mName: string) => require(
-  require.resolve(mName, { paths: [cwdRequireCDS().options.project, process.cwd()] })
+  require.resolve(mName, { paths: [cwdRequireCDS()?.options?.project ?? process.cwd()] })
 );
 
 
