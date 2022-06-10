@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import { expr } from "./cxn";
 
 export interface AssociationDefinition extends Definition {
@@ -23,15 +24,29 @@ export interface EntityDefinition extends Definition {
   keys: { [elementName: string]: ElementDefinition };
 }
 
+export type BuiltInType = "cds.Binary"
+  | "cds.Boolean"
+  | "cds.String"
+  | "cds.Integer"
+  | "cds.UUID"
+  | "cds.Decimal"
+  | "cds.Date"
+  | "cds.Time"
+  | "cds.DateTime"
+  | "cds.TimeStamp"
+  | "cds.Binary"
+  | "cds.LargeBinary"
+  | "cds.LargeString";
+
 /**
  * element definition type
  */
 export interface ElementDefinition extends Definition {
-
   kind: "element";
   parent: EntityDefinition;
   key: boolean;
   isAssociation?: boolean;
+  type: BuiltInType | string;
 }
 
 export interface ServiceDefinition extends Definition {
@@ -68,7 +83,7 @@ export declare class LinkedCSN {
     creator?: string;
     flavor?: string;
   };
-  
+
   exports(ns: string): any;
 
   entities(ns?: string): { [key: string]: EntityDefinition };
