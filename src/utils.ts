@@ -33,7 +33,7 @@ export function isCDSEvent(obj: any): obj is Event {
  * @param obj 
  * @returns 
  */
-export const isCDSDefinition = (obj: any) => {
+export const isCDSDefinition = (obj: any): obj is Definition => {
   const cds = cwdRequireCDS();
   if (obj instanceof cds.builtin.classes.any) {
     return true;
@@ -77,7 +77,7 @@ export function defaultStringOrNull(...args: Array<any>) {
  * the instance will not throw error when status is not 2xx
  * 
  * @param path 
- * @returns axios instance
+ * @returns axios instance (without status check)
  */
 export const setupTest = (...path: Array<string>): AxiosInstance => {
   const cds = cwdRequireCDS();
@@ -104,7 +104,8 @@ export function cwdRequire(...args: any[]) {
   let [id] = args;
   if (isCDSDefinition(id) || isCDSService(id)) {
     id = path.join(getDefinitionBaseDir(id), ...args.slice(1));
-  } else {
+  }
+  else {
     if (args.length > 1) {
       id = path.join(...args);
     }
@@ -209,13 +210,18 @@ export const memorized = <T extends (...args: Array<any>) => any>(
  * @param path 
  * @returns 
  */
-
-export const get = (object: any, path: string) => {
+export const get = (object: any, path: string | Array<string>) => {
   if (path?.length > 0) {
-    for (const part of path.split(".")) {
+    // TODO: remove __proto__ ...
+    if (typeof path === 'string') {
+      path = path.split(".")
+    }
+    path = path.filter(part => typeof part === 'string' || typeof part === 'number')
+    for (const part of path) {
       if (object?.[part] !== undefined) {
         object = object[part];
-      } else {
+      }
+      else {
         return undefined;
       }
     }
@@ -296,18 +302,20 @@ export function getCurrentProjectHome() {
 
 /**
  * get the absolutely path of specific CDS definition
- * @param def 
+ * 
+ * @param def definition or cds.Service instance 
  */
-export function getDefinitionPath(def: Definition): string
-export function getDefinitionPath(def: Service): string
-export function getDefinitionPath(def: any): string {
+export function getDefinitionPath(def: Definition | Service): string {
   if (isCDSService(def)) { def = def.definition; }
   assert.mustNotNullOrUndefined(def);
   return path.join(getCurrentProjectHome(), def?.["$location"]?.file);
 }
 
-export function getDefinitionBaseDir(def: Definition): string
-export function getDefinitionBaseDir(def: Service): string
-export function getDefinitionBaseDir(def: any): string {
+/**
+ * 
+ * @param def definition or cds.Service instance 
+ * @returns 
+ */
+export function getDefinitionBaseDir(def: Definition | Service): string {
   return path.dirname(getDefinitionPath(def));
 }

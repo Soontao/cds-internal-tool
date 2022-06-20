@@ -70,22 +70,63 @@ const find = memorized((
       }
     }
   }
-}, 3);
+}, 3, 10240);
 
 /**
  * fuzzy utils for cds reflection
  */
 export const fuzzy = {
+  /**
+   * find entity in model
+   * 
+   * @param name 
+   * @param model 
+   * @returns 
+   */
   findEntity(name: string, model?: LinkedModel): EntityDefinition { return find("entity", name, model) as EntityDefinition; },
+  /**
+   * find event in model
+   * 
+   * @param name 
+   * @param model 
+   * @returns 
+   */
   findEvent(name: string, model?: LinkedModel) { return find("event", name, model); },
+  /**
+   * find action in model
+   * @param name 
+   * @param model 
+   * @returns 
+   */
   findAction(name: string, model?: LinkedModel) { return find("action", name, model); },
+  /**
+   * find function in model
+   * @param name 
+   * @param model 
+   * @returns 
+   */
   findFunction(name: string, model?: LinkedModel) { return find("function", name, model); },
+  /**
+   * find service in model
+   * @param name 
+   * @param model 
+   * @returns 
+   */
   findService(name: string, model?: LinkedModel) { return find("service", name, model); },
-  findElement(def: EntityDefinition, name: string) {
-    const iName = normalizeIdentifier(name);
-    for (const elementName of Object.keys(def.elements)) {
-      if (normalizeIdentifier(elementName) === iName) {
-        return def.elements[elementName];
+  /**
+   * find entity in definition
+   * 
+   * @param entityDef 
+   * @param name 
+   * @returns 
+   */
+  findElement(entityDef: EntityDefinition, name: string) {
+    if (entityDef.kind === 'entity') {
+      const iName = normalizeIdentifier(name);
+      for (const elementName of Object.keys(entityDef.elements)) {
+        if (normalizeIdentifier(elementName) === iName) {
+          return entityDef.elements[elementName];
+        }
       }
     }
   }

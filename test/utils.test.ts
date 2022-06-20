@@ -18,6 +18,8 @@ describe("Utils Test Suite", () => {
   it('should support "get"', async () => {
     const o1 = { a: [{ b: 1 }] };
     expect(utils.get(o1, "a.0.b")).toBe(1);
+    expect(utils.get(o1, ['a', 0, 'b'])).toBe(1);
+    expect(utils.get(o1, ['a', '0', 'b'])).toBe(1);
     expect(utils.get(o1, "a")).toBe(o1.a);
     // @ts-ignore
     expect(utils.get(o1, undefined)).toBe(o1);
