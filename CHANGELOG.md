@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.32](https://github.com/Soontao/cds-internal-tool/compare/v0.0.31...v0.0.32) (2022-06-20)
+
+
+### Bug Fixes
+
+* cds project home ([7e8ff6d](https://github.com/Soontao/cds-internal-tool/commit/7e8ff6d6fdfc73018cb6ceff1bbecac7c4334c26))
+* getDefinitionPath ([eb0ac3c](https://github.com/Soontao/cds-internal-tool/commit/eb0ac3c1739612264a5f47572c30b40c0cc8e644))
+
 ### [0.0.31](https://github.com/Soontao/cds-internal-tool/compare/v0.0.30...v0.0.31) (2022-06-09)
 
 
