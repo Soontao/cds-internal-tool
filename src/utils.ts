@@ -285,17 +285,25 @@ export function last<T = any>(list: Array<T>): T | undefined {
 }
 
 /**
+ * get current (cds) project home dir
+ * 
+ * @returns 
+ */
+export function getCurrentProjectHome() {
+  const cds = cwdRequireCDS();
+  return cds.options.project ?? cds.env._home ?? process.cwd()
+}
+
+/**
  * get the absolutely path of specific CDS definition
  * @param def 
  */
 export function getDefinitionPath(def: Definition): string
 export function getDefinitionPath(def: Service): string
 export function getDefinitionPath(def: any): string {
-  const cds = cwdRequireCDS();
   if (isCDSService(def)) { def = def.definition; }
   assert.mustNotNullOrUndefined(def);
-  const base = cds.options.project ?? process.cwd();
-  return path.join(base, def?.["$location"]?.file);
+  return path.join(getCurrentProjectHome(), def?.["$location"]?.file);
 }
 
 export function getDefinitionBaseDir(def: Definition): string
