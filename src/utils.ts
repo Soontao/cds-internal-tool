@@ -158,7 +158,8 @@ export const memorized = <T extends (...args: Array<any>) => any>(
 
     if (parametersNumber === undefined) {
       parametersNumber = args.length;
-    } else {
+    }
+    else {
       if (args.length < parametersNumber) {
         args = args.concat(new Array(parametersNumber - args.length).fill(undefined));
       }
@@ -187,14 +188,19 @@ export const memorized = <T extends (...args: Array<any>) => any>(
     return cache.get(lastArg);
   };
 
-  memorizedFunc.clear = () => {
-    if (caches !== undefined) {
-      caches = new LRUMap();
+  Object.defineProperty(memorizedFunc, 'clear', {
+    get() {
+      return () => {
+        if (caches !== undefined) {
+          caches.clear()
+          caches = new LRUMap();
+        }
+      };
     }
-  };
+  })
 
   Object.defineProperty(memorizedFunc, "caches", {
-    get() { return caches; }
+    get() { return caches; },
   });
 
   Object.defineProperty(memorizedFunc, "name", { value: func.name });

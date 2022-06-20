@@ -1,6 +1,7 @@
 import { LRUMap } from "../src/foundation";
 
 describe("foundation Test Suite", () => {
+  
   it("should support LRU Map", () => {
 
     const cache = new LRUMap(3);
