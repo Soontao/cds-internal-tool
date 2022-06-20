@@ -293,11 +293,9 @@ export function getDefinitionPath(def: Service): string
 export function getDefinitionPath(def: any): string {
   const cds = cwdRequireCDS();
   if (isCDSService(def)) { def = def.definition; }
-
   assert.mustNotNullOrUndefined(def);
-
-  const base = cds.options.project;
-  return path.join(base, def["$location"].file);
+  const base = cds.options.project ?? process.cwd();
+  return path.join(base, def?.["$location"]?.file);
 }
 
 export function getDefinitionBaseDir(def: Definition): string
