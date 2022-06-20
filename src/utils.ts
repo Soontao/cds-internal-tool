@@ -205,7 +205,7 @@ export const memorized = <T extends (...args: Array<any>) => any>(
 
   Object.defineProperty(memorizedFunc, "name", { value: func.name });
 
-  return memorizedFunc as (T & { clear: () => void, caches: LRUMap<any, any> });
+  return memorizedFunc as (T & { clear: () => void, caches: LRUMap<Parameters<T>[0], ReturnType<T>> });
 };
 
 
