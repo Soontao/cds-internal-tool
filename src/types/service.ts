@@ -2,7 +2,7 @@
 import { Readable } from "stream";
 import { EventContext, Request } from "./context";
 import { QueryObject } from "./ql";
-import { CQN, Definition, EntityDefinition, LinkedCSN, ServiceDefinition } from "./reflect";
+import { CQN, CSN, Definition, EntityDefinition, LinkedCSN, ServiceDefinition } from "./reflect";
 import { TransactionMix } from "./transaction";
 
 export type EventHook = "before" | "on" | "after"
@@ -24,11 +24,22 @@ export type AfterEventHandler = <T = any>(data: T, req: Request<T>) => Promise<a
 
 type DefinitionContext<T extends Definition> = { [entityName: string]: T } & Iterable<T>;
 type DefinitionProperty<T extends Definition> = DefinitionContext<T> & ((namespace?: string) => DefinitionContext<T>)
-
+export interface ServiceImplFunc {
+  (this: Service, srv: Service): any
+}
 /**
  * cds service
  */
 export declare class Service {
+
+  constructor(
+    name?: String,
+    model?: CSN,
+    options?: {
+      kind: String
+      impl: String | ServiceImplFunc
+    }
+  )
 
   kind: string;
 
