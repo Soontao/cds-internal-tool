@@ -96,7 +96,11 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   };
   compile: Function & {
     for: {
-      odata(csn: any, options: any): any;
+      odata(csn: CSN, options: any): any;
+      drafts(csn: CSN, options: any): any;
+      sql(csn: CSN, options: any): any;
+      java(csn: CSN, options: any): any;
+      nodejs(csn: CSN, options: any): LinkedCSN;
     }
     to: {
       json(csn: CSN): any;
