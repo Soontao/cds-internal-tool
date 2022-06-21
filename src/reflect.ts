@@ -121,7 +121,7 @@ export const fuzzy = {
    * @returns 
    */
   findElement(entityDef: EntityDefinition, name: string) {
-    if (entityDef.kind === 'entity') {
+    if (entityDef.kind === "entity") {
       const iName = normalizeIdentifier(name);
       for (const elementName of Object.keys(entityDef.elements)) {
         if (normalizeIdentifier(elementName) === iName) {

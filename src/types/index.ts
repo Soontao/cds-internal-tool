@@ -30,10 +30,19 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   home: string;
   builtin: any;
   version: string;
-  env: any;
+  env: {
+    [key: string]: any;
+    /**
+     * project home
+     */
+    _home?: string;
+  };
   requires: any;
   app: import("express").Application;
-  services: { [serviceName: string]: Service } & Iterator<Service>;
+  services: {
+    [serviceName: string]: Service,
+    [Symbol.iterator](): Iterator<Service>;
+  };
 
   Event: typeof Event;
   Service: typeof Service;

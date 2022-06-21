@@ -188,16 +188,16 @@ export const memorized = <T extends (...args: Array<any>) => any>(
     return cache.get(lastArg);
   };
 
-  Object.defineProperty(memorizedFunc, 'clear', {
+  Object.defineProperty(memorizedFunc, "clear", {
     get() {
       return () => {
         if (caches !== undefined) {
-          caches.clear()
+          caches.clear();
           caches = new LRUMap();
         }
       };
     }
-  })
+  });
 
   Object.defineProperty(memorizedFunc, "caches", {
     get() { return caches; },
@@ -219,10 +219,10 @@ export const memorized = <T extends (...args: Array<any>) => any>(
 export const get = (object: any, path: string | Array<string>) => {
   if (path?.length > 0) {
     // TODO: remove __proto__ ...
-    if (typeof path === 'string') {
-      path = path.split(".")
+    if (typeof path === "string") {
+      path = path.split(".");
     }
-    path = path.filter(part => typeof part === 'string' || typeof part === 'number')
+    path = path.filter(part => typeof part === "string" || typeof part === "number");
     for (const part of path) {
       if (object?.[part] !== undefined) {
         object = object[part];
@@ -303,7 +303,7 @@ export function last<T = any>(list: Array<T>): T | undefined {
  */
 export function getCurrentProjectHome() {
   const cds = cwdRequireCDS();
-  return cds.options.project ?? cds.env._home ?? process.cwd()
+  return cds.options.project ?? cds.env._home ?? process.cwd();
 }
 
 /**
