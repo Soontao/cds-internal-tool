@@ -105,8 +105,8 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
     xpr(cxl: string): CXN;
     ref(cxl: string): ref;
   };
-  load(files: string): CSN;
-  load(files: Array<string>): CSN;
+  load(files: string, options?: any): CSN;
+  load(files: Array<string>, options?: any): CSN;
   /**
    * @see [cds.resolve](https://pages.github.tools.sap/cap/docs/node.js/cds-compile#cds-resolve)
    * @param paths 
