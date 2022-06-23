@@ -46,6 +46,7 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
 
   Event: typeof Event;
   Service: typeof Service;
+  EventContext: typeof EventContext;
   ApplicationService: typeof ApplicationService;
   MessagingService: typeof MessagingService;
   AuditLogService: typeof AuditLogService;
@@ -82,11 +83,14 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   /**
    * Reference to the current root event or request, which acts as invocation context, providing access to the current tenant and user information, and also constitutes the transaction boundary for automatically managed transactions.
    */
-  get context(): EventContext;
+  get context(): EventContext | undefined;
   /**
    * set cds context
+   * 
+   * NOTE: set `undefined` value to clear current context (avoid context inherit)
+   * 
    */
-  set context(ctx: { tenant?: string, user: User | string });
+  set context(ctx: { tenant?: string, user: User | string } | undefined);
   server: (options: any) => any;
   utils: {
     /**

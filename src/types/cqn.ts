@@ -1,10 +1,10 @@
 import { expr, ref, xpr, _xpr } from "./cxn";
 
 export type CQN = {
-  SELECT: SELECT,
-  INSERT: INSERT,
-  UPDATE: UPDATE,
-  DELETE: DELETE,
+  SELECT?: SELECT,
+  INSERT?: INSERT,
+  UPDATE?: UPDATE,
+  DELETE?: DELETE,
 }
 
 export type Query = SELECT | INSERT | UPDATE | DELETE | CREATE | DROP

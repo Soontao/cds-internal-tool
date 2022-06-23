@@ -185,7 +185,6 @@ export declare class ApplicationService extends Service {
  */
 export declare class DatabaseService extends Service { }
 
-
 export declare class RemoteService extends Service { }
 
 export declare class OutboxService extends Service { }

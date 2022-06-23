@@ -3,6 +3,9 @@
 import * as CQN from "./cqn";
 import { Definition } from "./reflect";
 
+/**
+ * Query Object with fluent API
+ */
 export type QueryObject = SELECT | INSERT | UPDATE | DELETE | CREATE | DROP;
 
 export declare class PromiseLike {

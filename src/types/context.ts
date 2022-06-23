@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { User } from "./auth";
+import { QueryObject } from "./ql";
 import { CQN, Definition } from "./reflect";
 
 export declare class EventContext {
@@ -23,7 +24,7 @@ export declare class EventContext {
 
   locale: string;
 
-  timestamp: Date;
+  get timestamp(): Date;
 
   on(event: "succeeded" | "failed" | "done", cb: Function): void
 
@@ -63,7 +64,7 @@ export declare class Request<DATA = any> extends Event<DATA> {
 
   method: string;
 
-  target: Definition;
+  target?: Definition;
 
   /**
    * Captures the full cannibalized path information of incoming requests with navigation. '
@@ -75,7 +76,7 @@ export declare class Request<DATA = any> extends Event<DATA> {
 
   params: Iterable<any>;
 
-  query: CQN;
+  query: QueryObject | CQN | string | Array<QueryObject>;
 
   reply(results: any): void;
 
@@ -115,4 +116,5 @@ export declare class Request<DATA = any> extends Event<DATA> {
    * @param data 
    */
   diff(data?: any): Promise<any>
+  
 }
