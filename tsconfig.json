@@ -3,7 +3,5 @@
   "include": [
     "src",
   ],
-  "exclude": [
-    "commitlint.config.js"
-  ]
+  "exclude": []
 }
