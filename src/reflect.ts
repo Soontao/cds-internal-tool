@@ -19,10 +19,12 @@ const findElement = memorized(function findElement(struct: WithElements, name: s
   if (struct?.elements !== undefined) {
     const iName = normalizeIdentifier(name);
     for (const [elementName, elementDef] of Object.entries(struct.elements)) {
+      // if the element is a complex structure, and the input name is start with the element name
       if (elementDef?.elements !== undefined && iName.startsWith(normalizeIdentifier(elementName))) {
         const innerElement = findElement(elementDef as unknown as WithElements, iName.substring(elementName.length))
         if (innerElement !== undefined) { return innerElement }
       }
+      // if the element is a plain cds.type
       else {
         if (normalizeIdentifier(elementName) === iName) {
           return struct.elements[elementName];
@@ -32,65 +34,74 @@ const findElement = memorized(function findElement(struct: WithElements, name: s
   }
 })
 
-const find = memorized((
-  kind: "entity" | "action" | "function" | "event" | "service",
-  name: string,
-  model?: LinkedModel
-) => {
-  model = model ?? cwdRequireCDS().model;
+/**
+ * find def by filter
+ * 
+ * @param kind 
+ * @param name 
+ * @param model the model, for multi-tenancy, the object should be different
+ * @returns 
+ */
+const find = memorized(
+  (
+    kind: "entity" | "action" | "function" | "event" | "service",
+    name: string,
+    model?: LinkedModel
+  ) => {
+    model = model ?? cwdRequireCDS().model;
 
-  // if exact equal
-  if (model.definitions[name] !== undefined && model.definitions[name].kind === kind) {
-    return model.definitions[name];
-  }
+    // if exact equal
+    if (model.definitions[name] !== undefined && model.definitions[name].kind === kind) {
+      return model.definitions[name];
+    }
 
-  const iName = normalizeIdentifier(name);
-  const defs = Object.values(model.definitions).filter(def => def.kind === kind);
+    const iName = normalizeIdentifier(name);
+    const defs = Object.values(model.definitions).filter(def => def.kind === kind);
 
-  // find bounded action/function
-  if (kind === "action" || kind === "function") {
-    const entities = Object.values(model.definitions).filter(def => def.kind === "entity") as Array<EntityDefinition>;
-    for (const entity of Object.values(entities)) {
-      const entityName = entity.name;
-      const actions = Object.values(entity?.actions ?? []);
-      for (const action of actions.filter(a => a.kind === kind)) {
-        const actionName = `${entityName}.${action.name}`;
-        if (iName === normalizeIdentifier(actionName)) {
-          return action;
+    // find bounded action/function
+    if (kind === "action" || kind === "function") {
+      const entities = Object.values(model.definitions).filter(def => def.kind === "entity") as Array<EntityDefinition>;
+      for (const entity of Object.values(entities)) {
+        const entityName = entity.name;
+        const actions = Object.values(entity?.actions ?? []);
+        for (const action of actions.filter(a => a.kind === kind)) {
+          const actionName = `${entityName}.${action.name}`;
+          if (iName === normalizeIdentifier(actionName)) {
+            return action;
+          }
         }
       }
     }
-  }
 
-  // find with full namespace
-  for (const def of defs) {
-    if (iName === normalizeIdentifier(def.name)) {
-      return def;
+    // find with full namespace
+    for (const def of defs) {
+      if (iName === normalizeIdentifier(def.name)) {
+        return def;
+      }
     }
-  }
 
-  // find without namespace
-  for (const def of defs) {
-    if (normalizeIdentifier(def.name).endsWith(iName)) {
-      return def;
+    // find without namespace
+    for (const def of defs) {
+      if (normalizeIdentifier(def.name).endsWith(iName)) {
+        return def;
+      }
     }
-  }
 
-  // find bounded action/function without namespace
-  if (kind === "action" || kind === "function") {
-    const entities = Object.values(model.definitions).filter(def => def.kind === "entity") as Array<EntityDefinition>;
-    for (const entity of Object.values(entities)) {
-      const entityName = entity.name;
-      const actions = Object.values(entity?.actions ?? []);
-      for (const action of actions.filter(a => a.kind === kind)) {
-        const actionName = `${entityName}.${action.name}`;
-        if (normalizeIdentifier(actionName).endsWith(iName)) {
-          return action;
+    // find bounded action/function without namespace
+    if (kind === "action" || kind === "function") {
+      const entities = Object.values(model.definitions).filter(def => def.kind === "entity") as Array<EntityDefinition>;
+      for (const entity of Object.values(entities)) {
+        const entityName = entity.name;
+        const actions = Object.values(entity?.actions ?? []);
+        for (const action of actions.filter(a => a.kind === kind)) {
+          const actionName = `${entityName}.${action.name}`;
+          if (normalizeIdentifier(actionName).endsWith(iName)) {
+            return action;
+          }
         }
       }
     }
-  }
-}, 3, 10240);
+  }, 3, 10240);
 
 /**
  * fuzzy utils for cds reflection
