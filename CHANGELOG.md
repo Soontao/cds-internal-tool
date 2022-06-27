@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/Soontao/cds-internal-tool/compare/v1.2.0...v1.2.1) (2022-06-27)
+
+
+### Features
+
+* better find element ([185eab2](https://github.com/Soontao/cds-internal-tool/commit/185eab293a99afc12e175c2acf09d85259d6555f))
+
 ## [1.2.0](https://github.com/Soontao/cds-internal-tool/compare/v1.1.2...v1.2.0) (2022-06-23)
 
 
