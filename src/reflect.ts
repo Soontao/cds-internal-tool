@@ -1,8 +1,10 @@
 /* eslint-disable max-len */
-import { EntityDefinition, LinkedModel } from "./types";
+import { ElementDefinition, EntityDefinition, LinkedModel } from "./types";
 import { cwdRequireCDS, memorized } from "./utils";
 
 const REP_REG = /[-_\.]/g;
+
+type WithElements = { elements: { [key: string]: ElementDefinition } };
 
 /**
  * ignore underscore and dot and uppercase char
@@ -11,6 +13,24 @@ const REP_REG = /[-_\.]/g;
  * @returns 
  */
 function normalizeIdentifier(n: string) { return n.replace(REP_REG, "").toLowerCase(); }
+
+// TODO: test with deep struct
+const findElement = memorized(function findElement(struct: WithElements, name: string): ElementDefinition | undefined {
+  if (struct?.elements !== undefined) {
+    const iName = normalizeIdentifier(name);
+    for (const [elementName, elementDef] of Object.entries(struct.elements)) {
+      if (elementDef?.elements !== undefined && iName.startsWith(normalizeIdentifier(elementName))) {
+        const innerElement = findElement(elementDef as unknown as WithElements, iName.substring(elementName.length))
+        if (innerElement !== undefined) { return innerElement }
+      }
+      else {
+        if (normalizeIdentifier(elementName) === iName) {
+          return struct.elements[elementName];
+        }
+      }
+    }
+  }
+})
 
 const find = memorized((
   kind: "entity" | "action" | "function" | "event" | "service",
@@ -120,17 +140,7 @@ export const fuzzy = {
    * @param name 
    * @returns 
    */
-  findElement(entityDef: EntityDefinition, name: string) {
-    if (entityDef.kind === "entity") {
-      const iName = normalizeIdentifier(name);
-      for (const elementName of Object.keys(entityDef.elements)) {
-        if (normalizeIdentifier(elementName) === iName) {
-          return entityDef.elements[elementName];
-        }
-      }
-    }
-  }
+  findElement: findElement
 };
-
 
 

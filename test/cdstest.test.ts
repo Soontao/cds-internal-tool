@@ -3,8 +3,6 @@ import path from "path";
 import { fuzzy } from "../src";
 import { cdsProjectRequire, cwdRequire, cwdRequireCDS, getDefinitionBaseDir, getDefinitionPath, setupTest } from "../src/utils";
 
-
-
 describe("CDS setupTest Suite", () => {
 
   const axios = setupTest(__dirname, "./app");

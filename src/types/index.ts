@@ -6,6 +6,7 @@
 
 import type EventEmitter from "events";
 import { User } from "./auth";
+import { builtin } from "./builtin";
 import { connect } from "./connect";
 import { Event, EventContext, Request } from "./context";
 import { ref } from "./cxn";
@@ -15,6 +16,7 @@ import { CQN, CSN, CXN, LinkedCSN } from "./reflect";
 import { ApplicationService, AuditLogService, DatabaseService, MessagingService, RemoteService, Service } from "./service";
 import { TestFacade } from "./test";
 import { TransactionMix } from "./transaction";
+
 
 
 export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" | "delete" | "insert"> {
@@ -28,7 +30,7 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
    * @sap/cds home directory
    */
   home: string;
-  builtin: any;
+  builtin: builtin;
   version: string;
   env: {
     [key: string]: any;
