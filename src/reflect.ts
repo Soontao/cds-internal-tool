@@ -14,21 +14,12 @@ type WithElements = { elements: { [key: string]: ElementDefinition } };
  */
 function normalizeIdentifier(n: string) { return n.replace(REP_REG, "").toLowerCase(); }
 
-// TODO: test with deep struct
 const findElement = memorized(function findElement(struct: WithElements, name: string): ElementDefinition | undefined {
   if (struct?.elements !== undefined) {
     const iName = normalizeIdentifier(name);
     for (const [elementName, elementDef] of Object.entries(struct.elements)) {
-      // if the element is a complex structure, and the input name is start with the element name
-      if (elementDef?.elements !== undefined && iName.startsWith(normalizeIdentifier(elementName))) {
-        const innerElement = findElement(elementDef as unknown as WithElements, iName.substring(elementName.length))
-        if (innerElement !== undefined) { return innerElement }
-      }
-      // if the element is a plain cds.type
-      else {
-        if (normalizeIdentifier(elementName) === iName) {
-          return struct.elements[elementName];
-        }
+      if (normalizeIdentifier(elementName) === iName) {
+        return elementDef
       }
     }
   }
@@ -48,7 +39,9 @@ const find = memorized(
     name: string,
     model?: LinkedModel
   ) => {
-    model = model ?? cwdRequireCDS().model;
+    const cds = cwdRequireCDS()
+    model = model ?? cds.model;
+    // TODO: if the model is plain CSN, convert it to LinkedCSN
 
     // if exact equal
     if (model.definitions[name] !== undefined && model.definitions[name].kind === kind) {
