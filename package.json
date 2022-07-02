@@ -51,6 +51,6 @@
     "@types/express": "^4.17.13"
   },
   "overrides": {
-    "@sap/xsenv": "3.2.0"
+    "@sap/xsenv": "3.3.2"
   }
 }
