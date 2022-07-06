@@ -1,7 +1,15 @@
 /* eslint-disable max-len */
+// @ts-nocheck
 import path from "path";
 import { fuzzy } from "../src";
-import { cdsProjectRequire, cwdRequire, cwdRequireCDS, getDefinitionBaseDir, getDefinitionPath, setupTest } from "../src/utils";
+import {
+  cdsProjectRequire,
+  cwdRequire,
+  cwdRequireCDS,
+  getDefinitionBaseDir,
+  getDefinitionPath,
+  setupTest
+} from "../src/utils";
 
 describe("CDS setupTest Suite", () => {
 
@@ -62,26 +70,26 @@ describe("CDS setupTest Suite", () => {
 
   it("should support get definition location (service)", () => {
     expect(getDefinitionPath(cds.services["test.app.srv.MyService"].definition))
-      .toBe(path.join(cds.options.project, "srv/demo.cds"));
+      .toBe(path.join(cds.root, "srv/demo.cds"));
     expect(getDefinitionPath(cds.services["test.app.srv.MyService"]))
-      .toBe(path.join(cds.options.project, "srv/demo.cds"));
+      .toBe(path.join(cds.root, "srv/demo.cds"));
   });
 
   it("should support get definition location (entity)", () => {
     expect(getDefinitionPath(cds.services["test.app.srv.MyService"].entities["Foo"]))
-      .toBe(path.join(cds.options.project, "srv/demo.cds"));
+      .toBe(path.join(cds.root, "srv/demo.cds"));
   });
 
 
 
   it("should support get definition location (operations)", () => {
     expect(getDefinitionPath(cds.services["test.app.srv.MyService"].operations["addFoo"]))
-      .toBe(path.join(cds.options.project, "srv/demo.cds"));
+      .toBe(path.join(cds.root, "srv/demo.cds"));
   });
 
   it("should support get definition dir (operations)", () => {
     expect(getDefinitionBaseDir(cds.services["test.app.srv.MyService"].operations["addFoo"]))
-      .toBe(path.join(cds.options.project, "srv"));
+      .toBe(path.join(cds.root, "srv"));
   });
 
   it("should support cwdRequire for target definition", () => {

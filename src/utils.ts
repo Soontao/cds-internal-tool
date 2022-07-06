@@ -131,10 +131,8 @@ export const cwdRequireCDS = (): CDS => require(require.resolve("@sap/cds", { pa
  * @returns 
  */
 export const cdsProjectRequire = (mName: string) => require(
-  require.resolve(mName, { paths: [cwdRequireCDS()?.options?.project ?? process.cwd()] })
+  require.resolve(mName, { paths: [cwdRequireCDS()?.root ?? process.cwd()] })
 );
-
-
 
 /**
  * `hyper` memorized function, make it support multi parameters function

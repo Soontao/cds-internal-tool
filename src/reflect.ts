@@ -19,11 +19,11 @@ const findElement = memorized(function findElement(struct: WithElements, name: s
     const iName = normalizeIdentifier(name);
     for (const [elementName, elementDef] of Object.entries(struct.elements)) {
       if (normalizeIdentifier(elementName) === iName) {
-        return elementDef
+        return elementDef;
       }
     }
   }
-})
+});
 
 /**
  * find def by filter
@@ -39,7 +39,7 @@ const find = memorized(
     name: string,
     model?: LinkedModel
   ) => {
-    const cds = cwdRequireCDS()
+    const cds = cwdRequireCDS();
     model = model ?? cds.model;
     // TODO: if the model is plain CSN, convert it to LinkedCSN
 
