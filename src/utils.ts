@@ -76,6 +76,8 @@ export function defaultStringOrNull(...args: Array<any>) {
  * 
  * the instance will not throw error when status is not 2xx
  * 
+ * NOTICE: you need manually install `axios` as dep dependency
+ * 
  * @param path 
  * @returns axios instance (without status check)
  */
