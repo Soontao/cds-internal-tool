@@ -102,20 +102,20 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   };
   compile: Function & {
     for: {
-      odata(csn: CSN, options: any): any;
-      drafts(csn: CSN, options: any): any;
-      sql(csn: CSN, options: any): any;
-      java(csn: CSN, options: any): any;
-      nodejs(csn: CSN, options: any): LinkedCSN;
+      odata(csn: CSN, options?: any): any;
+      drafts(csn: CSN, options?: any): any;
+      sql(csn: CSN, options?: any): any;
+      java(csn: CSN, options?: any): any;
+      nodejs(csn: CSN, options?: any): LinkedCSN;
     }
     to: {
       json(csn: CSN): any;
       yaml(csn: CSN): any;
-      edm(csn: CSN, options: any): any;
-      edmx(csn: CSN, options: any): any;
+      edm(csn: CSN, options?: any): any;
+      edmx(csn: CSN, options?: any): any;
       hdbtable(csn: CSN): any;
       hdbcds(csn: CSN): any;
-      sql(csn: CSN, options: any): any;
+      sql(csn: CSN, options?: any): any;
     }
   };
   parse: {
