@@ -1,6 +1,3 @@
-// ref: https://stackoverflow.com/a/46432113/4380476
-// Author: odinho - Velmont
-
 /**
  * LRU (Least Recently Used) Map implementation
  */
