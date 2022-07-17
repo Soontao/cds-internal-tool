@@ -1,10 +1,15 @@
 import { expr, ref, xpr, _xpr } from "./cxn";
 
+/**
+ * CDS Query Notation
+ */
 export type CQN = {
   SELECT?: SELECT,
   INSERT?: INSERT,
   UPDATE?: UPDATE,
   DELETE?: DELETE,
+  CREATE?: CREATE,
+  DROP?: DROP,
 }
 
 export type Query = SELECT | INSERT | UPDATE | DELETE | CREATE | DROP
