@@ -18,8 +18,8 @@ describe("Utils Test Suite", () => {
   it('should support "get"', async () => {
     const o1 = { a: [{ b: 1 }] };
     expect(utils.get(o1, "a.0.b")).toBe(1);
-    expect(utils.get(o1, ['a', 0, 'b'])).toBe(1);
-    expect(utils.get(o1, ['a', '0', 'b'])).toBe(1);
+    expect(utils.get(o1, ["a", 0, "b"])).toBe(1);
+    expect(utils.get(o1, ["a", "0", "b"])).toBe(1);
     expect(utils.get(o1, "a")).toBe(o1.a);
     // @ts-ignore
     expect(utils.get(o1, undefined)).toBe(o1);
@@ -60,19 +60,19 @@ describe("Utils Test Suite", () => {
     expect(mf1(k1)).toBe(1);
     expect(mf1(k1)).toBe(1);
     expect(mf1(k1)).toBe(1);
-    expect(f1).toBeCalledTimes(1);
+    expect(f1).toHaveBeenCalledTimes(1);
 
     // support clear cache
     mf1.clear();
     expect(mf1(k1)).toBe(1);
-    expect(f1).toBeCalledTimes(2);
+    expect(f1).toHaveBeenCalledTimes(2);
     expect(mf1.caches.get(k1)).toBe(1);
 
     expect(mf2(k2)).toBe(2);
     expect(mf2(k2)).toBe(2);
     expect(mf2(k2)).toBe(2);
     expect(mf2(k2)).toBe(2);
-    expect(f2).toBeCalledTimes(1);
+    expect(f2).toHaveBeenCalledTimes(1);
 
     expect(() => mf1(k1, k2)).toThrow("change the number of parameters");
 
@@ -92,23 +92,23 @@ describe("Utils Test Suite", () => {
     expect(mf1(k1, k2)).toBe(1);
     expect(mf1(k1, k2)).toBe(1);
     expect(mf1(k1, k2)).toBe(1);
-    expect(f1).toBeCalledTimes(1);
+    expect(f1).toHaveBeenCalledTimes(1);
 
     // support clear cache
     mf1.clear();
     expect(mf1(k1, k2)).toBe(1);
-    expect(f1).toBeCalledTimes(2);
+    expect(f1).toHaveBeenCalledTimes(2);
     expect(mf1.caches.get(k1).get(k2)).toBe(1);
 
     expect(mf2(k2, k1)).toBe(2);
     expect(mf2(k2, k1)).toBe(2);
     expect(mf2(k2, k1)).toBe(2);
     expect(mf2(k2, k1)).toBe(2);
-    expect(f2).toBeCalledTimes(1);
+    expect(f2).toHaveBeenCalledTimes(1);
 
     expect(mf2(k2, {})).toBe(2);
     expect(mf2(k2, {})).toBe(2);
-    expect(f2).toBeCalledTimes(3);
+    expect(f2).toHaveBeenCalledTimes(3);
 
     expect(() => mf1(k2, 1, 2)).toThrow("change the number of parameters");
   });

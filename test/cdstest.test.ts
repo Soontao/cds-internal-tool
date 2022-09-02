@@ -51,8 +51,8 @@ describe("CDS setupTest Suite", () => {
     expect(fuzzy.findElement(FooDef, "ageNew")).toBe(FooDef.elements["age_new"]);
     expect(fuzzy.findElement(FooDef, "height2")).toBe(FooDef.elements["height_2"]);
 
-    expect(fuzzy.findElement(FooDef, "s2_s2")).not.toBeUndefined()
-    expect(fuzzy.findElement(FooDef, "s2_s1_v1")).not.toBeUndefined()
+    expect(fuzzy.findElement(FooDef, "s2_s2")).not.toBeUndefined();
+    expect(fuzzy.findElement(FooDef, "s2_s1_v1")).not.toBeUndefined();
 
     expect(fuzzy.findService("my_service")).toBe(MyService);
     expect(fuzzy.findService("MyService")).toBe(MyService);

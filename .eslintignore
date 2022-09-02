@@ -2,3 +2,5 @@ lib
 commitlint.config.js
 node_modules
 jest.config.js
+*.json
+test
