@@ -44,6 +44,8 @@ describe("CDS setupTest Suite", () => {
     expect(FooDef).not.toBeUndefined();
     expect(fuzzy.findEntity("Foo")).toBe(FooDef);
     expect(fuzzy.findEntity("testAppSrvMyServiceFoo")).toBe(FooDef);
+    // support draft table find entity
+    expect(fuzzy.findEntity("IndexService_Person_drafts")).toBe(model.definitions['IndexService.Person']);
     expect(fuzzy.findEvent("Sub")).toBe(SubEvtDef);
 
     expect(fuzzy.findElement(FooDef, "Age")).toBe(FooDef.elements["age"]);

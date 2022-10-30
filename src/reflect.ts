@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { ElementDefinition, EntityDefinition, LinkedModel } from "./types";
+import { Definition, ElementDefinition, EntityDefinition, LinkedModel } from "./types";
 import { cwdRequireCDS, memorized } from "./utils";
 
 const REP_REG = /[-_\.]/g;
@@ -38,7 +38,15 @@ const find = memorized(
     kind: "entity" | "action" | "function" | "event" | "service",
     name: string,
     model?: LinkedModel
-  ) => {
+  ): Definition | undefined => {
+
+    if (name.endsWith("_drafts")) {
+      const def = find(kind, name.substring(0, name.length - 7), model);
+      if (def !== undefined) {
+        return def;
+      }
+    }
+
     const cds = cwdRequireCDS();
     model = model ?? cds.model;
     // TODO: if the model is plain CSN, convert it to LinkedCSN
@@ -66,6 +74,7 @@ const find = memorized(
       }
     }
 
+
     // find with full namespace
     for (const def of defs) {
       if (iName === normalizeIdentifier(def.name)) {
@@ -74,6 +83,12 @@ const find = memorized(
     }
 
     // find without namespace
+    for (const def of defs) {
+      if (normalizeIdentifier(def.name).endsWith(iName)) {
+        return def;
+      }
+    }
+
     for (const def of defs) {
       if (normalizeIdentifier(def.name).endsWith(iName)) {
         return def;

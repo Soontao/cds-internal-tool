@@ -9,4 +9,10 @@ service IndexService {
     Age  : Integer;
   }
 
+  @odata.draft.enabled : true
+  entity Person : cuid {
+    Name : String(255);
+    Age  : Integer;
+  }
+
 }
