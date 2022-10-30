@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/Soontao/cds-internal-tool/compare/v1.4.1...v1.5.0) (2022-10-30)
+
+
+### Features
+
+* support find entity for draft table ([3736973](https://github.com/Soontao/cds-internal-tool/commit/37369738796d4bde7038530b47f4f2fc6dac4069))
+
 ### [1.4.1](https://github.com/Soontao/cds-internal-tool/compare/v1.4.0...v1.4.1) (2022-10-07)
 
 ## [1.4.0](https://github.com/Soontao/cds-internal-tool/compare/v1.3.0...v1.4.0) (2022-07-17)
