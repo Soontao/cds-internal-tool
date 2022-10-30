@@ -89,12 +89,6 @@ const find = memorized(
       }
     }
 
-    for (const def of defs) {
-      if (normalizeIdentifier(def.name).endsWith(iName)) {
-        return def;
-      }
-    }
-
     // find bounded action/function without namespace
     if (kind === "action" || kind === "function") {
       const entities = Object.values(model.definitions).filter(def => def.kind === "entity") as Array<EntityDefinition>;
