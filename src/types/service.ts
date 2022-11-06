@@ -17,9 +17,9 @@ export type AnyEvent = "*"
 
 export type NextFunction<T = any> = () => Promise<T>;
 
-export type OnEventHandler = <T = any>(req: Request<T>, next: NextFunction<T>) => Promise<any> | any
-export type BeforeEventHandler = <T = any>(req: Request<T>) => Promise<any> | any
-export type AfterEventHandler = <T = any>(data: T, req: Request<T>) => Promise<any> | any
+export type OnEventHandler<THIS> = <T = any>(this: THIS, req: Request<T>, next: NextFunction<T>) => Promise<any> | any
+export type BeforeEventHandler<THIS> = <T = any>(this: THIS, req: Request<T>) => Promise<any> | any
+export type AfterEventHandler<THIS> = <T = any>(this: THIS, data: T, req: Request<T>) => Promise<any> | any
 
 
 type DefinitionContext<T extends Definition> = { [entityName: string]: T } & Iterable<T>;
@@ -148,17 +148,17 @@ export declare class Service {
 
   // >>> register handlers
 
-  before(event: EventNames, handler: BeforeEventHandler): void;
+  before(event: EventNames, handler: BeforeEventHandler<this>): void;
 
-  before(event: EventNames, entity: Entities, handler: BeforeEventHandler): void;
+  before(event: EventNames, entity: Entities, handler: BeforeEventHandler<this>): void;
 
-  on(event: EventNames, handler: OnEventHandler): void;
+  on(event: EventNames, handler: OnEventHandler<this>): void;
 
-  on(event: EventNames, entity: Entities, handler: OnEventHandler): void;
+  on(event: EventNames, entity: Entities, handler: OnEventHandler<this>): void;
 
-  after(event: EventNames, handler: AfterEventHandler): void;
+  after(event: EventNames, handler: AfterEventHandler<this>): void;
 
-  after(event: EventNames, entity: Entities, handler: AfterEventHandler): void;
+  after(event: EventNames, entity: Entities, handler: AfterEventHandler<this>): void;
 
   /**
    * Registers a generic handler that automatically rejects incoming request with a standard error message. 

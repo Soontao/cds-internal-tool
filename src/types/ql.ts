@@ -64,6 +64,10 @@ export declare class SELECT<T = any> extends PromiseLike {
 
   limit(rows: number, offset?: number): this
 
+  forSharedLock(): this
+
+  forUpdate(): this
+
   SELECT: CQN.SELECT;
 }
 
