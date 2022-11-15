@@ -66,7 +66,7 @@ export declare class SELECT<T = any> extends PromiseLike {
 
   forSharedLock(): this
 
-  forUpdate(): this
+  forUpdate(options?: { wait: number }): this
 
   SELECT: CQN.SELECT;
 }
