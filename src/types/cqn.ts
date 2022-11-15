@@ -12,7 +12,7 @@ export type CQN = {
   DROP?: DROP,
 }
 
-export type Query = SELECT | INSERT | UPDATE | DELETE | CREATE | DROP
+export type Query = Partial<SELECT & INSERT & UPDATE & DELETE & CREATE & DROP>
 
 export type ParsedExpr = expr & { _: string }
 
