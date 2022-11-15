@@ -116,16 +116,19 @@ export declare class Service {
 
   tx<T = any>(cb?: (tx: this & TransactionMix) => Promise<T>): this & TransactionMix & Promise<T>;
 
-  tx<T = any>(context: Partial<EventContext>, cb?: (tx: this & TransactionMix) => Promise<T>): this & TransactionMix & Promise<T>;
+  tx<T = any>(
+    context: Partial<EventContext>,
+    cb?: (tx: this & TransactionMix) => Promise<T>
+  ): this & TransactionMix & Promise<T>;
 
   // >>> query API
 
   run(query: CQN): Promise<any>;
 
   run(query: QueryObject): Promise<any>;
-  
+
   run(query: string): Promise<any>;
-  
+
   run(query: any): Promise<any>;
 
   read(entity: Definition | string, key?: any, projection?: any): QueryObject;
