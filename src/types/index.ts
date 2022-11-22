@@ -79,6 +79,13 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   error(msg: string, options?: any): Error;
   error(options: {message: string, [param: string]: string}): Error;
 
+  /**
+   * shortcut of `cds.log().debug`, if debug is not enabled, the result is undefined
+   * 
+   * @param module 
+   */
+  debug(module: string): Logger['debug'] | undefined;
+
   connect: connect;
 
   serve(service: string, options: any): any;
