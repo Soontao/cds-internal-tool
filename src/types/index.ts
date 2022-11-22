@@ -38,6 +38,12 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
      * project home
      */
     _home?: string;
+    /**
+     * safe get
+     * 
+     * @param prop prop name 
+     */
+    get(prop: string): any;
   };
   requires: any;
   app: import("express").Application;
@@ -68,8 +74,10 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   on(event: "connect", cb: (service: Service) => any): void;
   on(event: "subscribe", cb: (service: Service, event: string) => any): void;
 
-
   log(module: string): Logger;
+  
+  error(msg: string, options?: any): Error;
+  error(options: {message: string, [param: string]: string}): Error;
 
   connect: connect;
 
