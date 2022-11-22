@@ -64,8 +64,16 @@ export declare class SELECT<T = any> extends PromiseLike {
 
   limit(rows: number, offset?: number): this
 
-  forSharedLock(): this
+  /**
+   * Locks the selected rows in the current transaction, thereby preventing concurrent updates by other parallel transactions, until the transaction is committed or rolled back. 
+   * Using a shared lock allows all transactions to read the locked record.
+   */
+  forShareLock(): this
 
+  /**
+   * Exclusively locks the selected rows for subsequent updates in the current transaction, thereby preventing concurrent updates by other parallel transactions.
+   * @param options 
+   */
   forUpdate(options?: { wait: number }): this
 
   SELECT: CQN.SELECT;
