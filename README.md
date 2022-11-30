@@ -14,7 +14,6 @@
 - [x] module resolution
 - [x] reflect utils
 - [x] type checker and assertion
-- [ ] option name adapter
 
 ## [CHANGELOG](./CHANGELOG.md)
 
