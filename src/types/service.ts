@@ -155,9 +155,9 @@ export declare class Service<E = any, O = DefaultServiceOptions> {
 
   stream(column: string): { from: (entity: Definition | string) => { where: (filter: any) => Readable } };
 
-  foreach<ITEM_TYPE = any>(entity: Definition | string, cb: (each: ITEM_TYPE) => void): Promise<void>
+  foreach<ITEM_TYPE = any>(entityOrQuery: Definition | string | QueryObject, cb: (each: ITEM_TYPE) => void): Promise<void>
 
-  foreach<ITEM_TYPE = any>(entity: Definition | string, args: Array<any>, cb: (each: ITEM_TYPE) => void): Promise<void>
+  foreach<ITEM_TYPE = any>(entityOrQuery: Definition | string | QueryObject, args: Array<any>, cb: (each: ITEM_TYPE) => void): Promise<void>
 
 
   // >>> register handlers
