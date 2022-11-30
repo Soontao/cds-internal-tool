@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/ban-types */
 import { Readable } from "stream";
 import { EventContext, Request } from "./context";
@@ -7,6 +9,7 @@ import { TransactionMix } from "./transaction";
 
 export type EventHook = "before" | "on" | "after"
 
+export type ExtendedEventNames<T> = EventName | T | (EventName | T)[]
 export type EventNames = EventName | EventName[]
 export type EventName = (CRUD | TX | HTTP | DRAFT | AnyEvent)
 export type CRUD = "CREATE" | "READ" | "UPDATE" | "DELETE"
@@ -24,26 +27,30 @@ export type AfterEventHandler<THIS> = <T = any>(this: THIS, data: T, req: Reques
 
 type DefinitionContext<T extends Definition> = { [entityName: string]: T } & Iterable<T>;
 type DefinitionProperty<T extends Definition> = DefinitionContext<T> & ((namespace?: string) => DefinitionContext<T>)
+
 export interface ServiceImplFunc {
   (this: Service, srv: Service): any
 }
+
+export interface DefaultServiceOptions {
+  kind: String
+  impl: String | ServiceImplFunc
+}
+
 /**
  * cds service
  */
-export declare class Service {
+export declare class Service<E = any, O = DefaultServiceOptions> {
 
   constructor(
     name?: String,
     model?: CSN,
-    options?: {
-      kind: String
-      impl: String | ServiceImplFunc
-    }
+    options?: O
   )
 
   kind: string;
 
-  options: any;
+  options: O;
 
   /**
    * The service’s name, that means, the definition’s name for services constructed with cds.serve, or the name of required services as passed to cds.connect.
@@ -148,29 +155,33 @@ export declare class Service {
 
   stream(column: string): { from: (entity: Definition | string) => { where: (filter: any) => Readable } };
 
+  foreach<ITEM_TYPE = any>(entity: Definition | string, cb: (each: ITEM_TYPE) => void): Promise<void>
+
   foreach<ITEM_TYPE = any>(entity: Definition | string, args: Array<any>, cb: (each: ITEM_TYPE) => void): Promise<void>
+
 
   // >>> register handlers
 
-  before(event: EventNames, handler: BeforeEventHandler<this>): void;
+  before(event: ExtendedEventNames<E>, handler: BeforeEventHandler<this>): void;
 
-  before(event: EventNames, entity: Entities, handler: BeforeEventHandler<this>): void;
+  before(event: ExtendedEventNames<E>, entity: Entities, handler: BeforeEventHandler<this>): void;
 
-  on(event: EventNames, handler: OnEventHandler<this>): void;
+  on(event: ExtendedEventNames<E>, handler: OnEventHandler<this>): void;
 
-  on(event: EventNames, entity: Entities, handler: OnEventHandler<this>): void;
+  on(event: ExtendedEventNames<E>, entity: Entities, handler: OnEventHandler<this>): void;
 
-  after(event: EventNames, handler: AfterEventHandler<this>): void;
+  after(event: ExtendedEventNames<E>, handler: AfterEventHandler<this>): void;
 
-  after(event: EventNames, entity: Entities, handler: AfterEventHandler<this>): void;
+  after(event: ExtendedEventNames<E>, entity: Entities, handler: AfterEventHandler<this>): void;
 
   /**
    * Registers a generic handler that automatically rejects incoming request with a standard error message. 
    * You can specify multiple events and entities.
+   * 
    * @param event 
    * @param entity 
    */
-  reject(event: EventNames, entity: Entities): void;
+  reject(event: ExtendedEventNames<E>, entity: Entities): void;
 }
 
 
@@ -179,11 +190,12 @@ export type Entities = string | Definition | Array<Entities>
 /**
  * cds application service
  */
-export declare class ApplicationService extends Service {
+export declare class ApplicationService<E = any, O = any> extends Service<E, O> {
   kind: "app-service";
 
   begin(): this;
 }
+
 /**
  * cds database service
  */
@@ -196,3 +208,18 @@ export declare class OutboxService extends Service { }
 export declare class AuditLogService extends OutboxService { }
 
 export declare class MessagingService extends OutboxService { }
+
+export declare class cds_xt_ModelProviderService extends ApplicationService<"getCsn" | "getEdmx" | "isExtended" | "getExtensions" | "getResources"> { }
+export declare class cds_xt_ExtensibilityService extends ApplicationService<"add" | "promote" | "base" | "push"> { }
+export declare class cds_xt_DeploymentService extends ApplicationService<"subscribe" | "upgrade" | "unsubscribe"> { }
+export declare class cds_xt_SaasProvisioningService extends ApplicationService<"upgrade"> { }
+
+export interface BuiltInServices {
+  db: DatabaseService,
+  "cds.xt.SaasProvisioningService": cds_xt_SaasProvisioningService,
+  "cds.xt.DeploymentService": cds_xt_DeploymentService,
+  "cds.xt.ExtensibilityService": cds_xt_ExtensibilityService,
+  "cds.xt.ModelProviderService": cds_xt_ModelProviderService,
+  "messaging": MessagingService,
+  "audit-log-service": AuditLogService,
+}

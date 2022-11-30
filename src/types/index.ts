@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 /* eslint-disable @typescript-eslint/ban-types */
@@ -13,7 +14,10 @@ import { ref } from "./cxn";
 import { Logger } from "./log";
 import { QL } from "./ql";
 import { CQN, CSN, CXN, LinkedCSN } from "./reflect";
-import { ApplicationService, AuditLogService, DatabaseService, MessagingService, RemoteService, Service } from "./service";
+import {
+  ApplicationService, AuditLogService,
+  BuiltInServices, DatabaseService, MessagingService, RemoteService, Service
+} from "./service";
 import { TestFacade } from "./test";
 import { TransactionMix } from "./transaction";
 
@@ -48,9 +52,9 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   requires: any;
   app: import("express").Application;
   services: {
-    [serviceName: string]: Service,
+    [serviceName: string]: Service | undefined,
     [Symbol.iterator](): Iterator<Service>;
-  };
+  } & Partial<BuiltInServices>;
 
   Event: typeof Event;
   Service: typeof Service;
@@ -75,16 +79,16 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   on(event: "subscribe", cb: (service: Service, event: string) => any): void;
 
   log(module: string): Logger;
-  
+
   error(msg: string, options?: any): Error;
-  error(options: {message: string, [param: string]: string}): Error;
+  error(options: { message: string, [param: string]: string }): Error;
 
   /**
    * shortcut of `cds.log().debug`, if debug is not enabled, the result is undefined
    * 
    * @param module 
    */
-  debug(module: string): Logger['debug'] | undefined;
+  debug(module: string): Logger["debug"] | undefined;
 
   connect: connect;
 
@@ -93,6 +97,7 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   model: LinkedCSN;
 
   reflect(csn: CSN): LinkedCSN;
+  linked(csn: CSN): LinkedCSN;
 
   test(project: string): { in: (...path: Array<string>) => TestFacade };
 
@@ -176,4 +181,3 @@ export * from "./reflect";
 export * from "./service";
 export * from "./test";
 export * from "./transaction";
-

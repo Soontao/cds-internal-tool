@@ -1,5 +1,9 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/indent */
+import { builtin } from "./builtin";
 import { expr } from "./cxn";
+
+export type Kind = "aspect" | "context" | "service" | "entity" | "type" | "action" | "function" | "annotation" | "element"
 
 export interface AssociationDefinition extends Definition {
   target: string;
@@ -56,7 +60,7 @@ export interface ServiceDefinition extends Definition {
 }
 
 export interface Definition {
-  kind: string;
+  kind: Kind;
   type: string;
   name: string;
   localized?: boolean;
@@ -65,11 +69,7 @@ export interface Definition {
 
 export type CXN = expr;
 
-export type CSN = any;
-
-export { CQN } from "./cqn";
-
-export declare class LinkedCSN {
+export declare class CSN {
 
   $version: string;
 
@@ -77,16 +77,45 @@ export declare class LinkedCSN {
     [key: string]: Definition;
   };
 
-  kind: "type";
+
 
   meta?: {
     creator?: string;
     flavor?: string;
   };
 
+}
+
+export { CQN } from "./cqn";
+
+type FilterFunction = (def: Definition) => boolean;
+type FilterValue = Kind | FilterFunction | builtin["classes"][keyof builtin["classes"]]
+
+export declare class LinkedCSN extends CSN {
+  
+  kind: "type";
+
   exports(ns: string): any;
 
   entities(ns?: string): { [key: string]: EntityDefinition };
+
+  events(ns?: string): { [key: string]: Definition };
+
+  operations(ns?: string): { [key: string]: Definition };
+
+  each(x?: FilterValue, defs?: typeof this.definitions): Iterator<Definition>;
+
+  all(x?: FilterValue, defs?: typeof this.definitions): Iterator<Definition>;
+
+  find(x: FilterValue, defs?: typeof this.definitions): Definition | undefined;
+
+  foreach(x: FilterValue, visitor: (def: Definition) => void, defs?: typeof this.definitions): Definition | undefined;
+
+  forall(x: FilterValue, visitor: (def: Definition) => void, defs?: typeof this.definitions): Definition | undefined;
+
+  forall(visitor: (def: Definition) => void, defs?: typeof this.definitions): Definition | undefined;
+
+  services: { [key: string]: ServiceDefinition };
 
 }
 

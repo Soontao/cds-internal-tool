@@ -5,9 +5,17 @@ export declare class User {
 
   id: string;
 
-  get _roles(): any;
-
   get attr(): any;
+
+  /**
+   * @deprecated
+   */
+  get tenant(): string;
+
+  /**
+   * @deprecated
+   */
+  get locale(): string
 
   is(role: string): boolean;
 
@@ -16,6 +24,13 @@ export declare class User {
   static Anonymous: typeof Anonymous;
 
   static Privileged: typeof Privileged;
+
+  static anonymous: Anonymous;
+
+  static privileged: Anonymous;
+
+  static default: Anonymous;
+
 
 }
 
