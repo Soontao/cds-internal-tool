@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/Soontao/cds-internal-tool/compare/v1.5.6...v1.6.0) (2022-11-30)
+
+
+### Features
+
+* better type ([164b5fd](https://github.com/Soontao/cds-internal-tool/commit/164b5fd061b75da5f2b96a75f75ee1ff45862f02))
+
 ### [1.5.6](https://github.com/Soontao/cds-internal-tool/compare/v1.5.5...v1.5.6) (2022-11-22)
 
 ### [1.5.5](https://github.com/Soontao/cds-internal-tool/compare/v1.5.4...v1.5.5) (2022-11-22)
