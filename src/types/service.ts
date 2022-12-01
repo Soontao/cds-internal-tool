@@ -211,7 +211,7 @@ export declare class MessagingService extends OutboxService { }
 
 export declare class cds_xt_ModelProviderService extends ApplicationService<"getCsn" | "getEdmx" | "isExtended" | "getExtensions" | "getResources"> { }
 export declare class cds_xt_ExtensibilityService extends ApplicationService<"add" | "promote" | "base" | "push"> { }
-export declare class cds_xt_DeploymentService extends ApplicationService<"subscribe" | "upgrade" | "unsubscribe"> { }
+export declare class cds_xt_DeploymentService extends ApplicationService<"subscribe" | "upgrade" | "unsubscribe"|"deploy"|"upgrade"| "extend"> { }
 export declare class cds_xt_SaasProvisioningService extends ApplicationService<"upgrade"> { }
 
 export interface BuiltInServices {
