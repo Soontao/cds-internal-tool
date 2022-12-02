@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/ban-types */
-import { Readable } from "stream";
+import type { Readable } from "stream";
 import { EventContext, Request } from "./context";
 import { QueryObject } from "./ql";
 import { CQN, CSN, Definition, EntityDefinition, LinkedCSN, ServiceDefinition } from "./reflect";
@@ -20,9 +20,21 @@ export type AnyEvent = "*"
 
 export type NextFunction<T = any> = () => Promise<T>;
 
-export type OnEventHandler<THIS> = <T = any>(this: THIS, req: Request<T>, next: NextFunction<T>) => Promise<any> | any
-export type BeforeEventHandler<THIS> = <T = any>(this: THIS, req: Request<T>) => Promise<any> | any
-export type AfterEventHandler<THIS> = <T = any>(this: THIS, data: T, req: Request<T>) => Promise<any> | any
+export interface OnEventHandler<THIS, DATA_TYPE = any, RETURN_TYPE = any> {
+  (this: THIS, req: Request<DATA_TYPE>, next: NextFunction<DATA_TYPE>): Promise<RETURN_TYPE>
+  (this: THIS, req: Request<DATA_TYPE>, next: NextFunction<RETURN_TYPE>): RETURN_TYPE
+  (this: THIS, req: Request<any>, next: NextFunction<any>): any
+}
+export interface BeforeEventHandler<THIS, DATA_TYPE = any, RETURN_TYPE = any> {
+  (this: THIS, req: Request<DATA_TYPE>): Promise<RETURN_TYPE>
+  (this: THIS, req: Request<DATA_TYPE>): RETURN_TYPE;
+  (this: THIS, req: Request<any>): any;
+}
+export interface AfterEventHandler<THIS, DATA_TYPE = any, RETURN_TYPE = any> {
+  (this: THIS, data: DATA_TYPE, req: Request<DATA_TYPE>): Promise<RETURN_TYPE>
+  (this: THIS, data: DATA_TYPE, req: Request<DATA_TYPE>): RETURN_TYPE
+  (this: THIS, data: DATA_TYPE, req: Request<DATA_TYPE>): any
+}
 
 
 type DefinitionContext<T extends Definition> = { [entityName: string]: T } & Iterable<T>;
@@ -211,7 +223,7 @@ export declare class MessagingService extends OutboxService { }
 
 export declare class cds_xt_ModelProviderService extends ApplicationService<"getCsn" | "getEdmx" | "isExtended" | "getExtensions" | "getResources"> { }
 export declare class cds_xt_ExtensibilityService extends ApplicationService<"add" | "promote" | "base" | "push"> { }
-export declare class cds_xt_DeploymentService extends ApplicationService<"subscribe" | "upgrade" | "unsubscribe"|"deploy"|"upgrade"| "extend"> { }
+export declare class cds_xt_DeploymentService extends ApplicationService<"subscribe" | "upgrade" | "unsubscribe" | "deploy" | "upgrade" | "extend"> { }
 export declare class cds_xt_SaasProvisioningService extends ApplicationService<"upgrade"> { }
 
 export interface BuiltInServices {
