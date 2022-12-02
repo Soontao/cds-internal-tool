@@ -20,20 +20,14 @@ export type AnyEvent = "*"
 
 export type NextFunction<T = any> = () => Promise<T>;
 
-export interface OnEventHandler<THIS, DATA_TYPE = any, RETURN_TYPE = any> {
-  (this: THIS, req: Request<DATA_TYPE>, next: NextFunction<DATA_TYPE>): Promise<RETURN_TYPE>
-  (this: THIS, req: Request<DATA_TYPE>, next: NextFunction<RETURN_TYPE>): RETURN_TYPE
-  (this: THIS, req: Request<any>, next: NextFunction<any>): any
+export interface OnEventHandler<THIS, DATA_TYPE, RETURN_TYPE> {
+  (this: THIS, req: Request<DATA_TYPE>, next: NextFunction<any>): Promise<RETURN_TYPE | any | void> | any | void
 }
-export interface BeforeEventHandler<THIS, DATA_TYPE = any, RETURN_TYPE = any> {
-  (this: THIS, req: Request<DATA_TYPE>): Promise<RETURN_TYPE>
-  (this: THIS, req: Request<DATA_TYPE>): RETURN_TYPE;
-  (this: THIS, req: Request<any>): any;
+export interface BeforeEventHandler<THIS, DATA_TYPE> {
+  (this: THIS, req: Request<DATA_TYPE>): Promise<any | void> | any | void;
 }
-export interface AfterEventHandler<THIS, DATA_TYPE = any, RETURN_TYPE = any> {
-  (this: THIS, data: DATA_TYPE, req: Request<DATA_TYPE>): Promise<RETURN_TYPE>
-  (this: THIS, data: DATA_TYPE, req: Request<DATA_TYPE>): RETURN_TYPE
-  (this: THIS, data: DATA_TYPE, req: Request<DATA_TYPE>): any
+export interface AfterEventHandler<THIS, DATA_TYPE> {
+  (this: THIS, data: DATA_TYPE, req: Request<any>): Promise<DATA_TYPE | any | void> | any | void;
 }
 
 
@@ -174,17 +168,17 @@ export declare class Service<E = EventName, O = DefaultServiceOptions> {
 
   // >>> register handlers
 
-  before(event: EventNames<E>, handler: BeforeEventHandler<this>): void;
+  before<DATA_TYPE = any>(event: EventNames<E>, handler: BeforeEventHandler<this, DATA_TYPE>): void;
 
-  before(event: EventNames<E>, entity: Entities, handler: BeforeEventHandler<this>): void;
+  before<DATA_TYPE = any>(event: EventNames<E>, entity: Entities, handler: BeforeEventHandler<this, DATA_TYPE>): void;
 
-  on(event: EventNames<E>, handler: OnEventHandler<this>): void;
+  on<DATA_TYPE = any, RETURN_TYPE = any>(event: EventNames<E>, handler: OnEventHandler<this, DATA_TYPE, RETURN_TYPE>): void;
 
-  on(event: EventNames<E>, entity: Entities, handler: OnEventHandler<this>): void;
+  on<DATA_TYPE = any, RETURN_TYPE = any>(event: EventNames<E>, entity: Entities, handler: OnEventHandler<this, DATA_TYPE, RETURN_TYPE>): void;
 
-  after(event: EventNames<E>, handler: AfterEventHandler<this>): void;
+  after<DATA_TYPE = any>(event: EventNames<E>, handler: AfterEventHandler<this, DATA_TYPE>): void;
 
-  after(event: EventNames<E>, entity: Entities, handler: AfterEventHandler<this>): void;
+  after<DATA_TYPE = any>(event: EventNames<E>, entity: Entities, handler: AfterEventHandler<this, DATA_TYPE>): void;
 
   /**
    * Registers a generic handler that automatically rejects incoming request with a standard error message. 
