@@ -9,8 +9,8 @@ import { TransactionMix } from "./transaction";
 
 export type EventHook = "before" | "on" | "after"
 
-export type ExtendedEventNames<T> = EventName | T | (EventName | T)[]
-export type EventNames = EventName | EventName[]
+export type EventNames<T = EventName> = T | T[]
+export type ExtendEventName<T> = EventName | T
 export type EventName = (CRUD | TX | HTTP | DRAFT | AnyEvent)
 export type CRUD = "CREATE" | "READ" | "UPDATE" | "DELETE"
 export type DRAFT = "NEW" | "EDIT" | "PATCH" | "SAVE"
@@ -52,7 +52,7 @@ export interface DefaultServiceOptions {
 /**
  * cds service
  */
-export declare class Service<E = any, O = DefaultServiceOptions> {
+export declare class Service<E = EventName, O = DefaultServiceOptions> {
 
   constructor(
     name?: String,
@@ -174,17 +174,17 @@ export declare class Service<E = any, O = DefaultServiceOptions> {
 
   // >>> register handlers
 
-  before(event: ExtendedEventNames<E>, handler: BeforeEventHandler<this>): void;
+  before(event: EventNames<E>, handler: BeforeEventHandler<this>): void;
 
-  before(event: ExtendedEventNames<E>, entity: Entities, handler: BeforeEventHandler<this>): void;
+  before(event: EventNames<E>, entity: Entities, handler: BeforeEventHandler<this>): void;
 
-  on(event: ExtendedEventNames<E>, handler: OnEventHandler<this>): void;
+  on(event: EventNames<E>, handler: OnEventHandler<this>): void;
 
-  on(event: ExtendedEventNames<E>, entity: Entities, handler: OnEventHandler<this>): void;
+  on(event: EventNames<E>, entity: Entities, handler: OnEventHandler<this>): void;
 
-  after(event: ExtendedEventNames<E>, handler: AfterEventHandler<this>): void;
+  after(event: EventNames<E>, handler: AfterEventHandler<this>): void;
 
-  after(event: ExtendedEventNames<E>, entity: Entities, handler: AfterEventHandler<this>): void;
+  after(event: EventNames<E>, entity: Entities, handler: AfterEventHandler<this>): void;
 
   /**
    * Registers a generic handler that automatically rejects incoming request with a standard error message. 
@@ -193,7 +193,7 @@ export declare class Service<E = any, O = DefaultServiceOptions> {
    * @param event 
    * @param entity 
    */
-  reject(event: ExtendedEventNames<E>, entity: Entities): void;
+  reject(event: EventNames<E>, entity: Entities): void;
 }
 
 
@@ -221,10 +221,17 @@ export declare class AuditLogService extends OutboxService { }
 
 export declare class MessagingService extends OutboxService { }
 
-export declare class cds_xt_ModelProviderService extends ApplicationService<"getCsn" | "getEdmx" | "isExtended" | "getExtensions" | "getResources"> { }
-export declare class cds_xt_ExtensibilityService extends ApplicationService<"add" | "promote" | "base" | "push"> { }
-export declare class cds_xt_DeploymentService extends ApplicationService<"subscribe" | "upgrade" | "unsubscribe" | "deploy" | "upgrade" | "extend"> { }
-export declare class cds_xt_SaasProvisioningService extends ApplicationService<"upgrade"> { }
+export type ModelProviderServiceEvents = ExtendEventName<"getCsn" | "getEdmx" | "isExtended" | "getExtensions" | "getResources">
+export declare class cds_xt_ModelProviderService extends ApplicationService<ModelProviderServiceEvents> { }
+
+export type ExtensibilityServiceEvents = ExtendEventName<"add" | "promote" | "base" | "push">
+export declare class cds_xt_ExtensibilityService extends ApplicationService<ExtensibilityServiceEvents> { }
+
+export type DeploymentServiceEvents = ExtendEventName<"subscribe" | "upgrade" | "unsubscribe" | "deploy" | "upgrade" | "extend">
+export declare class cds_xt_DeploymentService extends ApplicationService<DeploymentServiceEvents> { }
+
+export type SaasProvisioningServiceEvents = ExtendEventName<"upgrade">
+export declare class cds_xt_SaasProvisioningService extends ApplicationService<SaasProvisioningServiceEvents> { }
 
 export interface BuiltInServices {
   db: DatabaseService,
