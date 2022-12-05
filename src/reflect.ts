@@ -61,16 +61,18 @@ const find = memorized(
 
     // find bounded action/function
     if (kind === "action" || kind === "function") {
-      const entities = Object.values(model.definitions).filter(def => def.kind === "entity") as Array<EntityDefinition>;
-      for (const entity of Object.values(entities)) {
-        const entityName = entity.name;
-        const actions = Object.values(entity?.actions ?? []);
-        for (const action of actions.filter(a => a.kind === kind)) {
-          const actionName = `${entityName}.${action.name}`;
-          if (iName === normalizeIdentifier(actionName)) {
-            return action;
+      for (const entity of Object.values(model.definitions)) {
+        if(entity.kind === "entity") {
+          const entityName = entity.name;
+          const actions = Object.values(entity?.actions ?? []);
+          for (const action of actions.filter(a => a.kind === kind)) {
+            const actionName = `${entityName}.${action.name}`;
+            if (iName === normalizeIdentifier(actionName)) {
+              return action;
+            }
           }
         }
+     
       }
     }
 
@@ -91,14 +93,15 @@ const find = memorized(
 
     // find bounded action/function without namespace
     if (kind === "action" || kind === "function") {
-      const entities = Object.values(model.definitions).filter(def => def.kind === "entity") as Array<EntityDefinition>;
-      for (const entity of Object.values(entities)) {
-        const entityName = entity.name;
-        const actions = Object.values(entity?.actions ?? []);
-        for (const action of actions.filter(a => a.kind === kind)) {
-          const actionName = `${entityName}.${action.name}`;
-          if (normalizeIdentifier(actionName).endsWith(iName)) {
-            return action;
+      for (const entity of Object.values(model.definitions)) {
+        if(entity.kind === "entity") {
+          const entityName = entity.name;
+          const actions = Object.values(entity?.actions ?? []);
+          for (const action of actions.filter(a => a.kind === kind)) {
+            const actionName = `${entityName}.${action.name}`;
+            if (normalizeIdentifier(actionName).endsWith(iName)) {
+              return action;
+            }
           }
         }
       }

@@ -1,26 +1,80 @@
-/* eslint-disable max-len */
-export type Kind = "aspect" | "context" | "service" | "entity" | "type" | "action" | "function" | "annotation" | "element" | "action"
+import { expr } from "./cxn";
 
-export interface AssociationDefinition extends Definition {
+/* eslint-disable max-len */
+export type Kind = "aspect" | "context" | "service" | "entity" | "type" | "action" | "function" | "annotation" | "element" | "action" | "function" | "event"
+
+interface Elements {
+  elements: {
+    [element: string]: ElementDefinition;
+  };
+}
+
+interface ActionOrFunction {
+  params?: {
+    [paramName: string]: {
+      type: BuiltInType
+    }
+  },
+  returns?: {
+    type: BuiltInType
+  }
+}
+
+export interface EventDefinition extends Definition, Elements {
+  kind: "event";
+  elements: {
+    [element: string]: ElementDefinition;
+  };
+}
+
+export interface TypeDefinition extends Definition {
+  kind: "type";
+  type: BuiltInType;
+  length?: number;
+  precision?: number,
+  scale?: number,
+  default?: expr;
+  target?: string;
+  keys?: Array<expr>;
+}
+
+export interface AspectDefinition extends Definition, Elements {
+  kind: "aspect";
+}
+
+export interface ActionDefinition extends Definition, ActionOrFunction {
+  kind: "action",
+}
+
+export interface FunctionDefinition extends Definition, ActionOrFunction {
+  kind: "function",
+}
+
+export interface AssociationDefinition extends ElementDefinition {
+  type: "cds.Association",
   target: string;
-  _target: EntityDefinition;
-  is2one: boolean;
-  is2many: boolean;
+  cardinality?: {
+    max: string
+  },
+  on?: Array<expr>;
+  keys?: Array<expr>
 }
 
 /**
  * entity definition type
  */
-export interface EntityDefinition extends Definition {
+export interface EntityDefinition extends Definition, Elements {
   kind: "entity";
   /**
    * aspects
    */
   includes: Array<string>;
-  actions: { [key: string]: Definition };
-  associations?: { [elementName: string]: AssociationDefinition };
-  compositions?: { [elementName: string]: AssociationDefinition };
-  elements: { [elementName: string]: ElementDefinition };
+  projection?: {
+    from: {
+      ref: Array<string>,
+    }
+  }
+
   keys: { [elementName: string]: ElementDefinition };
 }
 
@@ -36,7 +90,9 @@ export type BuiltInType = "cds.Binary"
 | "cds.TimeStamp"
 | "cds.Binary"
 | "cds.LargeBinary"
-| "cds.LargeString";
+| "cds.LargeString"
+| "cds.Association";
+
 
 /**
  * element definition type
@@ -50,9 +106,10 @@ export interface ElementDefinition extends Definition {
 }
 
 export interface ServiceDefinition extends Definition {
-  kind: "service"
+  kind: "service";
   path: string;
-  ["@source"]: string
+  "@source"?: string;
+  "@requires"?: any;
 }
 
 export interface Definition {
@@ -62,12 +119,14 @@ export interface Definition {
   [annotationKey: string]: any;
 }
 
+export type VarDefinition = ServiceDefinition | ActionDefinition | FunctionDefinition | AspectDefinition | TypeDefinition | EntityDefinition | EventDefinition
+
 export declare class CSN {
 
   $version: string;
 
   definitions: {
-    [key: string]: Definition;
+    [key: string]: VarDefinition;
   };
 
   meta?: {

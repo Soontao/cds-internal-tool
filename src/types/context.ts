@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { User } from "./auth";
+import { VarDefinition } from "./csn";
 import { QueryObject } from "./ql";
-import { CQN, Definition } from "./reflect";
+import { CQN } from "./reflect";
 
 export declare class EventContext {
 
@@ -64,7 +65,7 @@ export declare class Request<DATA = any> extends Event<DATA> {
 
   method: string;
 
-  target?: Definition;
+  target?: VarDefinition;
 
   /**
    * Captures the full cannibalized path information of incoming requests with navigation. '
