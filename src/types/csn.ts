@@ -68,14 +68,13 @@ export interface EntityDefinition extends Definition, Elements {
   /**
    * aspects
    */
-  includes: Array<string>;
+  includes?: Array<string>;
   projection?: {
     from: {
       ref: Array<string>,
     }
   }
 
-  keys: { [elementName: string]: ElementDefinition };
 }
 
 export type BuiltInType = "cds.Binary"
@@ -122,6 +121,8 @@ export interface Definition {
 export type VarDefinition = ServiceDefinition | ActionDefinition | FunctionDefinition | AspectDefinition | TypeDefinition | EntityDefinition | EventDefinition
 
 export declare class CSN {
+
+  namespace?: string;
 
   $version: string;
 

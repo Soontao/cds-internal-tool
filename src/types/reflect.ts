@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/indent */
 import { builtin } from "./builtin";
-import { ActionDefinition, AspectDefinition, AssociationDefinition, CSN, Definition, EntityDefinition, EventDefinition, FunctionDefinition, Kind, ServiceDefinition, TypeDefinition, VarDefinition } from "./csn";
+import { ActionDefinition, AspectDefinition, AssociationDefinition, CSN, Definition, ElementDefinition, EntityDefinition, EventDefinition, FunctionDefinition, Kind, ServiceDefinition, TypeDefinition, VarDefinition } from "./csn";
 import { expr } from "./cxn";
 
 export { CQN } from "./cqn";
@@ -10,12 +10,14 @@ export { CSN };
 export type Linked<T extends Definition> = T & { name: string }
 
 export type LinkedEntityDefinition = Linked<EntityDefinition> & {
-  actions?: { [key: string]: Linked<ActionDefinition> };
-  associations?: { [elementName: string]: Linked<AssociationDefinition> };
-  compositions?: { [elementName: string]: Linked<AssociationDefinition> };
+  keys?: LinkedDefs<ElementDefinition>;
+  actions?: LinkedDefs<ActionDefinition>;
+  associations?: LinkedDefs<AssociationDefinition>;
+  compositions?: LinkedDefs<AssociationDefinition>;
 }
 
-export type Defs<T> = { [defName: string]: T }
+export type Defs<T extends Definition> = { [defName: string]: T }
+export type LinkedDefs<T extends Definition> = { [defName: string]: Linked<T> }
 
 export type CXN = expr;
 
@@ -35,13 +37,13 @@ export declare class LinkedCSN extends CSN {
   /**
    * This is a getter property providing convenient and cached access to all service definitions in a model.
    */
-  get services(): Defs<Linked<ServiceDefinition>>;
+  get services(): LinkedDefs<ServiceDefinition>;
 
   exports?(ns: string): any;
 
   entities(ns?: string): Defs<LinkedEntityDefinition>;
 
-  events(ns?: string): Defs<Linked<EventDefinition>>;
+  events(ns?: string): LinkedDefs<EventDefinition>;
 
   operations(ns?: string): Defs<VarLinkedDefinitions>;
 
