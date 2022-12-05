@@ -25,9 +25,6 @@
     "release": "npx standard-version --no-verify",
     "coverage": "npm test -- --coverage --no-cache"
   },
-  "optionalDependencies": {
-    "fsevents": "^2.3.2"
-  },
   "devDependencies": {
     "@types/jest": "29.2.3",
     "@types/node": "18.11.10",
