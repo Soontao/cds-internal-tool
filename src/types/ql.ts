@@ -107,6 +107,8 @@ export declare class INSERT<T = any> extends PromiseLike {
 
   into(entity: Definition | string): this
 
+  as(select: SELECT): this
+
   data(block: (e: T) => void): this
 
   entries(...entries: object[]): this
