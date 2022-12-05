@@ -96,12 +96,11 @@ export type BuiltInType = "cds.Binary"
 /**
  * element definition type
  */
-export interface ElementDefinition extends Definition {
-  kind: "element";
-  parent: EntityDefinition;
-  key: boolean;
-  type: BuiltInType;
+export interface ElementDefinition {
+  key?: boolean;
+  type: BuiltInType | string;
   isAssociation?: boolean;
+  [attributes: string]: any;
 }
 
 export interface ServiceDefinition extends Definition {
@@ -115,7 +114,7 @@ export interface Definition {
   kind: Kind;
   name?: string;
   localized?: boolean;
-  [annotationKey: string]: any;
+  [attributes: string]: any;
 }
 
 export type VarDefinition = ServiceDefinition | ActionDefinition | FunctionDefinition | AspectDefinition | TypeDefinition | EntityDefinition | EventDefinition

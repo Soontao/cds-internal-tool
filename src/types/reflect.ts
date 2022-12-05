@@ -1,13 +1,13 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/indent */
 import { builtin } from "./builtin";
-import { ActionDefinition, AspectDefinition, AssociationDefinition, CSN, Definition, ElementDefinition, EntityDefinition, EventDefinition, FunctionDefinition, Kind, ServiceDefinition, TypeDefinition, VarDefinition } from "./csn";
+import { ActionDefinition, AspectDefinition, AssociationDefinition, CSN, ElementDefinition, EntityDefinition, EventDefinition, FunctionDefinition, Kind, ServiceDefinition, TypeDefinition, VarDefinition } from "./csn";
 import { expr } from "./cxn";
 
 export { CQN } from "./cqn";
 export { CSN };
 
-export type Linked<T extends Definition> = T & { name: string }
+export type Linked<T> = T & { name: string }
 
 export type LinkedEntityDefinition = Linked<EntityDefinition> & {
   keys?: LinkedDefs<ElementDefinition>;
@@ -16,8 +16,8 @@ export type LinkedEntityDefinition = Linked<EntityDefinition> & {
   compositions?: LinkedDefs<AssociationDefinition>;
 }
 
-export type Defs<T extends Definition> = { [defName: string]: T }
-export type LinkedDefs<T extends Definition> = { [defName: string]: Linked<T> }
+export type Defs<T> = { [defName: string]: T }
+export type LinkedDefs<T> = { [defName: string]: Linked<T> }
 
 export type CXN = expr;
 
