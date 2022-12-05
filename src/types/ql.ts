@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-len */
 import * as CQN from "./cqn";
-import { Definition } from "./reflect";
+import { Definition as RawDef } from "./csn";
+import { Linked } from "./reflect";
+
+type Definition = RawDef | Linked<RawDef>
 
 /**
  * Query Object with fluent API

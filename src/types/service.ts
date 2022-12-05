@@ -3,8 +3,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import type { Readable } from "stream";
 import { EventContext, Request } from "./context";
+import { CQN } from "./cqn";
+import { CSN, Definition, EntityDefinition, ServiceDefinition } from "./csn";
 import { QueryObject } from "./ql";
-import { CQN, CSN, Definition, EntityDefinition, LinkedCSN, ServiceDefinition } from "./reflect";
+import { LinkedCSN } from "./reflect";
 import { TransactionMix } from "./transaction";
 
 export type EventHook = "before" | "on" | "after"

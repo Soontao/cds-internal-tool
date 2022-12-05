@@ -21,6 +21,15 @@ import {
 import { TestFacade } from "./test";
 import { TransactionMix } from "./transaction";
 
+export * from "./auth";
+export * from "./context";
+export * from "./csn";
+export * from "./log";
+export * from "./reflect";
+export * from "./service";
+export * from "./test";
+export * from "./transaction";
+
 
 
 export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" | "delete" | "insert"> {
@@ -174,10 +183,4 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   }
 }
 
-export * from "./auth";
-export * from "./context";
-export * from "./log";
-export * from "./reflect";
-export * from "./service";
-export * from "./test";
-export * from "./transaction";
+
