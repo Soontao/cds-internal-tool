@@ -3,16 +3,21 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import type { Readable } from "stream";
 import { EventContext, Request } from "./context";
-import { CQN } from "./cqn";
-import { CSN, Definition, EntityDefinition, ServiceDefinition } from "./csn";
+import { CSN, Definition, EntityDefinition, EventDefinition, ServiceDefinition } from "./csn";
 import { QueryObject } from "./ql";
-import { LinkedCSN } from "./reflect";
+import { CQN, Linked, LinkedCSN, LinkedEntityDefinition, VarLinkedDefinitions } from "./reflect";
 import { TransactionMix } from "./transaction";
 
 export type EventHook = "before" | "on" | "after"
 
 export type EventNames<T = EventName> = T | T[]
+/**
+ * event with extended event
+ */
 export type ExtendEventName<T> = EventName | T
+/**
+ * standard events
+ */
 export type EventName = (CRUD | TX | HTTP | DRAFT | AnyEvent)
 export type CRUD = "CREATE" | "READ" | "UPDATE" | "DELETE"
 export type DRAFT = "NEW" | "EDIT" | "PATCH" | "SAVE"
@@ -32,7 +37,6 @@ export interface AfterEventHandler<THIS, DATA_TYPE> {
   (this: THIS, data: DATA_TYPE, req: Request<any>): Promise<DATA_TYPE | any | void> | any | void;
 }
 
-
 type DefinitionContext<T extends Definition> = { [entityName: string]: T } & Iterable<T>;
 type DefinitionProperty<T extends Definition> = DefinitionContext<T> & ((namespace?: string) => DefinitionContext<T>)
 
@@ -44,6 +48,17 @@ export interface DefaultServiceOptions {
   kind: String
   impl: String | ServiceImplFunc
 }
+
+export type DefaultMixinMethod = (...args: any[]) => Promise<any>
+
+export type MixinMethods<E extends string | number | symbol, M = DefaultMixinMethod> = {
+  [key in E]: M
+}
+
+/**
+ * service with wrapped functions
+ */
+export type MixedService<E extends string | number | symbol, S extends Service> = S & MixinMethods<E>
 
 /**
  * cds service
@@ -71,9 +86,9 @@ export declare class Service<E = EventName, O = DefaultServiceOptions> {
    */
   model: LinkedCSN;
 
-  definition: ServiceDefinition;
+  get definition(): Linked<ServiceDefinition>;
 
-  namespace: string;
+  get namespace(): string;
 
   /**
    * The init() method acts like a parameter-less constructor. 
@@ -83,11 +98,11 @@ export declare class Service<E = EventName, O = DefaultServiceOptions> {
 
   // >>> metadata
 
-  entities: DefinitionProperty<EntityDefinition>;
+  get entities(): DefinitionProperty<LinkedEntityDefinition>;
 
-  events: DefinitionProperty<Definition>;
+  get events(): DefinitionProperty<Linked<EventDefinition>>;
 
-  operations: DefinitionProperty<Definition>;
+  get operations(): DefinitionProperty<VarLinkedDefinitions>;
 
   /**
    * Use srv.prepend in order to register handlers, which shall be executed before already registered handlers. In particular, this can be used to override handlers from reused services as in cap/samples/bookstore/srv/mashup.js:
@@ -138,34 +153,30 @@ export declare class Service<E = EventName, O = DefaultServiceOptions> {
 
   // >>> query API
 
-  run(query: CQN): Promise<any>;
-
-  run(query: QueryObject): Promise<any>;
-
-  run(query: string): Promise<any>;
+  run(query: CQN | QueryObject | string | Array<CQN | QueryObject | string>): Promise<any>;
 
   run(query: any): Promise<any>;
 
-  read(entity: Definition | string, key?: any, projection?: any): QueryObject;
+  read(entity: EntityDefinition | string, key?: any, projection?: any): QueryObject;
 
-  insert(data: any): { into: (entity: Definition | string) => QueryObject }
+  insert(data: any): { into: (entity: EntityDefinition | string) => QueryObject }
 
-  create(entity: Definition | string, key?: any): QueryObject;
+  create(entity: EntityDefinition | string, key?: any): QueryObject;
 
-  update(entity: Definition | string, key?: any): QueryObject;
+  update(entity: EntityDefinition | string, key?: any): QueryObject;
 
   // eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
-  delete(entity: Definition | string, key?: any): QueryObject;
+  delete(entity: EntityDefinition | string, key?: any): QueryObject;
 
   // >>> stream
 
   stream(cqn: CQN): Promise<Readable>;
 
-  stream(column: string): { from: (entity: Definition | string) => { where: (filter: any) => Readable } };
+  stream(column: string): { from: (entity: EntityDefinition | string) => { where: (filter: any) => Readable } };
 
-  foreach<ITEM_TYPE = any>(entityOrQuery: Definition | string | QueryObject, cb: (each: ITEM_TYPE) => void): Promise<void>
+  foreach<ITEM_TYPE = any>(entityOrQuery: EntityDefinition | string | QueryObject | CQN, cb: (each: ITEM_TYPE) => void): Promise<void>
 
-  foreach<ITEM_TYPE = any>(entityOrQuery: Definition | string | QueryObject, args: Array<any>, cb: (each: ITEM_TYPE) => void): Promise<void>
+  foreach<ITEM_TYPE = any>(entityOrQuery: EntityDefinition | string | QueryObject | CQN, args: Array<any>, cb: (each: ITEM_TYPE) => void): Promise<void>
 
 
   // >>> register handlers
@@ -199,15 +210,29 @@ export type Entities = string | Definition | Array<Entities>
  * cds application service
  */
 export declare class ApplicationService<E = any, O = any> extends Service<E, O> {
+
   kind: "app-service";
 
-  begin(): this;
+  with(serviceImpl: any): any
+
+  impl(serviceImpl: any): any
+
 }
 
 /**
  * cds database service
  */
-export declare class DatabaseService extends Service { }
+export declare class DatabaseService extends Service {
+
+  begin(): Promise<this>;
+
+  commit(): Promise<void>
+
+  rollback(): Promise<void>
+
+  stream(query: any): any
+
+}
 
 export declare class RemoteService extends Service { }
 
@@ -223,7 +248,7 @@ export declare class cds_xt_ModelProviderService extends ApplicationService<Mode
 export type ExtensibilityServiceEvents = ExtendEventName<"add" | "promote" | "base" | "push">
 export declare class cds_xt_ExtensibilityService extends ApplicationService<ExtensibilityServiceEvents> { }
 
-export type DeploymentServiceEvents = ExtendEventName<"subscribe" | "upgrade" | "unsubscribe" | "deploy" | "upgrade" | "extend">
+export type DeploymentServiceEvents = ExtendEventName<"subscribe" | "upgrade" | "unsubscribe" | "deploy" | "upgrade" | "extend" | "getTables">
 export declare class cds_xt_DeploymentService extends ApplicationService<DeploymentServiceEvents> { }
 
 export type SaasProvisioningServiceEvents = ExtendEventName<"upgrade">
@@ -231,10 +256,11 @@ export declare class cds_xt_SaasProvisioningService extends ApplicationService<S
 
 export interface BuiltInServices {
   db: DatabaseService,
-  "cds.xt.SaasProvisioningService": cds_xt_SaasProvisioningService,
-  "cds.xt.DeploymentService": cds_xt_DeploymentService,
-  "cds.xt.ExtensibilityService": cds_xt_ExtensibilityService,
-  "cds.xt.ModelProviderService": cds_xt_ModelProviderService,
+  "cds.xt.SaasProvisioningService": MixedService<Exclude<SaasProvisioningServiceEvents, EventName>, cds_xt_SaasProvisioningService>,
+  "cds.xt.DeploymentService": MixedService<Exclude<DeploymentServiceEvents, EventName>, cds_xt_DeploymentService>,
+  "cds.xt.ExtensibilityService": MixedService<Exclude<ExtensibilityServiceEvents, EventName>, cds_xt_ExtensibilityService>,
+  "cds.xt.ModelProviderService": MixedService<Exclude<ModelProviderServiceEvents, EventName>, cds_xt_ModelProviderService>,
   "messaging": MessagingService,
   "audit-log-service": AuditLogService,
 }
+
