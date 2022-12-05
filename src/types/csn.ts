@@ -45,8 +45,8 @@ export interface ElementDefinition extends Definition {
   kind: "element";
   parent: EntityDefinition;
   key: boolean;
+  type: BuiltInType;
   isAssociation?: boolean;
-  type: BuiltInType | string;
 }
 
 export interface ServiceDefinition extends Definition {
@@ -57,7 +57,6 @@ export interface ServiceDefinition extends Definition {
 
 export interface Definition {
   kind: Kind;
-  type: string;
   name?: string;
   localized?: boolean;
   [annotationKey: string]: any;
