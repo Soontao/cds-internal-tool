@@ -15,6 +15,8 @@ export type LinkedEntityDefinition = Linked<EntityDefinition> & {
   compositions?: { [elementName: string]: Linked<AssociationDefinition> };
 }
 
+export type Defs<T> = { [defName: string]: T }
+
 export type CXN = expr;
 
 export type VarLinkedDefinitions = LinkedEntityDefinition | Linked<ServiceDefinition> | Linked<ActionDefinition> | Linked<AspectDefinition> | Linked<TypeDefinition> | Linked<FunctionDefinition> | Linked<EventDefinition>;
@@ -30,27 +32,31 @@ export declare class LinkedCSN extends CSN {
     [key: string]: VarLinkedDefinitions;
   };
 
-  exports(ns: string): any;
+  /**
+   * This is a getter property providing convenient and cached access to all service definitions in a model.
+   */
+  get services(): Defs<Linked<ServiceDefinition>>;
 
-  entities(ns?: string): { [key: string]: LinkedEntityDefinition };
+  exports?(ns: string): any;
 
-  events(ns?: string): { [key: string]: Linked<Definition> };
+  entities(ns?: string): Defs<LinkedEntityDefinition>;
 
-  operations(ns?: string): { [key: string]: Linked<Definition> };
+  events(ns?: string): Defs<Linked<EventDefinition>>;
 
-  each(x?: FilterValue, defs?: typeof this.definitions): Iterator<Linked<Definition>>;
+  operations(ns?: string): Defs<VarLinkedDefinitions>;
 
-  all(x?: FilterValue, defs?: typeof this.definitions): Iterator<Linked<Definition>>;
+  each(x?: FilterValue, defs?: typeof this.definitions): Iterator<VarLinkedDefinitions>;
 
-  find(x: FilterValue, defs?: typeof this.definitions): Linked<Definition> | undefined;
+  all(x?: FilterValue, defs?: typeof this.definitions): Iterator<VarLinkedDefinitions>;
 
-  foreach(x: FilterValue, visitor: (def: Linked<Definition>) => void, defs?: typeof this.definitions): Linked<Definition> | undefined;
+  find(x: FilterValue, defs?: typeof this.definitions): VarLinkedDefinitions | undefined;
 
-  forall(x: FilterValue, visitor: (def: Linked<Definition>) => void, defs?: typeof this.definitions): Linked<Definition> | undefined;
+  foreach(x: FilterValue, visitor: (def: VarLinkedDefinitions) => void, defs?: typeof this.definitions): VarLinkedDefinitions | undefined;
 
-  forall(visitor: (def: Linked<Definition>) => void, defs?: typeof this.definitions): Linked<Definition> | undefined;
+  forall(x: FilterValue, visitor: (def: VarLinkedDefinitions) => void, defs?: typeof this.definitions): VarLinkedDefinitions | undefined;
 
-  services: { [key: string]: Linked<ServiceDefinition> };
+  forall(visitor: (def: VarLinkedDefinitions) => void, defs?: typeof this.definitions): VarLinkedDefinitions | undefined;
+
 
 }
 
