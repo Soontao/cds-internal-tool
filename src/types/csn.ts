@@ -72,9 +72,15 @@ export interface EntityDefinition extends Definition, Elements {
   projection?: {
     from: {
       ref: Array<string>,
-    }
+    },
+    columns: Array<expr>;
   }
-
+  query?: {
+    from: {
+      ref: Array<string>
+    },
+    columns: Array<expr>;
+  }
 }
 
 export type BuiltInType = "cds.Binary"
