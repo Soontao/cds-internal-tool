@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.12](https://github.com/Soontao/cds-internal-tool/compare/v1.6.11...v1.6.12) (2022-12-05)
+
+
+### Bug Fixes
+
+* fs events ([8bcfe06](https://github.com/Soontao/cds-internal-tool/commit/8bcfe0627cd82725af5cbd983434a9f2128f2a39))
+* type for insert as select ([18e524c](https://github.com/Soontao/cds-internal-tool/commit/18e524ca01528a4e4d3a6d2d409cbf61aa2e9555))
+
 ### [1.6.11](https://github.com/Soontao/cds-internal-tool/compare/v1.6.10...v1.6.11) (2022-12-05)
 
 
