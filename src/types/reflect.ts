@@ -30,9 +30,7 @@ export declare class LinkedCSN extends CSN {
 
   kind: "type";
 
-  definitions: {
-    [key: string]: VarLinkedDefinitions;
-  };
+  definitions: Defs<VarLinkedDefinitions>;
 
   /**
    * This is a getter property providing convenient and cached access to all service definitions in a model.
@@ -46,22 +44,22 @@ export declare class LinkedCSN extends CSN {
   events(ns?: string): LinkedDefs<EventDefinition>;
 
   operations(ns?: string): Defs<VarLinkedDefinitions>;
-  
-  each(x?: "entity", defs?: typeof this.definitions): IterableIterator<LinkedEntityDefinition>;
-  
-  each(x?: "service", defs?: typeof this.definitions): IterableIterator<Linked<ServiceDefinition>>;
 
-  each(x?: FilterValue, defs?: typeof this.definitions): IterableIterator<VarLinkedDefinitions>;
+  each(x?: "entity", defs?: Defs<VarLinkedDefinitions>): IterableIterator<LinkedEntityDefinition>;
 
-  all(x?: FilterValue, defs?: typeof this.definitions): Array<VarLinkedDefinitions>;
+  each(x?: "service", defs?: Defs<VarLinkedDefinitions>): IterableIterator<Linked<ServiceDefinition>>;
 
-  find(x: FilterValue, defs?: typeof this.definitions): VarLinkedDefinitions | undefined;
+  each(x?: FilterValue, defs?: Defs<VarLinkedDefinitions>): IterableIterator<VarLinkedDefinitions>;
 
-  foreach(x: FilterValue, visitor: (def: VarLinkedDefinitions) => void, defs?: typeof this.definitions): void;
+  all(x?: FilterValue, defs?: Defs<VarLinkedDefinitions>): Array<VarLinkedDefinitions>;
 
-  forall(x: FilterValue, visitor: (def: VarLinkedDefinitions) => void, defs?: typeof this.definitions): void;
+  find(x: FilterValue, defs?: Defs<VarLinkedDefinitions>): VarLinkedDefinitions | undefined;
 
-  forall(visitor: (def: VarLinkedDefinitions) => void, defs?: typeof this.definitions): void;
+  foreach(x: FilterValue, visitor: (def: VarLinkedDefinitions) => void, defs?: Defs<VarLinkedDefinitions>): void;
+
+  forall(x: FilterValue, visitor: (def: VarLinkedDefinitions) => void, defs?: Defs<VarLinkedDefinitions>): void;
+
+  forall(visitor: (def: VarLinkedDefinitions) => void, defs?: Defs<VarLinkedDefinitions>): void;
 
 
 }
