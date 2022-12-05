@@ -46,18 +46,22 @@ export declare class LinkedCSN extends CSN {
   events(ns?: string): LinkedDefs<EventDefinition>;
 
   operations(ns?: string): Defs<VarLinkedDefinitions>;
+  
+  each(x?: "entity", defs?: typeof this.definitions): IterableIterator<LinkedEntityDefinition>;
+  
+  each(x?: "service", defs?: typeof this.definitions): IterableIterator<Linked<ServiceDefinition>>;
 
-  each(x?: FilterValue, defs?: typeof this.definitions): Iterator<VarLinkedDefinitions>;
+  each(x?: FilterValue, defs?: typeof this.definitions): IterableIterator<VarLinkedDefinitions>;
 
-  all(x?: FilterValue, defs?: typeof this.definitions): Iterator<VarLinkedDefinitions>;
+  all(x?: FilterValue, defs?: typeof this.definitions): Array<VarLinkedDefinitions>;
 
   find(x: FilterValue, defs?: typeof this.definitions): VarLinkedDefinitions | undefined;
 
-  foreach(x: FilterValue, visitor: (def: VarLinkedDefinitions) => void, defs?: typeof this.definitions): VarLinkedDefinitions | undefined;
+  foreach(x: FilterValue, visitor: (def: VarLinkedDefinitions) => void, defs?: typeof this.definitions): void;
 
-  forall(x: FilterValue, visitor: (def: VarLinkedDefinitions) => void, defs?: typeof this.definitions): VarLinkedDefinitions | undefined;
+  forall(x: FilterValue, visitor: (def: VarLinkedDefinitions) => void, defs?: typeof this.definitions): void;
 
-  forall(visitor: (def: VarLinkedDefinitions) => void, defs?: typeof this.definitions): VarLinkedDefinitions | undefined;
+  forall(visitor: (def: VarLinkedDefinitions) => void, defs?: typeof this.definitions): void;
 
 
 }
