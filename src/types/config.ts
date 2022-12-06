@@ -26,6 +26,7 @@ export interface Config {
   cdsc?: any;
   query?: Query;
   profiles?: string[];
+  [other: string]: any;
 }
 
 
@@ -52,6 +53,7 @@ export interface Features {
   assert_integrity?: boolean;
   cds_tx_protection?: boolean;
   cds_tx_inheritance?: boolean;
+  [other: string]: boolean | string | undefined;
 }
 
 export interface Folders {
@@ -332,6 +334,7 @@ export interface DBObject {
    * Optional: Used to select an entry in VCAP_SERVICES.
    */
   vcap?: Vcap;
+  [other: string]: any;
 }
 
 /**
@@ -340,6 +343,7 @@ export interface DBObject {
 */
 export interface DBCredentials {
   database?: string;
+  [other: string]: any;
 }
 
 /**
