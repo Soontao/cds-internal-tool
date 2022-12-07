@@ -46,6 +46,8 @@ export declare class SELECT<T = any> extends PromiseLike {
 
   from(entity: Definition | string, primaryKey?: number | string | object, projection?: (e: any) => void): this
 
+  alias(alias: string): this
+
   byKey(primaryKey?: number | string | object): this
 
   columns(projection: (e: T) => void): this
