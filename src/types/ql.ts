@@ -2,11 +2,12 @@
 /* eslint-disable max-len */
 import * as CQN from "./cqn";
 import { Definition as RawDef } from "./csn";
+import { expr } from "./cxn";
 import { Linked } from "./reflect";
 
-type Definition = RawDef | Linked<RawDef>
+type Definition = RawDef | Linked<RawDef>;
 
-/**
+/** 
  * Query Object with fluent API
  */
 export type QueryObject = SELECT | INSERT | UPDATE | DELETE | CREATE | DROP;
@@ -19,8 +20,8 @@ interface Constructable<T> {
   new(...args: any[]): T
 }
 
-
 export declare class QL {
+
   SELECT: typeof SELECT & ((...columns: string[]) => SELECT<any>) & ((columns: string[]) => SELECT<any>);
 
   INSERT: typeof INSERT & ((...entries: object[]) => INSERT<any>) & ((entries: object[]) => INSERT<any>);
@@ -32,9 +33,11 @@ export declare class QL {
   CREATE: typeof CREATE;
 
   DROP: typeof DROP;
+
 }
 
 export declare class SELECT<T = any> extends PromiseLike {
+
   static one: SELECT_one & { from: SELECT_one };
 
   static distinct: typeof SELECT;
@@ -65,21 +68,36 @@ export declare class SELECT<T = any> extends PromiseLike {
 
   orderBy(...expr: string[]): this
 
-  limit(rows: number, offset?: number): this
+  fullJoin(other: string, as?: string): SELECT_join<T>;
+
+  leftJoin(other: string, as?: string): SELECT_join<T>;
+
+  rightJoin(other: string, as?: string): SELECT_join<T>;
+
+  innerJoin(other: string, as?: string): SELECT_join<T>;
+
+  join(other: string, as?: string, kind?: "inner" | "full" | "left" | "right"): SELECT_join<T>;
+
+  limit(rows: number, offset?: number): this;
 
   /**
-   * Locks the selected rows in the current transaction, thereby preventing concurrent updates by other parallel transactions, until the transaction is committed or rolled back. 
-   * Using a shared lock allows all transactions to read the locked record.
+   * locks the selected rows in the current transaction
+   * thereby preventing concurrent updates by other parallel transactions
+   * until the transaction is committed or rolled back
+   * 
+   * using a shared lock allows all transactions to read the locked record
    */
-  forShareLock(): this
+  forShareLock(options?: { wait: number }): this;
 
   /**
    * Exclusively locks the selected rows for subsequent updates in the current transaction, thereby preventing concurrent updates by other parallel transactions.
+   * 
    * @param options 
    */
   forUpdate(options?: { wait: number }): this
 
   SELECT: CQN.SELECT;
+
 }
 
 type SELECT_one =
@@ -96,6 +114,11 @@ type SELECT_from =
   & (<T> (entity: T[], primaryKey: number | string | object, projection?: (e: T) => void) => SELECT<T> & Promise<T>)
   & (<T> (entity: { new(): T }, projection?: (e: T) => void) => SELECT<T> & Promise<T[]>)
   & (<T> (entity: { new(): T }, primaryKey: number | string | object, projection?: (e: T) => void) => SELECT<T> & Promise<T>)
+
+
+interface SELECT_join<T = any> extends SELECT<T> {
+  on(...expr: Array<expr>): SELECT<T>;
+}
 
 
 export declare class INSERT<T = any> extends PromiseLike {
