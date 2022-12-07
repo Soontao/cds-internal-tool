@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 import * as CQN from "./cqn";
 import { Definition as RawDef } from "./csn";
-import { expr } from "./cxn";
+import { expr, Operator } from "./cxn";
 import { Linked } from "./reflect";
 
 type Definition = RawDef | Linked<RawDef>;
@@ -117,7 +117,7 @@ type SELECT_from =
 
 
 interface SELECT_join<T = any> extends SELECT<T> {
-  on(...expr: Array<expr>): SELECT<T>;
+  on(...expr: Array<expr | Operator>): SELECT<T>;
 }
 
 
