@@ -107,6 +107,14 @@ export interface Levels {
   mysql?: LogLevel;
   hana?: LogLevel;
   cds?: LogLevel;
+  pool?: LogLevel;
+  remote?: LogLevel;
+  "audit-log"?: LogLevel;
+  odata?: LogLevel;
+  rest?: LogLevel;
+  graphql?: LogLevel;
+  messaging?: LogLevel;
+  app?: LogLevel;
 }
 
 export interface Mtx {
