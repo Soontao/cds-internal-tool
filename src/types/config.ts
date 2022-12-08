@@ -94,12 +94,19 @@ export interface KibanaCustomFields {
   details?: number;
 }
 
+export type LogLevel = "silent" | "error" | "warn" | "info" | "debug" | "trace" | "silly" | "verbose";
+
 export interface Levels {
-  compile?: string;
-  cli?: string;
-  deploy?: string;
-  serve?: string;
-  server?: string;
+  compile?: LogLevel;
+  cli?: LogLevel;
+  deploy?: LogLevel;
+  serve?: LogLevel;
+  server?: LogLevel;
+  db?: LogLevel;
+  sqlite?: LogLevel;
+  mysql?: LogLevel;
+  hana?: LogLevel;
+  cds?: LogLevel;
 }
 
 export interface Mtx {
