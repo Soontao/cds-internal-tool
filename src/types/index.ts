@@ -8,13 +8,13 @@
 import type EventEmitter from "events";
 import { User } from "./auth";
 import { builtin } from "./builtin";
-import { Env, Requires } from "./config";
+import { Env, LogLevel, Requires } from "./config";
 import { connect } from "./connect";
 import { Event, EventContext, Request } from "./context";
-import { ref } from "./cxn";
+import { CXN, ref } from "./cxn";
 import { Logger } from "./log";
 import { QL } from "./ql";
-import { CQN, CSN, CXN, LinkedCSN } from "./reflect";
+import { CQN, CSN, LinkedCSN } from "./reflect";
 import {
   ApplicationService, AuditLogService,
   BuiltInServices, DatabaseService, MessagingService, RemoteService, Service
@@ -76,7 +76,21 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   on(event: "connect", cb: (service: Service) => any): void;
   on(event: "subscribe", cb: (service: Service, event: string) => any): void;
 
-  log(module: string): Logger;
+  log: {
+    (module: string, options?: { label: string }): Logger;
+    format?: (id: string, level: LogLevel, ...args: Array<any>) => Array<any>;
+    levels: {
+      SILENT: 0,    // all log output switched off
+      ERROR: 1,     // logs errors only
+      WARN: 2,      // logs errors and warnings only
+      INFO: 3,      // logs errors, warnings and general infos 
+      DEBUG: 4,     // logs errors, warnings, info, and debug
+      TRACE: 5,     // most detailed log level
+      SILLY: 5,     // alias for TRACE
+      VERBOSE: 5
+    };
+    Logger?: (label: string, level: LogLevel) => Logger;
+  };
 
   error(msg: string, options?: any): Error;
   error(options: { message: string, [param: string]: string }): Error;
@@ -171,5 +185,4 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
     from: string;
   }
 }
-
 
