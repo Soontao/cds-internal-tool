@@ -22,7 +22,7 @@ export type param = {
 export type ref = { ref: _ref }
 export type val = { val: _val, literal?: "x" | "date" | "time" | "timestamp" }
 export type xpr = { xpr: _xpr }
-export type func = { func: any, args: Args, xpr?: _xpr }
+export type func = { func: any, args: Args, xpr?: _xpr, as?: string }
 
 type AnyOperator = "*"
 type CompareOperator = "<" | "<=" | "<>" | "=" | "!=" | ">" | ">="
@@ -57,4 +57,4 @@ export interface ExecutionOptions {
   timeout?: number;
 }
 
-export type expr = ref | val | xpr | SELECT
+export type expr = ref | val | xpr | func | SELECT

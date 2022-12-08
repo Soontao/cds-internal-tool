@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 import * as CQN from "./cqn";
 import { Definition as RawDef } from "./csn";
-import { expr, Operator } from "./cxn";
+import { expr, func, Operator, ref } from "./cxn";
 import { Linked } from "./reflect";
 
 type Definition = RawDef | Linked<RawDef>;
@@ -53,6 +53,8 @@ export declare class SELECT<T = any> extends PromiseLike {
   columns(projection: (e: T) => void): this
 
   columns(...col: string[]): this
+
+  columns(...col: (ref | func)[]): this
 
   where(predicate: object): this
 
