@@ -44,7 +44,7 @@ export declare class SELECT<T = any> extends PromiseLike {
 
   static from: SELECT_from;
 
-  from(entity: Definition | string, primaryKey?: number | string | object, projection?: (e: any) => void): this
+  from(entity: Definition | string | QueryObject | CQN.CQN, primaryKey?: number | string | object, projection?: (e: any) => void): this
 
   alias(alias: string): this
 
