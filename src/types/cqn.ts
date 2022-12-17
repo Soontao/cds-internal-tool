@@ -39,6 +39,19 @@ export type INSERT = {
   }
 }
 
+
+export type UPSERT = {
+  UPSERT: {
+    into: name
+    columns: string[]
+    values: any[]
+    rows: any[]
+    entries: any[]
+    as?: SELECT;
+  }
+}
+
+
 export type UPDATE = {
   UPDATE: {
     entity: name

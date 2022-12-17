@@ -32,6 +32,8 @@ export declare class QL {
 
   CREATE: typeof CREATE;
 
+  UPSERT: typeof UPSERT;
+
   DROP: typeof DROP;
 
 }
@@ -100,7 +102,7 @@ export declare class SELECT<T = any> extends PromiseLike {
    */
   forUpdate(options?: { wait: number }): this
 
-  SELECT: CQN.SELECT;
+  SELECT: CQN.SELECT["SELECT"];
 
 }
 
@@ -146,8 +148,33 @@ export declare class INSERT<T = any> extends PromiseLike {
 
   rows(...row: any[]): this
 
-  INSERT: CQN.INSERT;
+  INSERT: CQN.INSERT["INSERT"];
 }
+
+export declare class UPSERT<T = any> extends PromiseLike {
+  static into(entity: Definition | string, entries?: object | object[]): INSERT<any>
+
+  static into<T>(entity: Constructable<T>, entries?: object | object[]): INSERT<T>
+
+  static into<T>(entity: T, entries?: T | object | object[]): INSERT<T>
+
+  into(entity: Definition | string): this
+
+  as(select: SELECT): this
+
+  data(block: (e: T) => void): this
+
+  entries(...entries: object[]): this
+
+  columns(...col: string[]): this
+
+  values(...val: any[]): this
+
+  rows(...row: any[]): this
+
+  UPSERT: CQN.UPSERT["UPSERT"];
+}
+
 
 export declare class DELETE<T = any> extends PromiseLike {
   static from(entity: Definition | string, primaryKey?: number | string | object): DELETE<any>
@@ -162,7 +189,7 @@ export declare class DELETE<T = any> extends PromiseLike {
 
   and(...expr: any[]): this
 
-  DELETE: CQN.DELETE;
+  DELETE: CQN.DELETE["DELETE"];
 }
 
 export declare class UPDATE<T = any> extends PromiseLike {
@@ -188,17 +215,17 @@ export declare class UPDATE<T = any> extends PromiseLike {
 
   and(...expr: any[]): this
 
-  UPDATE: CQN.UPDATE;
+  UPDATE: CQN.UPDATE["UPDATE"];
 }
 
 export declare class CREATE<T = any> extends PromiseLike {
   static entity(entity: Definition | string): CREATE<any>
 
-  CREATE: CQN.CREATE;
+  CREATE: CQN.CREATE["CREATE"];
 }
 
 export declare class DROP<T = any> extends PromiseLike {
   static entity(entity: Definition | string): DROP<any>
 
-  DROP: CQN.DROP;
+  DROP: CQN.DROP["DROP"];
 }
