@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/Soontao/cds-internal-tool/compare/v1.6.18...v1.7.0) (2023-01-14)
+
+
+### Features
+
+* support UPSERT ([eaa3c93](https://github.com/Soontao/cds-internal-tool/commit/eaa3c9390f80b65656e2794d9e4d9d311d0aa7d1))
+
+
+### Bug Fixes
+
+* type ([e1d93f3](https://github.com/Soontao/cds-internal-tool/commit/e1d93f33e12cb0ec39fbb0251b98f23a6c96c28a))
+* **type:** for select ([375e67d](https://github.com/Soontao/cds-internal-tool/commit/375e67de07960680a4f260e4753269a55158f9f9))
+
 ### [1.6.18](https://github.com/Soontao/cds-internal-tool/compare/v1.6.17...v1.6.18) (2022-12-08)
 
 
