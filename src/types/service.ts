@@ -248,7 +248,7 @@ export declare class cds_xt_ModelProviderService extends ApplicationService<Mode
 export type ExtensibilityServiceEvents = ExtendEventName<"add" | "promote" | "base" | "push">
 export declare class cds_xt_ExtensibilityService extends ApplicationService<ExtensibilityServiceEvents> { }
 
-export type DeploymentServiceEvents = ExtendEventName<"subscribe" | "upgrade" | "unsubscribe" | "deploy" | "upgrade" | "extend" | "getTables">
+export type DeploymentServiceEvents = ExtendEventName<"subscribe" | "upgrade" | "unsubscribe" | "deploy" | "upgrade" | "extend" | "getTables" | "getColumns">
 export declare class cds_xt_DeploymentService extends ApplicationService<DeploymentServiceEvents> { }
 
 export type SaasProvisioningServiceEvents = ExtendEventName<"upgrade">
