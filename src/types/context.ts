@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { User } from "./auth";
@@ -46,17 +47,6 @@ export declare class Event<DATA = any> extends EventContext {
 
 }
 
-type RequestMessage = string | object | Error
-
-interface RequestMessageParam {
-  code?: number;
-  status?: number;
-  statusCode?: number;
-  message: RequestMessage;
-  target?: string;
-  args?: Array<any>;
-}
-
 export declare class Request<DATA = any> extends Event<DATA> {
   _: {
     req: import("express").Request;
@@ -79,35 +69,37 @@ export declare class Request<DATA = any> extends Event<DATA> {
 
   query: QueryObject | CQN | string | Array<QueryObject>;
 
-  reply(results: any): void;
+  reply(results: any): void
 
-  reject(msg: string, target?: any, args?: Array<any>): void
+  notify(code: number, msg: string, target?: string, args?: {}): Error
 
-  reject(code: number, msg: string, target?: any, args?: Array<any>): void
+  info(code: number, msg: string, target?: string, args?: {}): Error
 
-  notify(param: RequestMessageParam): void;
+  warn(code: number, msg: string, target?: string, args?: {}): Error
 
-  notify(msg: string, target?: any, args?: Array<any>): void;
+  error(code: number, msg: string, target?: string, args?: {}): Error
 
-  notify(code: null, msg: string, target?: any, args?: Array<any>): void;
+  reject(code: number, msg: string, target?: string, args?: {}): Error
 
-  info(param: RequestMessageParam): void;
+  notify(msg: string, target?: string, args?: {}): Error
 
-  info(msg: string, target?: any, args?: Array<any>): void;
+  info(msg: string, target?: string, args?: {}): Error
 
-  info(code: null, msg: string, target?: any, args?: Array<any>): void;
+  warn(msg: string, target?: string, args?: {}): Error
 
-  warn(param: RequestMessageParam): void;
+  error(msg: string, target?: string, args?: {}): Error
 
-  warn(msg: string, target?: any, args?: Array<any>): void;
+  reject(msg: string, target?: string, args?: {}): Error
 
-  warn(code: null, msg: string, target?: any, args?: Array<any>): void;
+  notify(msg: { code?: number | string, msg: string, target?: string, args?: {} }): Error
 
-  error(param: RequestMessageParam): void;
+  info(msg: { code?: number | string, msg: string, target?: string, args?: {} }): Error
 
-  error(msg: string, target?: any, args?: Array<any>): void;
+  warn(msg: { code?: number | string, msg: string, target?: string, args?: {} }): Error
 
-  error(code: null, msg: string, target?: any, args?: Array<any>): void;
+  error(msg: { code?: number | string, msg: string, target?: string, args?: {} }): Error
+
+  reject(msg: { code?: number | string, msg: string, target?: string, args?: {} }): Error
 
   /**
    * 
@@ -117,5 +109,5 @@ export declare class Request<DATA = any> extends Event<DATA> {
    * @param data 
    */
   diff(data?: any): Promise<any>
-  
+
 }

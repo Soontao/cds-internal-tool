@@ -93,7 +93,7 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
   };
 
   error(msg: string, options?: any): Error;
-  error(options: { message: string, [param: string]: string }): Error;
+  error(options: { message: string, code: any, [param: string]: string }): Error;
 
   /**
    * shortcut of `cds.log().debug`, if debug is not enabled, the result is undefined
