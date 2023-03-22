@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "charset": "UTF-8",
     "newLine": "lf",
-    "target": "ES2019",
+    "target": "ES2020",
     "module": "CommonJS",
     "skipLibCheck": true,
     "useUnknownInCatchVariables": false,
