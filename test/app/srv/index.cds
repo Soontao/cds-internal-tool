@@ -2,6 +2,7 @@ using {cuid} from '@sap/cds/common';
 using from './demo';
 
 
+@path: '/index'
 service IndexService {
 
   entity People : cuid {
@@ -9,7 +10,7 @@ service IndexService {
     Age  : Integer;
   }
 
-  @odata.draft.enabled : true
+  @odata.draft.enabled: true
   entity Person : cuid {
     Name : String(255);
     Age  : Integer;

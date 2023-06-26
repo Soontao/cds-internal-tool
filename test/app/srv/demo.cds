@@ -12,6 +12,7 @@ type Struct2 {
   s2 : String(255);
 }
 
+@path: '/my'
 service MyService {
 
   entity Foo : cuid {

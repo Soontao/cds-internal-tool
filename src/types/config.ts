@@ -37,6 +37,7 @@ export interface Build {
 export interface Features {
   schema_evolution?: boolean;
   folders?: string;
+  lean_draft?: boolean;
   cls?: boolean;
   live_reload?: boolean;
   fiori_preview?: boolean;

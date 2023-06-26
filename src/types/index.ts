@@ -73,6 +73,7 @@ export interface CDS extends Pick<Service, "run" | "read" | "create" | "update" 
 
   on(event: "loaded", cb: (csn: LinkedCSN) => any): void;
   on(event: "serving", cb: (service: Service) => any): void;
+  on(event: "shutdown", cb: Function): void;
   on(event: "connect", cb: (service: Service) => any): void;
   on(event: "subscribe", cb: (service: Service, event: string) => any): void;
 
