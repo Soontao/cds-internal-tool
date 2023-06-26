@@ -11,8 +11,8 @@
     "url": "https://github.com/Soontao/cds-internal-tool"
   },
   "engines": {
-    "node": ">=14",
-    "npm": ">=6"
+    "node": ">=16",
+    "npm": ">=8"
   },
   "scripts": {
     "test": "jest --detectOpenHandles --passWithNoTests",
@@ -45,9 +45,9 @@
     "utils"
   ],
   "dependencies": {
-    "@types/express": "^4.17.17"
+    "@types/express": "4.17.17"
   },
   "optionalDependencies": {
-    "fsevents": "^2.3.2"
+    "fsevents": "2.3.2"
   }
 }
