@@ -39,13 +39,10 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-coverage-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
 
-      - name: npm ci
-        run: npm ci
-        env:
-          CI: true
+      - run: npm install
 
       - name: test & coverage
         run: npm run coverage
 
       - name: upload coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v3
