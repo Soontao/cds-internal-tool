@@ -18,19 +18,15 @@ jobs:
         with:
           node-version: 20.x
           registry-url: https://registry.npmjs.org/
-
-      - name: npm install
-        run: npm install
-
-      - name: npm test
-        run: npm test
-        env:
-          CI: true
-
-      - name: npm shrinkwrap
-        run: npm shrinkwrap
-
+        
+        
+      - run: npm install
+      - run: npm test
       - run: npm run build
+
+      - run: node overwrite_package_json.js
+      - run: npm install
+      - run: npm shrinkwrap
 
       - name: npm auth & publish
         run: npm publish --access public

@@ -4,3 +4,4 @@ node_modules
 jest.config.js
 *.json
 test
+overwrite_package_json.js
