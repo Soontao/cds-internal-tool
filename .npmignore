@@ -6,9 +6,12 @@ test
 .eslint*
 commitlint.config.js
 jest.config.js
+overwrite_package_json.js
 .env
 .editorconfig
 .prettierignore
 .prettierrc.json
 .whitesource
 src
+tsconfig*.json
+renovate.json
