@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.9](https://github.com/Soontao/cds-internal-tool/compare/v1.7.8...v1.7.9) (2024-03-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/express to v4.17.19 ([0b921eb](https://github.com/Soontao/cds-internal-tool/commit/0b921ebcd9825664d27c26ae1f5570fb98d2db12))
+* **deps:** update dependency @types/express to v4.17.20 ([c66803e](https://github.com/Soontao/cds-internal-tool/commit/c66803e1a0e88672537a28ece2153aaca1900349))
+* **deps:** update dependency @types/express to v4.17.21 ([90ce8b8](https://github.com/Soontao/cds-internal-tool/commit/90ce8b8e46bfdeedd8388bc082639825bab3bf2b))
+
 ### [1.7.8](https://github.com/Soontao/cds-internal-tool/compare/v1.7.7...v1.7.8) (2023-09-29)
 
 
