@@ -5,5 +5,9 @@
     "noImplicitAny": false,
     "useUnknownInCatchVariables": false,
     "allowJs": true
-  }
+  },
+  "exclude": [
+    ".cdsrc.json",
+    "package.json"
+  ]
 }

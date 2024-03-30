@@ -18,8 +18,8 @@ describe("CDS setupTest Suite", () => {
 
   it("should support get odata metadata", async () => {
     const response = await axios.get("/index/$metadata");
-    expect(response.status).toBe(200);
     expect(response.data).toMatch(/People/);
+    expect(response.status).toBe(200);
   });
 
   it("should not throw error when data not existed", async () => {
