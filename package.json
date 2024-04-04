@@ -43,7 +43,7 @@
     "ts-node": "10.9.2",
     "@cap-js/sqlite": "1.6.0",
     "better-sqlite3": "9.4.5",
-    "typescript": "5.4.3"
+    "typescript": "5.4.4"
   },
   "dependencies": {
     "@types/express": "4.17.21"
