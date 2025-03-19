@@ -46,6 +46,6 @@
     "typescript": "5.5.4"
   },
   "dependencies": {
-    "@types/express": "5.0.0"
+    "@types/express": "5.0.1"
   }
 }
