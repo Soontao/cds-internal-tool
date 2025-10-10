@@ -39,7 +39,7 @@
     "eslint-plugin-jest": "29.0.1",
     "express": "^4.19.2",
     "jest": "30.2.0",
-    "ts-jest": "29.4.4",
+    "ts-jest": "29.4.5",
     "ts-node": "10.9.2",
     "@cap-js/sqlite": "1.11.1",
     "better-sqlite3": "12.4.1",
