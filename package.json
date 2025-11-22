@@ -42,7 +42,7 @@
     "ts-jest": "29.4.5",
     "ts-node": "10.9.2",
     "@cap-js/sqlite": "1.11.1",
-    "better-sqlite3": "12.4.5",
+    "better-sqlite3": "12.4.6",
     "typescript": "5.5.4"
   },
   "dependencies": {
