@@ -35,7 +35,7 @@
     "@typescript-eslint/eslint-plugin": "8.49.0",
     "@typescript-eslint/parser": "8.49.0",
     "axios": "^1.6.8",
-    "eslint": "9.39.1",
+    "eslint": "9.39.2",
     "eslint-plugin-jest": "29.2.2",
     "express": "^4.19.2",
     "jest": "30.2.0",
