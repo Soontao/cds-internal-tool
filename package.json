@@ -31,7 +31,7 @@
   "devDependencies": {
     "@sap/cds": "^8.0.0",
     "@types/jest": "30.0.0",
-    "@types/node": "24.10.12",
+    "@types/node": "24.10.13",
     "@typescript-eslint/eslint-plugin": "8.55.0",
     "@typescript-eslint/parser": "8.55.0",
     "axios": "^1.6.8",
